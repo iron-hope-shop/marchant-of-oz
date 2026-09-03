@@ -1,6 +1,7 @@
-[2026-09-03T02:41:00Z] GitHub Actions Run 33708516435 failed on 'main' branch in step 'Google Cloud Auth':
-Error: google-github-actions/auth failed with: failed to parse service account key JSON credentials: unexpected token '', "*^ǿi("... is not valid JSON
-Reason: The repository secret GCP_SA_KEY contains invalid JSON or corrupted binary/base64-encoded string instead of plain JSON service account key.
-Resolution: Re-copy the full contents of your Google Service Account JSON key file into GitHub Repository Secrets as GCP_SA_KEY.
+[2026-09-03T02:47:57Z] GitHub Actions Run 33708979893 failed on 'main' branch in test step:
+Error: AssertionError: 'merchant-of-oz-repo' not found in google-cloudrun-docker.yml
+Reason: The repository name in workflow was updated to 'merchant-of-oz' while test_deploy.py was expecting 'merchant-of-oz-repo'.
+Resolution: Updated test_deploy.py to match workflow definition.
+
 
 

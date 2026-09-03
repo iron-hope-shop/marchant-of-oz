@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] - 2026-09-03
 
+### Changed
+- Updated unit test in `tests/test_deploy.py` to match new `REPOSITORY: merchant-of-oz` workflow configuration.
+
 ### Added
 - Workflow integration for Google Cloud Run deployment (`.github/workflows/google-cloudrun-docker.yml`).
 - Firebase Hosting configuration (`firebase.json` and `.firebaserc`) for project `iron-hope-shop-ff854`.

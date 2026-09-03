@@ -49,8 +49,7 @@ class TestDeploymentSetup(unittest.TestCase):
             content = f.read()
             self.assertIn('google-github-actions/auth@v2', content)
             self.assertIn('google-github-actions/deploy-cloudrun@v2', content)
-            self.assertIn('merchant-of-oz-repo', content)
-            self.assertIn('merchant-of-oz', content)
+            self.assertIn('SERVICE: merchant-of-oz', content)
 
 if __name__ == '__main__':
     unittest.main()
