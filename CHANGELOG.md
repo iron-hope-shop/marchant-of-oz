@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] - 2026-09-03
 
+### Added
+- Integrated Firebase Web SDK (v11) with Google Sign-In popup flow, user profile view, and sign-out handler in `public/index.html`.
+- Updated direct console URLs in `README.md` for deployed service `https://merchant-of-oz-zk4so6dwua-uc.a.run.app`.
+
 ### Changed
 - Logged Artifact Registry repository lookup failure in `error.log`.
 - Updated unit test in `tests/test_deploy.py` to match new `REPOSITORY: merchant-of-oz` workflow configuration.

@@ -6,14 +6,14 @@ Simple Hello World web application deployed to Google Cloud Run with Nginx rever
 
 ### 1. Firebase Authorized Domains
 - **Direct Link**: [Firebase Authentication Settings](https://console.firebase.google.com/project/iron-hope-shop-ff854/authentication/settings)
-- **Action**: Add deployed Cloud Run domain (`<service-name>-<hash>-uc.a.run.app` or custom domain).
+- **Authorized Domain to Add**: `merchant-of-oz-zk4so6dwua-uc.a.run.app`
 
 ### 2. Google Cloud OAuth 2.0 Credentials
 - **Direct Link**: [GCP Credentials Console](https://console.cloud.google.com/apis/credentials?project=iron-hope-shop-ff854)
 - **Authorized JavaScript origins**:
-  - `https://<your-cloud-run-url>`
+  - `https://merchant-of-oz-zk4so6dwua-uc.a.run.app`
 - **Authorized redirect URIs**:
-  - `https://<your-cloud-run-url>/__/auth/handler`
+  - `https://merchant-of-oz-zk4so6dwua-uc.a.run.app/__/auth/handler`
   - `https://iron-hope-shop-ff854.firebaseapp.com/__/auth/handler`
 
 ### 3. Google Cloud Run Dashboard

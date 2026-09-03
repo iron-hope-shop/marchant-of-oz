@@ -23,7 +23,10 @@ class TestDeploymentSetup(unittest.TestCase):
         self.assertTrue(os.path.exists('public/index.html'))
         with open('public/index.html', 'r') as f:
             content = f.read()
-            self.assertIn('Hello World', content)
+            self.assertIn('Merchant of Oz', content)
+            self.assertIn('signInWithPopup', content)
+            self.assertIn('GoogleAuthProvider', content)
+            self.assertIn('iron-hope-shop-ff854', content)
 
     def test_firebase_config_exists(self):
         self.assertTrue(os.path.exists('firebase.json'))
