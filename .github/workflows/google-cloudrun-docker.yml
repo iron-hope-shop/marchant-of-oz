@@ -11,7 +11,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID || 'iron-hope-shop-ff854' }}
   GAR_LOCATION: us-central1
-  REPOSITORY: merchant-of-oz-repo
+  REPOSITORY: merchant-of-oz
   SERVICE: merchant-of-oz
   REGION: us-central1
 
