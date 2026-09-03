@@ -1,5 +1,6 @@
-[2026-09-03T02:37:25Z] GitHub Actions Run 33708311489 failed on 'main' branch:
-Error: ImportError: Start directory is not importable: 'tests'
-Reason: The commit 1bea974 on origin/main added the workflow before the 'tests/' directory and application files from our branch were merged into 'main'.
-Resolution: Merge branch cursor/deploy-firebase-hello-world-d7d9 (or push changes containing tests/, Dockerfile, nginx.conf, public/) to main.
+[2026-09-03T02:41:00Z] GitHub Actions Run 33708516435 failed on 'main' branch in step 'Google Cloud Auth':
+Error: google-github-actions/auth failed with: failed to parse service account key JSON credentials: unexpected token '', "*^ǿi("... is not valid JSON
+Reason: The repository secret GCP_SA_KEY contains invalid JSON or corrupted binary/base64-encoded string instead of plain JSON service account key.
+Resolution: Re-copy the full contents of your Google Service Account JSON key file into GitHub Repository Secrets as GCP_SA_KEY.
+
 
