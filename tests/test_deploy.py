@@ -25,6 +25,23 @@ class TestDeploymentSetup(unittest.TestCase):
             content = f.read()
             self.assertIn('Hello World', content)
 
+    def test_firebase_config_exists(self):
+        self.assertTrue(os.path.exists('firebase.json'))
+        self.assertTrue(os.path.exists('.firebaserc'))
+        with open('firebase.json', 'r') as f:
+            content = f.read()
+            self.assertIn('"public": "public"', content)
+        with open('.firebaserc', 'r') as f:
+            content = f.read()
+            self.assertIn('"default": "iron-hope-shop-ff854"', content)
+
+    def test_deploy_script_exists(self):
+        self.assertTrue(os.path.exists('deploy-firebase.sh'))
+        with open('deploy-firebase.sh', 'r') as f:
+            content = f.read()
+            self.assertIn('iron-hope-shop-ff854', content)
+            self.assertIn('firebase-tools deploy', content)
+
     def test_github_workflow_exists(self):
         self.assertTrue(os.path.exists('.github/workflows/deploy.yml'))
         with open('.github/workflows/deploy.yml', 'r') as f:
