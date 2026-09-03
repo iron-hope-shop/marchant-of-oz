@@ -43,11 +43,14 @@ class TestDeploymentSetup(unittest.TestCase):
             self.assertIn('firebase-tools deploy', content)
 
     def test_github_workflow_exists(self):
-        self.assertTrue(os.path.exists('.github/workflows/deploy.yml'))
-        with open('.github/workflows/deploy.yml', 'r') as f:
+        workflow_path = '.github/workflows/google-cloudrun-docker.yml'
+        self.assertTrue(os.path.exists(workflow_path))
+        with open(workflow_path, 'r') as f:
             content = f.read()
             self.assertIn('google-github-actions/auth@v2', content)
             self.assertIn('google-github-actions/deploy-cloudrun@v2', content)
+            self.assertIn('merchant-of-oz-repo', content)
+            self.assertIn('merchant-of-oz', content)
 
 if __name__ == '__main__':
     unittest.main()

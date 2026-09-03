@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] - 2026-09-03
 
 ### Added
+- Workflow integration for Google Cloud Run deployment (`.github/workflows/google-cloudrun-docker.yml`).
 - Firebase Hosting configuration (`firebase.json` and `.firebaserc`) for project `iron-hope-shop-ff854`.
 - Automated deployment helper script `deploy-firebase.sh` supporting `FIREBASE_TOKEN` and `GOOGLE_APPLICATION_CREDENTIALS`.
 - Static "Hello World" frontend web application in `public/index.html`.
