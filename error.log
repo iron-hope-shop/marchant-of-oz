@@ -1,7 +1,8 @@
-[2026-09-03T02:47:57Z] GitHub Actions Run 33708979893 failed on 'main' branch in test step:
-Error: AssertionError: 'merchant-of-oz-repo' not found in google-cloudrun-docker.yml
-Reason: The repository name in workflow was updated to 'merchant-of-oz' while test_deploy.py was expecting 'merchant-of-oz-repo'.
-Resolution: Updated test_deploy.py to match workflow definition.
+[2026-09-03T02:50:25Z] GitHub Actions Run 33709090872 failed on 'main' branch in step 'Build and Push Container Image':
+Error: name unknown: Repository "merchant-of-oz" not found
+Reason: The Docker push failed because the Artifact Registry repository 'merchant-of-oz' does not exist in project 'iron-hope-shop-ff854' under region 'us-central1'.
+Resolution: Create the Artifact Registry repository 'merchant-of-oz' (or update REPOSITORY in .github/workflows/google-cloudrun-docker.yml to an existing Artifact Registry repository such as 'cat-app-repo' or 'cloud-run-source-deploy').
+
 
 
 

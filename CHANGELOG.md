@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] - 2026-09-03
 
 ### Changed
+- Logged Artifact Registry repository lookup failure in `error.log`.
 - Updated unit test in `tests/test_deploy.py` to match new `REPOSITORY: merchant-of-oz` workflow configuration.
 
 ### Added
