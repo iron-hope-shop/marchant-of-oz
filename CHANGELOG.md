@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] - 2026-09-05
 
 ### Added
-- Zero-dependency UI design system (`public/tamagui.css`) with:
+- Explicit Google OAuth scopes (`profile`, `email`) and `prompt: 'select_account'` parameter added to `GoogleAuthProvider` to enforce proper avatar photo retrieval permissions.
+- Safe client-side local avatar upload mechanism using HTML5 Canvas re-encoding:
+  - Validates file type (`image/jpeg`, `image/png`, `image/webp`, `image/gif`) and enforces a 2MB size limit.
+  - Re-encodes images onto a sanitized Canvas (max 256x256) to strip malicious EXIF/metadata and prevent polyglot file execution before storing in client storage.
+  - Added visual avatar source badge and one-click "Reset to Google Photo" action.
+- Auth-gated theme customization:
+  - Theme mode (Light/Dark/Auto) and accent color sub-theme controls now require user sign-in.
+  - Displays a clean "Sign In Required" lock banner with a quick navigation link to the Account sign-in view when signed out.
+- Incremented build version to `v1.0.5-43` in `public/version.json` and UI watermarks.
+- Updated unit test suite in `tests/test_deploy.py` to assert presence of theme auth gating and custom avatar components.
   - Design tokens for sizing, spacing ($size/$space), radius, typography, shadows, transitions, and z-indices.
   - 12-step color scales for Gray, Blue, Purple, Green, Red, Orange, Pink, and Yellow.
   - Light and Dark base themes with system auto-detection and sub-theme color palettes (`blue`, `purple`, `green`, `red`, `orange`, `pink`, `yellow`).

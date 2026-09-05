@@ -35,6 +35,9 @@ class TestDeploymentSetup(unittest.TestCase):
             self.assertIn('view-settings', content)
             self.assertIn('settings-subpanel-themes', content)
             self.assertIn('settings-subpanel-account', content)
+            self.assertIn('theme-controls-auth-panel', content)
+            self.assertIn('theme-controls-guest-banner', content)
+            self.assertIn('avatar-file-input', content)
             self.assertIn('build-watermark', content)
 
     def test_version_json_exists(self):

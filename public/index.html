@@ -97,6 +97,30 @@
       display: block;
     }
 
+    .auth-locked-banner {
+      border: 1px dashed var(--border-subtle);
+      background-color: var(--bg-surface);
+      border-radius: var(--radius-6);
+      padding: var(--space-6);
+      text-align: center;
+    }
+
+    .avatar-upload-dropzone {
+      border: 2px dashed var(--border-subtle);
+      border-radius: var(--radius-5);
+      padding: var(--space-3) var(--space-4);
+      background-color: var(--bg-element);
+      cursor: pointer;
+      text-align: center;
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+
+    .avatar-upload-dropzone:hover {
+      border-color: var(--primary);
+      background-color: var(--primary-subtle);
+    }
+
     @media (max-width: 640px) {
       .t-drawer-layout {
         flex-direction: column;
@@ -139,6 +163,12 @@
       const app = initializeApp(firebaseConfig);
       auth = getAuth(app);
       provider = new GoogleAuthProvider();
+      // Explicitly request user profile picture & email permissions from Google OAuth
+      provider.addScope('profile');
+      provider.addScope('email');
+      provider.setCustomParameters({
+        prompt: 'select_account'
+      });
     } catch (e) {
       console.warn("Firebase initialization skipped or simulated:", e);
     }
@@ -153,14 +183,44 @@
     const signOutBtn = document.getElementById("signout-btn");
     const navUserAvatar = document.getElementById("nav-user-avatar");
     const homeUserWelcome = document.getElementById("home-user-welcome");
+    const avatarFileInput = document.getElementById("avatar-file-input");
+    const avatarUploadError = document.getElementById("avatar-upload-error");
+    const avatarSourceBadge = document.getElementById("avatar-source-badge");
+    const removeCustomAvatarBtn = document.getElementById("remove-custom-avatar-btn");
+
+    const LOCAL_AVATAR_KEY = "user_custom_avatar_data";
+
+    let currentUser = null;
+
+    function getCustomAvatar() {
+      try {
+        return localStorage.getItem(LOCAL_AVATAR_KEY) || null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function setCustomAvatar(dataUrl) {
+      try {
+        if (dataUrl) {
+          localStorage.setItem(LOCAL_AVATAR_KEY, dataUrl);
+        } else {
+          localStorage.removeItem(LOCAL_AVATAR_KEY);
+        }
+      } catch (e) {
+        console.warn("[Avatar] Failed to persist custom avatar:", e);
+      }
+    }
 
     function renderUserAvatar(photoUrl, name, targetElement) {
       if (!targetElement) return;
       
-      let finalPhoto = photoUrl;
+      const customAvatar = getCustomAvatar();
+      let finalPhoto = customAvatar || photoUrl;
+      
       // High-resolution Google photo resolution and remove sizing restrictions
-      if (finalPhoto && finalPhoto.includes("googleusercontent.com")) {
-        finalPhoto = finalPhoto.replace(/=s\d+-c$/, "=s256-c");
+      if (!customAvatar && finalPhoto && finalPhoto.includes("googleusercontent.com")) {
+        finalPhoto = finalPhoto.replace(/=s\d+(-c)?$/, "=s256-c");
       }
 
       if (finalPhoto) {
@@ -190,6 +250,121 @@
       }
     }
 
+    function updateAllAvatars() {
+      const customAvatar = getCustomAvatar();
+      let photo = "";
+      let name = "Merchant";
+      if (currentUser) {
+        photo = currentUser.photoURL || "";
+        if (!photo && currentUser.providerData && currentUser.providerData.length > 0) {
+          for (const profile of currentUser.providerData) {
+            if (profile.photoURL) {
+              photo = profile.photoURL;
+              break;
+            }
+          }
+        }
+        name = currentUser.displayName || (currentUser.providerData && currentUser.providerData[0]?.displayName) || "User";
+      }
+
+      if (userAvatar) renderUserAvatar(photo, name, userAvatar);
+      if (navUserAvatar) renderUserAvatar(photo, name, navUserAvatar);
+
+      if (avatarSourceBadge) {
+        if (customAvatar) {
+          avatarSourceBadge.textContent = "Custom Upload";
+          avatarSourceBadge.className = "t-badge t-badge-primary";
+        } else if (photo) {
+          avatarSourceBadge.textContent = "Google SSO";
+          avatarSourceBadge.className = "t-badge t-badge-info";
+        } else {
+          avatarSourceBadge.textContent = "Initials (Default)";
+          avatarSourceBadge.className = "t-badge";
+        }
+      }
+
+      if (removeCustomAvatarBtn) {
+        removeCustomAvatarBtn.style.display = customAvatar ? "inline-block" : "none";
+      }
+    }
+
+    // Secure local image upload & client-side sanitization
+    function processUploadedFile(file) {
+      if (avatarUploadError) avatarUploadError.textContent = "";
+
+      if (!file) return;
+
+      const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+      if (!allowedTypes.includes(file.type)) {
+        if (avatarUploadError) avatarUploadError.textContent = "Unsupported format. Please upload JPEG, PNG, WebP, or GIF.";
+        return;
+      }
+
+      const maxBytes = 2 * 1024 * 1024; // 2MB max input
+      if (file.size > maxBytes) {
+        if (avatarUploadError) avatarUploadError.textContent = "File is too large. Maximum size is 2MB.";
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          // Re-encode via sanitized Canvas element: strips malicious EXIF/metadata payloads & clamps resolution
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+          const maxDim = 256;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > maxDim) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            }
+          } else {
+            if (height > maxDim) {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Export sanitized WebP / JPEG Data URL
+          const sanitizedDataUrl = canvas.toDataURL("image/webp", 0.9);
+          setCustomAvatar(sanitizedDataUrl);
+          updateAllAvatars();
+        };
+        img.onerror = () => {
+          if (avatarUploadError) avatarUploadError.textContent = "Corrupted or invalid image file.";
+        };
+        img.src = e.target.result;
+      };
+      reader.onerror = () => {
+        if (avatarUploadError) avatarUploadError.textContent = "Could not read selected file.";
+      };
+      reader.readAsDataURL(file);
+    }
+
+    if (avatarFileInput) {
+      avatarFileInput.addEventListener("change", (e) => {
+        if (e.target.files && e.target.files[0]) {
+          processUploadedFile(e.target.files[0]);
+          avatarFileInput.value = "";
+        }
+      });
+    }
+
+    if (removeCustomAvatarBtn) {
+      removeCustomAvatarBtn.addEventListener("click", () => {
+        setCustomAvatar(null);
+        updateAllAvatars();
+      });
+    }
+
     if (signInBtn && auth) {
       signInBtn.addEventListener("click", async () => {
         statusMsg.textContent = "";
@@ -216,20 +391,16 @@
       });
     }
 
+    function setAuthUIState(isAuthenticated) {
+      if (window.setAuthState) {
+        window.setAuthState(isAuthenticated);
+      }
+    }
+
     if (auth) {
       onAuthStateChanged(auth, (user) => {
+        currentUser = user;
         if (user) {
-          // Resolve photo from user profile or providerData
-          let photo = user.photoURL || "";
-          if (!photo && user.providerData && user.providerData.length > 0) {
-            for (const profile of user.providerData) {
-              if (profile.photoURL) {
-                photo = profile.photoURL;
-                break;
-              }
-            }
-          }
-
           const name = user.displayName || (user.providerData && user.providerData[0]?.displayName) || "User";
           const email = user.email || (user.providerData && user.providerData[0]?.email) || "";
 
@@ -238,24 +409,20 @@
           if (userName) userName.textContent = name;
           if (userEmail) userEmail.textContent = email;
           
-          if (userAvatar) {
-            renderUserAvatar(photo, name, userAvatar);
-          }
-          if (navUserAvatar) {
-            renderUserAvatar(photo, name, navUserAvatar);
-          }
+          updateAllAvatars();
+
           if (homeUserWelcome) {
             homeUserWelcome.textContent = `Welcome back, ${name}`;
           }
+          setAuthUIState(true);
         } else {
           if (loginSection) loginSection.style.display = "block";
           if (userProfile) userProfile.style.display = "none";
-          if (navUserAvatar) {
-            navUserAvatar.innerHTML = `<span style="font-weight: bold;">MO</span>`;
-          }
+          updateAllAvatars();
           if (homeUserWelcome) {
             homeUserWelcome.textContent = "Welcome Home";
           }
+          setAuthUIState(false);
         }
       });
     }
@@ -329,106 +496,125 @@
             <!-- Settings Subpanel: Themes -->
             <div id="settings-subpanel-themes" class="settings-subpanel active t-ystack gap-6">
               
-              <!-- Theme Selection Card -->
-              <div class="t-card t-ystack gap-6">
-                <div>
-                  <h2 class="t-card-title">Theme &amp; Appearance</h2>
-                  <p class="t-card-subtitle">Customize base light/dark mode and color palette sub-themes.</p>
-                </div>
-
-                <div class="t-separator"></div>
-
-                <!-- Theme Mode Controls -->
-                <div class="t-ystack gap-3">
-                  <label style="font-size: var(--font-size-4); font-weight: 600;">Color Mode</label>
-                  <div class="t-theme-switcher" id="theme-mode-picker">
-                    <button class="t-theme-pill active" data-mode="light">Light</button>
-                    <button class="t-theme-pill" data-mode="dark">Dark</button>
-                    <button class="t-theme-pill" data-mode="system">Auto</button>
+              <!-- Authenticated Theme Controls -->
+              <div id="theme-controls-auth-panel" class="t-ystack gap-6">
+                <!-- Theme Selection Card -->
+                <div class="t-card t-ystack gap-6">
+                  <div>
+                    <h2 class="t-card-title">Theme &amp; Appearance</h2>
+                    <p class="t-card-subtitle">Customize base light/dark mode and color palette sub-themes.</p>
                   </div>
-                </div>
 
-                <!-- Sub-Theme Color Picker -->
-                <div class="t-ystack gap-3">
-                  <label style="font-size: var(--font-size-4); font-weight: 600;">Accent Sub-Theme</label>
-                  <div class="color-swatches" id="subtheme-picker" title="Select Sub-theme Color">
-                    <button class="t-color-swatch swatch-blue active" data-color="blue" aria-label="Blue"></button>
-                    <button class="t-color-swatch swatch-purple" data-color="purple" aria-label="Purple"></button>
-                    <button class="t-color-swatch swatch-green" data-color="green" aria-label="Green"></button>
-                    <button class="t-color-swatch swatch-red" data-color="red" aria-label="Red"></button>
-                    <button class="t-color-swatch swatch-orange" data-color="orange" aria-label="Orange"></button>
-                    <button class="t-color-swatch swatch-pink" data-color="pink" aria-label="Pink"></button>
-                    <button class="t-color-swatch swatch-yellow" data-color="yellow" aria-label="Yellow"></button>
+                  <div class="t-separator"></div>
+
+                  <!-- Theme Mode Controls -->
+                  <div class="t-ystack gap-3">
+                    <label style="font-size: var(--font-size-4); font-weight: 600;">Color Mode</label>
+                    <div class="t-theme-switcher" id="theme-mode-picker">
+                      <button class="t-theme-pill active" data-mode="light">Light</button>
+                      <button class="t-theme-pill" data-mode="dark">Dark</button>
+                      <button class="t-theme-pill" data-mode="system">Auto</button>
+                    </div>
                   </div>
-                </div>
 
-                <div class="t-separator"></div>
+                  <!-- Sub-Theme Color Picker -->
+                  <div class="t-ystack gap-3">
+                    <label style="font-size: var(--font-size-4); font-weight: 600;">Accent Sub-Theme</label>
+                    <div class="color-swatches" id="subtheme-picker" title="Select Sub-theme Color">
+                      <button class="t-color-swatch swatch-blue active" data-color="blue" aria-label="Blue"></button>
+                      <button class="t-color-swatch swatch-purple" data-color="purple" aria-label="Purple"></button>
+                      <button class="t-color-swatch swatch-green" data-color="green" aria-label="Green"></button>
+                      <button class="t-color-swatch swatch-red" data-color="red" aria-label="Red"></button>
+                      <button class="t-color-swatch swatch-orange" data-color="orange" aria-label="Orange"></button>
+                      <button class="t-color-swatch swatch-pink" data-color="pink" aria-label="Pink"></button>
+                      <button class="t-color-swatch swatch-yellow" data-color="yellow" aria-label="Yellow"></button>
+                    </div>
+                  </div>
 
-                <!-- Live State Output -->
-                <div class="t-ystack gap-2">
-                  <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Active Theme State</label>
-                  <pre class="code-preview" id="theme-state-output">{
+                  <div class="t-separator"></div>
+
+                  <!-- Live State Output -->
+                  <div class="t-ystack gap-2">
+                    <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Active Theme State</label>
+                    <pre class="code-preview" id="theme-state-output">{
   "theme": "light",
   "resolvedTheme": "light",
   "subTheme": "blue"
 }</pre>
+                  </div>
+                </div>
+
+                <!-- Interactive Component Primitives Preview within Themes -->
+                <div class="t-card t-ystack gap-5">
+                  <div>
+                    <div class="t-xstack ai-center jc-between t-card-header">
+                      <h2 class="t-card-title">Theme Primitives &amp; Controls</h2>
+                      <span class="t-badge t-badge-primary">Live Preview</span>
+                    </div>
+                    <p class="t-card-subtitle">Test how layout stacks, inputs, switches, badges, and modals render under the active theme.</p>
+                  </div>
+
+                  <!-- Inputs & Groups -->
+                  <div class="t-ystack gap-3">
+                    <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Input &amp; Group Primitive</label>
+                    <div class="t-group">
+                      <input type="text" class="t-input" placeholder="Search query..." value="design-tokens">
+                      <button class="t-btn t-btn-primary">Search</button>
+                    </div>
+                  </div>
+
+                  <!-- Buttons & Switches -->
+                  <div class="t-ystack gap-3">
+                    <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Button Variants &amp; Switches</label>
+                    <div class="t-xstack ai-center gap-3 flex-wrap">
+                      <button class="t-btn t-btn-primary">Primary</button>
+                      <button class="t-btn t-btn-subtle">Subtle</button>
+                      <button class="t-btn t-btn-ghost">Ghost</button>
+                      
+                      <div class="t-spacer-flex"></div>
+
+                      <label class="t-switch" title="Toggle Demo State">
+                        <input type="checkbox" checked id="demo-toggle">
+                        <span class="t-switch-thumb"></span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Badges & Tooltips -->
+                  <div class="t-ystack gap-3">
+                    <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Badges &amp; Tooltips</label>
+                    <div class="t-xstack ai-center gap-2 flex-wrap">
+                      <span class="t-badge t-badge-primary">Active Theme Badge</span>
+                      <span class="t-badge">Neutral Badge</span>
+                      
+                      <div class="t-tooltip-trigger">
+                        <button class="t-btn t-btn-sm">Hover me</button>
+                        <div class="t-tooltip t-tooltip-primary">Interactive Tooltip!</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Modal Trigger Demo -->
+                  <div class="t-card-footer">
+                    <button class="t-btn t-btn-sm" id="open-modal-btn">Preview Modal Dialog</button>
+                  </div>
                 </div>
               </div>
 
-              <!-- Interactive Component Primitives Preview within Themes -->
-              <div class="t-card t-ystack gap-5">
-                <div>
-                  <div class="t-xstack ai-center jc-between t-card-header">
-                    <h2 class="t-card-title">Theme Primitives &amp; Controls</h2>
-                    <span class="t-badge t-badge-primary">Live Preview</span>
-                  </div>
-                  <p class="t-card-subtitle">Test how layout stacks, inputs, switches, badges, and modals render under the active theme.</p>
+              <!-- Unauthenticated Sign-In Required Banner -->
+              <div id="theme-controls-guest-banner" class="auth-locked-banner t-ystack ai-center gap-3" style="display: none;">
+                <div class="t-avatar t-avatar-lg" style="background-color: var(--primary-subtle); color: var(--primary); font-size: var(--font-size-7);">
+                  🔒
                 </div>
-
-                <!-- Inputs & Groups -->
-                <div class="t-ystack gap-3">
-                  <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Input &amp; Group Primitive</label>
-                  <div class="t-group">
-                    <input type="text" class="t-input" placeholder="Search query..." value="design-tokens">
-                    <button class="t-btn t-btn-primary">Search</button>
-                  </div>
+                <div class="t-ystack ai-center gap-1">
+                  <h3 style="margin: 0; font-size: var(--font-size-6); font-weight: 700;">Sign In Required</h3>
+                  <p style="margin: 0; color: var(--color-text-subtle); max-width: 380px; font-size: var(--font-size-4);">
+                    Please sign in with your account to customize themes, change color palettes, and personalize your workspace.
+                  </p>
                 </div>
-
-                <!-- Buttons & Switches -->
-                <div class="t-ystack gap-3">
-                  <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Button Variants &amp; Switches</label>
-                  <div class="t-xstack ai-center gap-3 flex-wrap">
-                    <button class="t-btn t-btn-primary">Primary</button>
-                    <button class="t-btn t-btn-subtle">Subtle</button>
-                    <button class="t-btn t-btn-ghost">Ghost</button>
-                    
-                    <div class="t-spacer-flex"></div>
-
-                    <label class="t-switch" title="Toggle Demo State">
-                      <input type="checkbox" checked id="demo-toggle">
-                      <span class="t-switch-thumb"></span>
-                    </label>
-                  </div>
-                </div>
-
-                <!-- Badges & Tooltips -->
-                <div class="t-ystack gap-3">
-                  <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Badges &amp; Tooltips</label>
-                  <div class="t-xstack ai-center gap-2 flex-wrap">
-                    <span class="t-badge t-badge-primary">Active Theme Badge</span>
-                    <span class="t-badge">Neutral Badge</span>
-                    
-                    <div class="t-tooltip-trigger">
-                      <button class="t-btn t-btn-sm">Hover me</button>
-                      <div class="t-tooltip t-tooltip-primary">Interactive Tooltip!</div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Modal Trigger Demo -->
-                <div class="t-card-footer">
-                  <button class="t-btn t-btn-sm" id="open-modal-btn">Preview Modal Dialog</button>
-                </div>
+                <button class="t-btn t-btn-primary" onclick="switchSettingsTab('account');" style="margin-top: var(--space-2);">
+                  Go to Sign In
+                </button>
               </div>
 
             </div>
@@ -450,7 +636,7 @@
                   <!-- Sign In Flow -->
                   <div id="login-section" class="t-ystack gap-3">
                     <p style="color: var(--color-text-subtle); font-size: var(--font-size-4); margin: 0 0 var(--space-2) 0;">
-                      Sign in with your Google Account to access authorized services and personal workspace state.
+                      Sign in with your Google Account to unlock theme switching and manage your workspace profile.
                     </p>
                     <button id="signin-btn" class="t-btn w-full t-btn-primary">
                       <svg width="18" height="18" viewBox="0 0 18 18">
@@ -464,14 +650,30 @@
                   </div>
 
                   <!-- Authenticated Profile View -->
-                  <div id="user-profile" class="t-ystack ai-center gap-3" style="display: none; padding: var(--space-4) 0;">
+                  <div id="user-profile" class="t-ystack ai-center gap-4" style="display: none; padding: var(--space-4) 0;">
                     <div class="t-avatar t-avatar-xl" id="user-avatar" style="background-color: var(--primary-subtle); color: var(--primary);">
                     </div>
-                    <div class="t-ystack ai-center">
-                      <h3 id="user-name" style="margin: 0; font-size: var(--font-size-7);"></h3>
-                      <p id="user-email" style="margin: var(--space-1) 0 0 0; color: var(--color-text-muted); font-size: var(--font-size-3);"></p>
+                    <div class="t-ystack ai-center gap-1">
+                      <div class="t-xstack ai-center gap-2">
+                        <h3 id="user-name" style="margin: 0; font-size: var(--font-size-7);"></h3>
+                        <span id="avatar-source-badge" class="t-badge">SSO</span>
+                      </div>
+                      <p id="user-email" style="margin: 0; color: var(--color-text-muted); font-size: var(--font-size-3);"></p>
                     </div>
-                    <button id="signout-btn" class="t-btn t-btn-primary w-full">Sign Out</button>
+
+                    <!-- Safe Local Avatar Upload Dropzone -->
+                    <div class="w-full t-ystack gap-2" style="margin-top: var(--space-2);">
+                      <label style="font-size: var(--font-size-3); font-weight: 600;">Custom Profile Picture</label>
+                      <label class="avatar-upload-dropzone t-xstack ai-center jc-center gap-2">
+                        <input type="file" id="avatar-file-input" accept="image/jpeg,image/png,image/webp,image/gif" style="display: none;">
+                        <span>📷</span>
+                        <span style="font-size: var(--font-size-3); color: var(--color-text-subtle);">Click to upload custom avatar (Sanitized Canvas / max 2MB)</span>
+                      </label>
+                      <div id="avatar-upload-error" style="color: var(--color-red-11); font-size: var(--font-size-2); min-height: 16px;"></div>
+                      <button id="remove-custom-avatar-btn" class="t-btn t-btn-ghost t-btn-sm" style="display: none; align-self: center;">Reset to Google Photo</button>
+                    </div>
+
+                    <button id="signout-btn" class="t-btn t-btn-primary w-full" style="margin-top: var(--space-2);">Sign Out</button>
                   </div>
 
                   <div id="status-msg" style="color: var(--color-red-11); font-size: var(--font-size-3); margin-top: var(--space-2);"></div>
@@ -491,7 +693,7 @@
                 </div>
                 <div class="t-ystack gap-3">
                   <label style="font-size: var(--font-size-3); font-weight: 600;">Build Version</label>
-                  <input type="text" class="t-input" id="settings-build-tag" value="v1.0.4-42" readonly>
+                  <input type="text" class="t-input" id="settings-build-tag" value="v1.0.5-43" readonly>
                 </div>
               </div>
             </div>
@@ -503,7 +705,7 @@
     </main>
 
     <!-- Subtle Bottom Build Stamp -->
-    <div class="build-watermark" id="build-tag">v1.0.4-42</div>
+    <div class="build-watermark" id="build-tag">v1.0.5-43</div>
 
   </div>
 
@@ -531,7 +733,7 @@
         const res = await fetch('version.json');
         if (res.ok) {
           const data = await res.json();
-          const tag = `v${data.version || '1.0.4'}-${data.buildNumber || 42}`;
+          const tag = `v${data.version || '1.0.5'}-${data.buildNumber || 43}`;
           const tagEl = document.getElementById('build-tag');
           const sTagEl = document.getElementById('settings-build-tag');
           if (tagEl) tagEl.textContent = tag;
@@ -589,6 +791,24 @@
       });
     }
 
+    // Authentication state handling for theme customization locking
+    let isUserAuthenticated = false;
+    const authLockedPanel = document.getElementById('theme-controls-auth-panel');
+    const guestBanner = document.getElementById('theme-controls-guest-banner');
+
+    function updateAuthGatedUI(isAuthenticated) {
+      isUserAuthenticated = !!isAuthenticated;
+      if (authLockedPanel) {
+        authLockedPanel.style.display = isUserAuthenticated ? 'flex' : 'none';
+      }
+      if (guestBanner) {
+        guestBanner.style.display = isUserAuthenticated ? 'none' : 'flex';
+      }
+    }
+
+    window.setAuthState = updateAuthGatedUI;
+    updateAuthGatedUI(false); // Default to locked until Firebase confirms user state
+
     // Theme Switcher Controller
     const themeModePicker = document.getElementById('theme-mode-picker');
     const subthemePicker = document.getElementById('subtheme-picker');
@@ -629,6 +849,10 @@
 
       if (themeModePicker) {
         themeModePicker.addEventListener('click', (e) => {
+          if (!isUserAuthenticated) {
+            switchSettingsTab('account');
+            return;
+          }
           const btn = e.target.closest('.t-theme-pill');
           if (btn && btn.dataset.mode) {
             themeController.setTheme(btn.dataset.mode);
@@ -638,6 +862,10 @@
 
       if (subthemePicker) {
         subthemePicker.addEventListener('click', (e) => {
+          if (!isUserAuthenticated) {
+            switchSettingsTab('account');
+            return;
+          }
           const btn = e.target.closest('.t-color-swatch');
           if (btn && btn.dataset.color) {
             themeController.setSubTheme(btn.dataset.color);
