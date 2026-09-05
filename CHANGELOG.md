@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] - 2026-09-05
 
 ### Added
+- **E-Commerce Routing & Storefront System**:
+  - Hash-based Single Page App (SPA) router supporting routes: `#/home`, `#/shop`, `#/product/:id`, `#/cart`, `#/settings`, `#/settings/themes`, `#/settings/account`, `#/settings/general`, `#/login`.
+  - Product Catalog grid with categories, pricing, item cards, and direct "Add to Cart" / "Details" actions.
+  - Dedicated Product Detail view with rich specifications and direct cart integration.
+  - Interactive Shopping Cart with live item counter badge in the top navigation, item quantity controls (+/-), item removal, order total calculation, and checkout modal confirmation.
+- **Dynamic Auth-State Navigation**:
+  - Unauthenticated guests see a dedicated `Log In` tab in the top navigation bar and direct login call-to-actions on the home screen.
+  - Authenticated users dynamically see the `Settings` tab in top navigation and workspace settings controls.
+- Incremented build version to `v1.0.6-44` in `public/version.json` and UI watermarks.
+- Updated unit test suite in `tests/test_deploy.py` to assert e-commerce views, route handling, and auth-state navigation controls.
 - Explicit Google OAuth scopes (`profile`, `email`) and `prompt: 'select_account'` parameter added to `GoogleAuthProvider` to enforce proper avatar photo retrieval permissions.
 - Safe client-side local avatar upload mechanism using HTML5 Canvas re-encoding:
   - Validates file type (`image/jpeg`, `image/png`, `image/webp`, `image/gif`) and enforces a 2MB size limit.

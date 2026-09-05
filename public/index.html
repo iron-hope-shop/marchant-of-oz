@@ -121,6 +121,54 @@
       background-color: var(--primary-subtle);
     }
 
+    /* E-commerce Catalog Grid & Cards */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: var(--space-5);
+      width: 100%;
+    }
+
+    .product-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-6);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all var(--transition-normal);
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-3);
+      border-color: var(--primary);
+    }
+
+    .product-img-box {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--bg-element), var(--primary-subtle));
+      font-size: 3.5rem;
+      user-select: none;
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -6px;
+      right: -8px;
+      background-color: var(--primary);
+      color: var(--primary-text);
+      font-size: var(--font-size-1);
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-1);
+    }
+
     @media (max-width: 640px) {
       .t-drawer-layout {
         flex-direction: column;
@@ -434,60 +482,175 @@
     <!-- Top Navigation Bar -->
     <header class="t-nav">
       <div class="t-xstack ai-center gap-3">
-        <div class="t-avatar" id="nav-user-avatar" style="background-color: var(--primary); color: #fff; font-weight: bold; cursor: pointer;" onclick="switchNavTab('settings'); switchSettingsTab('account');">
+        <a href="#/account" class="t-avatar" id="nav-user-avatar" style="background-color: var(--primary); color: #fff; font-weight: bold; cursor: pointer; text-decoration: none;" title="Account / Profile">
           MO
-        </div>
+        </a>
         <div class="t-ystack">
-          <span style="font-weight: 700; font-size: var(--font-size-5); letter-spacing: -0.02em;">Merchant of Oz</span>
-          <span style="font-size: var(--font-size-2); color: var(--color-text-muted);">Application Workspace</span>
+          <a href="#/home" style="text-decoration: none; color: inherit;">
+            <span style="font-weight: 700; font-size: var(--font-size-5); letter-spacing: -0.02em;">Merchant of Oz</span>
+          </a>
+          <span style="font-size: var(--font-size-2); color: var(--color-text-muted);">E-Commerce Workspace</span>
         </div>
       </div>
 
-      <!-- Main Navigation Tabs -->
+      <!-- Main Navigation Tabs & Links -->
       <nav class="t-nav-tabs" id="main-nav-tabs">
-        <button class="t-nav-tab active" data-tab="home">Home</button>
-        <button class="t-nav-tab" data-tab="settings">Settings</button>
+        <a href="#/home" class="t-nav-tab active" data-route="home">Home</a>
+        <a href="#/shop" class="t-nav-tab" data-route="shop">Shop</a>
+        <a href="#/cart" class="t-nav-tab" data-route="cart" style="position: relative;">
+          Cart
+          <span id="cart-counter-badge" class="cart-badge" style="display: none;">0</span>
+        </a>
+        <!-- Dynamic Auth/Settings Tab (Settings when logged in, Login when guest) -->
+        <a href="#/settings" class="t-nav-tab" data-route="settings" id="nav-settings-tab" style="display: none;">Settings</a>
+        <a href="#/login" class="t-nav-tab" data-route="login" id="nav-login-tab">Log In</a>
       </nav>
     </header>
 
     <!-- Main Content Area -->
     <main class="app-main">
 
-      <!-- View 1: Blank Home Screen -->
+      <!-- View 1: Home Screen -->
       <section id="view-home" class="view-panel active">
-        <div class="empty-state t-ystack ai-center gap-4">
-          <div class="t-avatar t-avatar-xl" style="background-color: var(--primary-subtle); color: var(--primary); font-size: var(--font-size-9);">
-            🏠
+        <div class="t-ystack gap-6">
+          <div class="empty-state t-ystack ai-center gap-4">
+            <div class="t-avatar t-avatar-xl" style="background-color: var(--primary-subtle); color: var(--primary); font-size: var(--font-size-9);">
+              🏪
+            </div>
+            <div class="t-ystack ai-center gap-1">
+              <h2 id="home-user-welcome" style="margin: 0; font-size: var(--font-size-8); font-weight: 700;">Welcome Home</h2>
+              <p style="margin: 0; color: var(--color-text-subtle); max-width: 460px;">
+                Explore modern storefront products, manage your shopping cart, or customize themes after signing in.
+              </p>
+            </div>
+            <div class="t-xstack ai-center gap-3" style="margin-top: var(--space-2);">
+              <a href="#/shop" class="t-btn t-btn-primary">Browse Catalog</a>
+              <a href="#/settings" class="t-btn t-btn-ghost" id="home-settings-btn" style="display: none;">Workspace Settings</a>
+              <a href="#/login" class="t-btn t-btn-subtle" id="home-login-btn">Log In</a>
+            </div>
           </div>
-          <div class="t-ystack ai-center gap-1">
-            <h2 id="home-user-welcome" style="margin: 0; font-size: var(--font-size-8); font-weight: 700;">Welcome Home</h2>
-            <p style="margin: 0; color: var(--color-text-subtle); max-width: 420px;">
-              Your application workspace is clean and ready. Open Settings to customize themes or manage your account.
-            </p>
-          </div>
-          <div class="t-xstack ai-center gap-3" style="margin-top: var(--space-2);">
-            <button class="t-btn t-btn-primary" onclick="switchNavTab('settings'); switchSettingsTab('account');">Account</button>
-            <button class="t-btn t-btn-ghost" onclick="switchNavTab('settings'); switchSettingsTab('themes');">Themes</button>
+
+          <!-- Quick Featured Promo -->
+          <div class="t-card t-xstack ai-center jc-between flex-wrap gap-4">
+            <div class="t-ystack gap-1">
+              <span class="t-badge t-badge-primary">Featured Spring Collection</span>
+              <h3 style="margin: var(--space-1) 0 0 0; font-size: var(--font-size-6);">Designed with Radix 12-Step Color Tokens</h3>
+              <p style="margin: 0; color: var(--color-text-subtle); font-size: var(--font-size-3);">Zero external dependencies. Dynamic colorway themes adapted directly from user preferences.</p>
+            </div>
+            <a href="#/shop" class="t-btn t-btn-primary">Shop Now &rarr;</a>
           </div>
         </div>
       </section>
 
-      <!-- View 2: Settings with Left Drawer Nav (Themes, Account, General) -->
+      <!-- View 2: Shop / E-Commerce Catalog View -->
+      <section id="view-shop" class="view-panel">
+        <div class="t-ystack gap-6">
+          <div class="t-xstack ai-center jc-between flex-wrap gap-3">
+            <div>
+              <h2 style="margin: 0; font-size: var(--font-size-8); font-weight: 700;">Product Catalog</h2>
+              <p style="margin: var(--space-1) 0 0 0; color: var(--color-text-subtle); font-size: var(--font-size-4);">Select items to view details or add to your shopping cart.</p>
+            </div>
+            <div class="t-xstack ai-center gap-2">
+              <a href="#/cart" class="t-btn t-btn-subtle">View Cart 🛒</a>
+            </div>
+          </div>
+
+          <!-- Product Grid -->
+          <div class="product-grid" id="products-catalog-container">
+            <!-- Rendered dynamically by JavaScript -->
+          </div>
+        </div>
+      </section>
+
+      <!-- View 3: Product Detail View -->
+      <section id="view-product" class="view-panel">
+        <div class="t-card t-ystack gap-6">
+          <div class="t-xstack ai-center gap-3">
+            <a href="#/shop" class="t-btn t-btn-ghost t-btn-sm">&larr; Back to Shop</a>
+            <span class="t-badge" id="product-detail-category">Category</span>
+          </div>
+          
+          <div class="t-drawer-layout" style="gap: var(--space-8);">
+            <div class="product-img-box" id="product-detail-icon" style="width: 260px; height: 260px; border-radius: var(--radius-6); flex-shrink: 0;">
+              📦
+            </div>
+            <div class="t-ystack gap-4" style="flex: 1;">
+              <div>
+                <h1 id="product-detail-title" style="margin: 0; font-size: var(--font-size-9); font-weight: 700;">Product Name</h1>
+                <p id="product-detail-price" style="margin: var(--space-2) 0 0 0; font-size: var(--font-size-8); font-weight: 700; color: var(--primary);">$0.00</p>
+              </div>
+              
+              <div class="t-separator"></div>
+
+              <p id="product-detail-desc" style="margin: 0; color: var(--color-text-subtle); line-height: var(--line-height-4); font-size: var(--font-size-4);">
+                Product description goes here.
+              </p>
+
+              <div class="t-xstack ai-center gap-3" style="margin-top: var(--space-4);">
+                <button class="t-btn t-btn-primary" id="product-detail-add-btn">Add to Cart</button>
+                <a href="#/cart" class="t-btn t-btn-subtle">Go to Checkout &rarr;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- View 4: Cart / Checkout View -->
+      <section id="view-cart" class="view-panel">
+        <div class="t-card t-ystack gap-6">
+          <div class="t-xstack ai-center jc-between t-card-header">
+            <div>
+              <h2 class="t-card-title">Shopping Cart</h2>
+              <p class="t-card-subtitle">Review selected items and proceed with order placement.</p>
+            </div>
+            <span class="t-badge t-badge-primary" id="cart-items-count-badge">0 Items</span>
+          </div>
+
+          <div class="t-separator"></div>
+
+          <!-- Cart Items List -->
+          <div id="cart-items-list" class="t-ystack gap-3">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Empty Cart State -->
+          <div id="cart-empty-message" class="empty-state t-ystack ai-center gap-3" style="display: none;">
+            <span style="font-size: var(--font-size-9);">🛒</span>
+            <p style="margin: 0; color: var(--color-text-subtle);">Your shopping cart is currently empty.</p>
+            <a href="#/shop" class="t-btn t-btn-primary">Browse Products</a>
+          </div>
+
+          <!-- Cart Summary & Checkout -->
+          <div id="cart-summary-section" class="t-ystack gap-4" style="margin-top: var(--space-2);">
+            <div class="t-separator"></div>
+            <div class="t-xstack ai-center jc-between">
+              <span style="font-size: var(--font-size-6); font-weight: 600;">Total Order Value:</span>
+              <span id="cart-total-price" style="font-size: var(--font-size-8); font-weight: 700; color: var(--primary);">$0.00</span>
+            </div>
+            <div class="t-xstack ai-center jc-end gap-3">
+              <button class="t-btn t-btn-ghost" id="clear-cart-btn">Clear Cart</button>
+              <button class="t-btn t-btn-primary" id="checkout-btn">Complete Purchase</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- View 5: Settings with Left Drawer Nav (Themes, Account, General) -->
       <section id="view-settings" class="view-panel">
         <div class="t-drawer-layout">
           
           <!-- Left Drawer Navigation in Settings -->
           <aside class="t-drawer-nav" id="settings-drawer-nav">
             <span style="font-size: var(--font-size-2); font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); padding: var(--space-2) var(--space-3);">Settings</span>
-            <button class="t-drawer-item active" data-settings-tab="themes">
+            <a href="#/settings/themes" class="t-drawer-item active" data-settings-route="themes" style="text-decoration: none;">
               <span>🎨</span> Themes
-            </button>
-            <button class="t-drawer-item" data-settings-tab="account">
+            </a>
+            <a href="#/settings/account" class="t-drawer-item" data-settings-route="account" style="text-decoration: none;">
               <span>👤</span> Account
-            </button>
-            <button class="t-drawer-item" data-settings-tab="general">
+            </a>
+            <a href="#/settings/general" class="t-drawer-item" data-settings-route="general" style="text-decoration: none;">
               <span>⚙️</span> General
-            </button>
+            </a>
           </aside>
 
           <!-- Drawer Content Area -->
@@ -693,7 +856,7 @@
                 </div>
                 <div class="t-ystack gap-3">
                   <label style="font-size: var(--font-size-3); font-weight: 600;">Build Version</label>
-                  <input type="text" class="t-input" id="settings-build-tag" value="v1.0.5-43" readonly>
+                  <input type="text" class="t-input" id="settings-build-tag" value="v1.0.6-44" readonly>
                 </div>
               </div>
             </div>
@@ -705,7 +868,7 @@
     </main>
 
     <!-- Subtle Bottom Build Stamp -->
-    <div class="build-watermark" id="build-tag">v1.0.5-43</div>
+    <div class="build-watermark" id="build-tag">v1.0.6-44</div>
 
   </div>
 
@@ -745,21 +908,293 @@
     }
     loadBuildInfo();
 
-    // Navigation Tab Switching
+    // E-Commerce Catalog Data & Cart State
+    const PRODUCTS = [
+      {
+        id: "prod-1",
+        name: "Emerald Silk Robe",
+        category: "Apparel",
+        price: 89.00,
+        icon: "👘",
+        description: "Luxurious pure silk robe tailored with fine craftsmanship and inspired by Emerald City elegance. Features lightweight breathable weave, waist tie, and deep side pockets."
+      },
+      {
+        id: "prod-2",
+        name: "Ruby Crimson Slippers",
+        category: "Footwear",
+        price: 129.50,
+        icon: "👠",
+        description: "Iconic hand-finished glittering footwear built with ultra-cushioned memory foam soles and dazzling reflective sparkle."
+      },
+      {
+        id: "prod-3",
+        name: "Mechanical Heart Chrono",
+        category: "Accessories",
+        price: 195.00,
+        icon: "⚙️",
+        description: "Steampunk-inspired mechanical clockwork pendant crafted with polished brass gears and precision movement."
+      },
+      {
+        id: "prod-4",
+        name: "Golden Brick Brew Mug",
+        category: "Homeware",
+        price: 24.00,
+        icon: "☕",
+        description: "Double-walled ceramic mug featuring metallic golden luster glaze. Keeps hot beverages piping hot for hours."
+      },
+      {
+        id: "prod-5",
+        name: "Yellow Road Tote Bag",
+        category: "Accessories",
+        price: 34.95,
+        icon: "👜",
+        description: "Heavy-duty organic canvas tote with reinforced handles, internal organizer pockets, and water-repellent coating."
+      },
+      {
+        id: "prod-6",
+        name: "Prism Crystal Lantern",
+        category: "Lighting",
+        price: 78.00,
+        icon: "🏮",
+        description: "Ambient multi-color LED lantern with rechargeable battery, touch dimmer, and spectral refraction crystal glass."
+      }
+    ];
+
+    let cart = [];
+    const CART_STORAGE_KEY = "oz_cart_items";
+
+    function loadCart() {
+      try {
+        const stored = localStorage.getItem(CART_STORAGE_KEY);
+        if (stored) cart = JSON.parse(stored);
+      } catch (e) {
+        cart = [];
+      }
+    }
+
+    function saveCart() {
+      try {
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+      } catch (e) {}
+      renderCartUI();
+    }
+
+    function addToCart(productId) {
+      const prod = PRODUCTS.find(p => p.id === productId);
+      if (!prod) return;
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ ...prod, quantity: 1 });
+      }
+      saveCart();
+      // Visual feedback via cart badge and navigation
+      location.hash = "#/cart";
+    }
+
+    function removeFromCart(productId) {
+      cart = cart.filter(item => item.id !== productId);
+      saveCart();
+    }
+
+    function updateCartQuantity(productId, delta) {
+      const item = cart.find(i => i.id === productId);
+      if (!item) return;
+      item.quantity += delta;
+      if (item.quantity <= 0) {
+        removeFromCart(productId);
+      } else {
+        saveCart();
+      }
+    }
+
+    function clearCart() {
+      cart = [];
+      saveCart();
+    }
+
+    function renderCatalog() {
+      const container = document.getElementById("products-catalog-container");
+      if (!container) return;
+      container.innerHTML = PRODUCTS.map(p => `
+        <div class="product-card" onclick="location.hash='#/product/${p.id}'">
+          <div class="product-img-box">${p.icon}</div>
+          <div class="t-ystack gap-2" style="padding: var(--space-4); flex: 1;">
+            <div class="t-xstack ai-center jc-between">
+              <span class="t-badge">${p.category}</span>
+              <span style="font-weight: 700; font-size: var(--font-size-5); color: var(--primary);">$${p.price.toFixed(2)}</span>
+            </div>
+            <h3 style="margin: 0; font-size: var(--font-size-5); font-weight: 700;">${p.name}</h3>
+            <p style="margin: 0; color: var(--color-text-subtle); font-size: var(--font-size-3); line-height: var(--line-height-3); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+              ${p.description}
+            </p>
+            <div class="t-xstack ai-center jc-between" style="margin-top: auto; padding-top: var(--space-2);">
+              <a href="#/product/${p.id}" class="t-btn t-btn-ghost t-btn-sm" onclick="event.stopPropagation();">Details</a>
+              <button class="t-btn t-btn-primary t-btn-sm" onclick="event.stopPropagation(); addToCart('${p.id}');">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderProductDetail(productId) {
+      const prod = PRODUCTS.find(p => p.id === productId) || PRODUCTS[0];
+      const titleEl = document.getElementById("product-detail-title");
+      const priceEl = document.getElementById("product-detail-price");
+      const descEl = document.getElementById("product-detail-desc");
+      const catEl = document.getElementById("product-detail-category");
+      const iconEl = document.getElementById("product-detail-icon");
+      const addBtn = document.getElementById("product-detail-add-btn");
+
+      if (titleEl) titleEl.textContent = prod.name;
+      if (priceEl) priceEl.textContent = `$${prod.price.toFixed(2)}`;
+      if (descEl) descEl.textContent = prod.description;
+      if (catEl) catEl.textContent = prod.category;
+      if (iconEl) iconEl.textContent = prod.icon;
+      if (addBtn) {
+        addBtn.onclick = () => addToCart(prod.id);
+      }
+    }
+
+    function renderCartUI() {
+      const listContainer = document.getElementById("cart-items-list");
+      const emptyMsg = document.getElementById("cart-empty-message");
+      const summarySection = document.getElementById("cart-summary-section");
+      const totalEl = document.getElementById("cart-total-price");
+      const itemsCountBadge = document.getElementById("cart-items-count-badge");
+      const navCounterBadge = document.getElementById("cart-counter-badge");
+
+      const totalCount = cart.reduce((sum, i) => sum + i.quantity, 0);
+      const totalPrice = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+
+      if (navCounterBadge) {
+        navCounterBadge.textContent = totalCount;
+        navCounterBadge.style.display = totalCount > 0 ? "inline-block" : "none";
+      }
+
+      if (itemsCountBadge) {
+        itemsCountBadge.textContent = `${totalCount} Item${totalCount === 1 ? '' : 's'}`;
+      }
+
+      if (totalEl) {
+        totalEl.textContent = `$${totalPrice.toFixed(2)}`;
+      }
+
+      if (cart.length === 0) {
+        if (listContainer) listContainer.innerHTML = "";
+        if (emptyMsg) emptyMsg.style.display = "flex";
+        if (summarySection) summarySection.style.display = "none";
+      } else {
+        if (emptyMsg) emptyMsg.style.display = "none";
+        if (summarySection) summarySection.style.display = "flex";
+        if (listContainer) {
+          listContainer.innerHTML = cart.map(item => `
+            <div class="t-card t-xstack ai-center jc-between flex-wrap gap-3" style="padding: var(--space-3) var(--space-4);">
+              <div class="t-xstack ai-center gap-3">
+                <div style="font-size: var(--font-size-8); background-color: var(--bg-element); padding: var(--space-2); border-radius: var(--radius-4);">${item.icon}</div>
+                <div class="t-ystack gap-1">
+                  <a href="#/product/${item.id}" style="text-decoration: none; color: inherit; font-weight: 700;">${item.name}</a>
+                  <span style="font-size: var(--font-size-2); color: var(--color-text-muted);">$${item.price.toFixed(2)} each</span>
+                </div>
+              </div>
+              <div class="t-xstack ai-center gap-3">
+                <div class="t-xstack ai-center gap-2">
+                  <button class="t-btn t-btn-ghost t-btn-sm" onclick="updateCartQuantity('${item.id}', -1)" style="padding: var(--space-1) var(--space-2);">-</button>
+                  <span style="font-weight: 600; min-width: 20px; text-align: center;">${item.quantity}</span>
+                  <button class="t-btn t-btn-ghost t-btn-sm" onclick="updateCartQuantity('${item.id}', 1)" style="padding: var(--space-1) var(--space-2);">+</button>
+                </div>
+                <span style="font-weight: 700; min-width: 80px; text-align: right; color: var(--primary);">$${(item.price * item.quantity).toFixed(2)}</span>
+                <button class="t-btn t-btn-ghost t-btn-sm" onclick="removeFromCart('${item.id}')" title="Remove item" style="color: var(--color-red-11);">&times;</button>
+              </div>
+            </div>
+          `).join("");
+        }
+      }
+    }
+
+    window.addToCart = addToCart;
+    window.removeFromCart = removeFromCart;
+    window.updateCartQuantity = updateCartQuantity;
+
+    // SPA Hash Router Implementation
+    function handleRoute() {
+      const hash = window.location.hash || "#/home";
+      const cleanHash = hash.replace(/^#\/?/, "") || "home";
+      const parts = cleanHash.split("/");
+      const rootRoute = parts[0];
+      const subParam = parts[1];
+
+      // Highlight active navigation tab
+      document.querySelectorAll("#main-nav-tabs .t-nav-tab").forEach(tab => {
+        const routeAttr = tab.getAttribute("data-route");
+        if (routeAttr === rootRoute || (rootRoute === "login" && routeAttr === "login") || (rootRoute === "account" && routeAttr === "settings")) {
+          tab.classList.add("active");
+        } else {
+          tab.classList.remove("active");
+        }
+      });
+
+      // Show/Hide top-level view panels
+      document.querySelectorAll(".view-panel").forEach(panel => {
+        panel.classList.remove("active");
+      });
+
+      if (rootRoute === "home") {
+        const p = document.getElementById("view-home");
+        if (p) p.classList.add("active");
+      } else if (rootRoute === "shop") {
+        const p = document.getElementById("view-shop");
+        if (p) p.classList.add("active");
+        renderCatalog();
+      } else if (rootRoute === "product") {
+        const p = document.getElementById("view-product");
+        if (p) p.classList.add("active");
+        renderProductDetail(subParam || "prod-1");
+      } else if (rootRoute === "cart") {
+        const p = document.getElementById("view-cart");
+        if (p) p.classList.add("active");
+        renderCartUI();
+      } else if (rootRoute === "settings" || rootRoute === "account" || rootRoute === "login") {
+        const p = document.getElementById("view-settings");
+        if (p) p.classList.add("active");
+        
+        let subTab = "themes";
+        if (rootRoute === "account" || rootRoute === "login" || subParam === "account") {
+          subTab = "account";
+        } else if (subParam === "general") {
+          subTab = "general";
+        } else if (subParam === "themes") {
+          subTab = "themes";
+        }
+        switchSettingsTab(subTab);
+      } else {
+        // Fallback to home
+        const p = document.getElementById("view-home");
+        if (p) p.classList.add("active");
+      }
+
+      window.scrollTo(0, 0);
+    }
+
+    window.addEventListener("hashchange", handleRoute);
+    window.addEventListener("DOMContentLoaded", () => {
+      loadCart();
+      renderCatalog();
+      renderCartUI();
+      handleRoute();
+    });
+
+    // Navigation Tab Switching (legacy/programmatic support)
     function switchNavTab(tabName) {
-      document.querySelectorAll('.t-nav-tab').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.tab === tabName);
-      });
-      document.querySelectorAll('.view-panel').forEach(panel => {
-        panel.classList.toggle('active', panel.id === `view-${tabName}`);
-      });
+      window.location.hash = `#/${tabName}`;
     }
 
     function switchSettingsTab(subTabKey) {
       const settingsDrawerNav = document.getElementById('settings-drawer-nav');
       if (settingsDrawerNav) {
         settingsDrawerNav.querySelectorAll('.t-drawer-item').forEach(btn => {
-          btn.classList.toggle('active', btn.dataset.settingsTab === subTabKey);
+          btn.classList.toggle('active', btn.dataset.settingsRoute === subTabKey);
         });
       }
       document.querySelectorAll('.settings-subpanel').forEach(panel => {
@@ -770,31 +1205,41 @@
     window.switchNavTab = switchNavTab;
     window.switchSettingsTab = switchSettingsTab;
 
-    const mainNavTabs = document.getElementById('main-nav-tabs');
-    if (mainNavTabs) {
-      mainNavTabs.addEventListener('click', (e) => {
-        const tabBtn = e.target.closest('.t-nav-tab');
-        if (tabBtn && tabBtn.dataset.tab) {
-          switchNavTab(tabBtn.dataset.tab);
+    const clearCartBtn = document.getElementById("clear-cart-btn");
+    if (clearCartBtn) clearCartBtn.addEventListener("click", clearCart);
+
+    const checkoutBtn = document.getElementById("checkout-btn");
+    if (checkoutBtn) {
+      checkoutBtn.addEventListener("click", () => {
+        if (modal) {
+          const modalContent = modal.querySelector(".t-modal-content");
+          if (modalContent) {
+            modalContent.innerHTML = `
+              <div class="t-xstack ai-center jc-between">
+                <h3 style="margin: 0; font-size: var(--font-size-7);">Order Confirmation</h3>
+                <button class="t-btn t-btn-ghost t-btn-sm" onclick="toggleModal(false);">&times;</button>
+              </div>
+              <p style="color: var(--color-text-subtle); margin: 0;">
+                Thank you for shopping at Merchant of Oz! Your test order of <strong>$${cart.reduce((s, i) => s + (i.price * i.quantity), 0).toFixed(2)}</strong> has been processed successfully.
+              </p>
+              <div class="t-xstack jc-end gap-3" style="margin-top: var(--space-4);">
+                <button class="t-btn t-btn-primary" onclick="clearCart(); toggleModal(false); location.hash='#/shop';">Continue Shopping</button>
+              </div>
+            `;
+          }
+          toggleModal(true);
         }
       });
     }
 
-    // Settings Drawer Navigation Switching
-    const settingsDrawerNav = document.getElementById('settings-drawer-nav');
-    if (settingsDrawerNav) {
-      settingsDrawerNav.addEventListener('click', (e) => {
-        const itemBtn = e.target.closest('.t-drawer-item');
-        if (itemBtn && itemBtn.dataset.settingsTab) {
-          switchSettingsTab(itemBtn.dataset.settingsTab);
-        }
-      });
-    }
-
-    // Authentication state handling for theme customization locking
+    // Authentication state handling for dynamic navbar & theme customization locking
     let isUserAuthenticated = false;
     const authLockedPanel = document.getElementById('theme-controls-auth-panel');
     const guestBanner = document.getElementById('theme-controls-guest-banner');
+    const navSettingsTab = document.getElementById('nav-settings-tab');
+    const navLoginTab = document.getElementById('nav-login-tab');
+    const homeSettingsBtn = document.getElementById('home-settings-btn');
+    const homeLoginBtn = document.getElementById('home-login-btn');
 
     function updateAuthGatedUI(isAuthenticated) {
       isUserAuthenticated = !!isAuthenticated;
@@ -804,10 +1249,32 @@
       if (guestBanner) {
         guestBanner.style.display = isUserAuthenticated ? 'none' : 'flex';
       }
+
+      // Dynamic top nav toggle: Log In tab for guests vs Settings tab for users
+      if (navSettingsTab) {
+        navSettingsTab.style.display = isUserAuthenticated ? 'inline-flex' : 'none';
+      }
+      if (navLoginTab) {
+        navLoginTab.style.display = isUserAuthenticated ? 'none' : 'inline-flex';
+      }
+
+      // Dynamic home action buttons
+      if (homeSettingsBtn) {
+        homeSettingsBtn.style.display = isUserAuthenticated ? 'inline-block' : 'none';
+      }
+      if (homeLoginBtn) {
+        homeLoginBtn.style.display = isUserAuthenticated ? 'none' : 'inline-block';
+      }
+
+      // Re-evaluate current active route styling
+      if (window.handleRoute) {
+        window.handleRoute();
+      }
     }
 
     window.setAuthState = updateAuthGatedUI;
-    updateAuthGatedUI(false); // Default to locked until Firebase confirms user state
+    window.handleRoute = handleRoute;
+    updateAuthGatedUI(false); // Default to guest state until Firebase confirms user state
 
     // Theme Switcher Controller
     const themeModePicker = document.getElementById('theme-mode-picker');

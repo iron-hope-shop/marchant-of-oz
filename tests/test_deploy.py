@@ -32,6 +32,9 @@ class TestDeploymentSetup(unittest.TestCase):
             self.assertIn('t-nav', content)
             self.assertIn('t-drawer-nav', content)
             self.assertIn('view-home', content)
+            self.assertIn('view-shop', content)
+            self.assertIn('view-product', content)
+            self.assertIn('view-cart', content)
             self.assertIn('view-settings', content)
             self.assertIn('settings-subpanel-themes', content)
             self.assertIn('settings-subpanel-account', content)
@@ -39,6 +42,9 @@ class TestDeploymentSetup(unittest.TestCase):
             self.assertIn('theme-controls-guest-banner', content)
             self.assertIn('avatar-file-input', content)
             self.assertIn('build-watermark', content)
+            self.assertIn('nav-login-tab', content)
+            self.assertIn('nav-settings-tab', content)
+            self.assertIn('handleRoute', content)
 
     def test_version_json_exists(self):
         self.assertTrue(os.path.exists('public/version.json'))
