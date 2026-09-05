@@ -18,13 +18,10 @@ All notable changes to this project will be documented in this file.
 - Lightweight theme management runtime (`public/tamagui-theme.js`) providing theme switching, sub-theme selection, local persistence, media query listening, and state event subscriptions.
 - Redesigned `public/index.html` application shell with:
   - Top navigation simplified to `Home` and `Settings`.
-  - Profile avatar rendering Google user photo with `referrerpolicy="no-referrer"` in both the top header and account settings.
+  - Robust Google profile avatar resolution checking `user.photoURL` and `providerData` with high-res formatting (`=s256-c`), `referrerpolicy="no-referrer"`, error fallbacks, and rendering in header and account view.
   - Consolidated authentication/portal view into `Settings -> Account`.
   - Streamlined `Settings -> Themes` drawer view containing theme pickers and live component controls.
   - Minimized footer into a discreet bottom-right build watermark (`v1.0.4-42`) with full details available under `Settings -> General`.
-- Added comprehensive unit tests in `tests/test_deploy.py` for design system tokens, themes, sub-themes, and theme engine functionality.
-- Updated GitHub Actions workflow triggers in `.github/workflows/google-cloudrun-docker.yml` to include `cursor/**` branches and `pull_request` events.
-- Logged Firebase deployment CLI authentication requirement in `error.log`.
 - Added comprehensive unit tests in `tests/test_deploy.py` for design system tokens, themes, sub-themes, and theme engine functionality.
 - Updated GitHub Actions workflow triggers in `.github/workflows/google-cloudrun-docker.yml` to include `cursor/**` branches and `pull_request` events.
 - Logged Firebase deployment CLI authentication requirement in `error.log`.

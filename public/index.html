@@ -156,11 +156,37 @@
 
     function renderUserAvatar(photoUrl, name, targetElement) {
       if (!targetElement) return;
-      if (photoUrl) {
-        targetElement.innerHTML = `<img src="${photoUrl}" alt="Avatar" class="user-avatar-img" referrerpolicy="no-referrer">`;
+      
+      let finalPhoto = photoUrl;
+      // High-resolution Google photo resolution and remove sizing restrictions
+      if (finalPhoto && finalPhoto.includes("googleusercontent.com")) {
+        finalPhoto = finalPhoto.replace(/=s\d+-c$/, "=s256-c");
+      }
+
+      if (finalPhoto) {
+        targetElement.innerHTML = "";
+        const img = document.createElement("img");
+        img.src = finalPhoto;
+        img.alt = name || "User Avatar";
+        img.className = "user-avatar-img";
+        img.crossOrigin = "anonymous";
+        img.referrerPolicy = "no-referrer";
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.style.objectFit = "cover";
+        img.style.borderRadius = "var(--radius-full)";
+        img.style.display = "block";
+
+        img.onerror = () => {
+          console.warn("[Avatar] Photo failed to load, falling back to initials:", finalPhoto);
+          const initials = name ? name.split(" ").map(p => p[0]).join("").toUpperCase().slice(0, 2) : "MO";
+          targetElement.innerHTML = `<span style="font-weight: bold;">${initials}</span>`;
+        };
+
+        targetElement.appendChild(img);
       } else {
         const initials = name ? name.split(" ").map(p => p[0]).join("").toUpperCase().slice(0, 2) : "MO";
-        targetElement.textContent = initials;
+        targetElement.innerHTML = `<span style="font-weight: bold;">${initials}</span>`;
       }
     }
 
@@ -168,7 +194,10 @@
       signInBtn.addEventListener("click", async () => {
         statusMsg.textContent = "";
         try {
-          await signInWithPopup(auth, provider);
+          const result = await signInWithPopup(auth, provider);
+          if (result && result.user) {
+            console.log("[Auth] User signed in:", result.user.displayName, result.user.photoURL);
+          }
         } catch (err) {
           console.error(err);
           statusMsg.textContent = err.message;
@@ -190,9 +219,19 @@
     if (auth) {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          const photo = user.photoURL || "";
-          const name = user.displayName || "User";
-          const email = user.email || "";
+          // Resolve photo from user profile or providerData
+          let photo = user.photoURL || "";
+          if (!photo && user.providerData && user.providerData.length > 0) {
+            for (const profile of user.providerData) {
+              if (profile.photoURL) {
+                photo = profile.photoURL;
+                break;
+              }
+            }
+          }
+
+          const name = user.displayName || (user.providerData && user.providerData[0]?.displayName) || "User";
+          const email = user.email || (user.providerData && user.providerData[0]?.email) || "";
 
           if (loginSection) loginSection.style.display = "none";
           if (userProfile) userProfile.style.display = "flex";
@@ -212,7 +251,7 @@
           if (loginSection) loginSection.style.display = "block";
           if (userProfile) userProfile.style.display = "none";
           if (navUserAvatar) {
-            navUserAvatar.textContent = "MO";
+            navUserAvatar.innerHTML = `<span style="font-weight: bold;">MO</span>`;
           }
           if (homeUserWelcome) {
             homeUserWelcome.textContent = "Welcome Home";
