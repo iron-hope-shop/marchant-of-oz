@@ -796,12 +796,14 @@ body {
   border: 1px solid var(--border-subtle);
 }
 
+/* Primary / Sub-Theme Adaptive Badge */
 .t-badge-primary {
   background-color: var(--primary-subtle);
   color: var(--primary);
   border-color: transparent;
 }
 
+/* Explicit Semantic Status Badges */
 .t-badge-success {
   background-color: var(--color-green-3);
   color: var(--color-green-11);
@@ -814,9 +816,64 @@ body {
   border-color: transparent;
 }
 
-.t-badge-danger {
+.t-badge-danger, .t-badge-error {
   background-color: var(--color-red-3);
   color: var(--color-red-11);
+  border-color: transparent;
+}
+
+.t-badge-info {
+  background-color: var(--color-blue-3);
+  color: var(--color-blue-11);
+  border-color: transparent;
+}
+
+/* Dedicated Color Scale Badges (independent of semantic status) */
+.t-badge-blue {
+  background-color: var(--color-blue-3);
+  color: var(--color-blue-11);
+  border-color: transparent;
+}
+
+.t-badge-purple {
+  background-color: var(--color-purple-3);
+  color: var(--color-purple-11);
+  border-color: transparent;
+}
+
+.t-badge-green {
+  background-color: var(--color-green-3);
+  color: var(--color-green-11);
+  border-color: transparent;
+}
+
+.t-badge-red {
+  background-color: var(--color-red-3);
+  color: var(--color-red-11);
+  border-color: transparent;
+}
+
+.t-badge-orange {
+  background-color: var(--color-orange-3);
+  color: var(--color-orange-11);
+  border-color: transparent;
+}
+
+.t-badge-pink {
+  background-color: var(--color-pink-3);
+  color: var(--color-pink-11);
+  border-color: transparent;
+}
+
+.t-badge-yellow {
+  background-color: var(--color-yellow-3);
+  color: var(--color-yellow-11);
+  border-color: transparent;
+}
+
+.t-badge-gray {
+  background-color: var(--color-gray-3);
+  color: var(--color-gray-11);
   border-color: transparent;
 }
 

@@ -67,6 +67,10 @@ class TestDeploymentSetup(unittest.TestCase):
             self.assertIn('.t-input', content)
             self.assertIn('.t-switch', content)
             self.assertIn('.t-badge', content)
+            self.assertIn('.t-badge-warning', content)
+            self.assertIn('.t-badge-yellow', content)
+            self.assertIn('.t-badge-danger', content)
+            self.assertIn('.t-badge-red', content)
             self.assertIn('.t-avatar', content)
 
     def test_tamagui_theme_js_engine(self):
