@@ -392,6 +392,124 @@
       border-color: var(--primary);
     }
 
+    /* Google Ads Styled Responsive Ad Units */
+    .ad-banner-slot {
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-4);
+      padding: var(--space-3) var(--space-4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-sizing: border-box;
+      overflow: hidden;
+      transition: border-color var(--transition-fast);
+    }
+    .ad-banner-slot:hover {
+      border-color: var(--border-focus);
+    }
+    .ad-badge-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .ad-badge-icon {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      line-height: 12px;
+      text-align: center;
+      border-radius: 2px;
+      background-color: var(--bg-element);
+      color: var(--color-text-subtle);
+      font-size: 9px;
+      font-family: var(--font-family-sans);
+    }
+    .ad-leaderboard {
+      min-height: 90px;
+      margin-bottom: var(--space-4);
+    }
+    .ad-banner-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: var(--space-4);
+      text-decoration: none;
+      color: inherit;
+    }
+    .ad-creative-media {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-3);
+      background: linear-gradient(135deg, #4285F4, #34A853);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+    .ad-text-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .ad-headline {
+      font-weight: 700;
+      font-size: var(--font-size-4);
+      color: var(--primary);
+      line-height: var(--line-height-2);
+    }
+    .ad-body-text {
+      font-size: var(--font-size-2);
+      color: var(--color-text-subtle);
+      line-height: var(--line-height-2);
+    }
+    .ad-cta-btn {
+      padding: var(--space-1-5) var(--space-3-5);
+      border-radius: var(--radius-full);
+      background-color: var(--primary);
+      color: var(--primary-text);
+      font-size: var(--font-size-2);
+      font-weight: 700;
+      white-space: nowrap;
+      border: none;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .collage-pin.ad-pin {
+      background: linear-gradient(180deg, var(--bg-surface), var(--bg-element));
+      border: 1px dashed var(--primary);
+    }
+    .collage-pin.ad-pin .collage-pin-media {
+      background: radial-gradient(circle at center, var(--primary-subtle), var(--bg-element));
+    }
+    .ad-footer-unit {
+      margin-top: var(--space-6);
+      padding: var(--space-4);
+    }
+
+    @media (max-width: 640px) {
+      .ad-banner-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .ad-cta-btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
     /* Product Grid for Catalog */
     .product-grid {
       display: grid;
@@ -522,6 +640,42 @@
     const LOCAL_AVATAR_KEY = "user_custom_avatar_data";
 
     let currentUser = null;
+
+    // Export Global AppAuth bridge to ensure all click handlers and modals can trigger sign-in/out reliably
+    window.AppAuth = {
+      async signIn() {
+        if (!auth || !provider) {
+          console.warn("[Auth] Firebase auth/provider not initialized.");
+          return null;
+        }
+        if (statusMsg) statusMsg.textContent = "";
+        try {
+          const result = await signInWithPopup(auth, provider);
+          if (result && result.user) {
+            console.log("[Auth] Signed in successfully:", result.user.displayName);
+          }
+          return result;
+        } catch (err) {
+          console.error("[Auth Error]", err);
+          if (statusMsg) statusMsg.textContent = err.message || "Failed to sign in.";
+          throw err;
+        }
+      },
+      async signOut() {
+        if (!auth) return;
+        try {
+          await signOut(auth);
+          console.log("[Auth] Signed out successfully");
+        } catch (err) {
+          console.error("[Auth SignOut Error]", err);
+          if (statusMsg) statusMsg.textContent = err.message || "Failed to sign out.";
+          throw err;
+        }
+      },
+      getCurrentUser() {
+        return currentUser;
+      }
+    };
 
     function getCustomAvatar() {
       try {
@@ -696,28 +850,22 @@
       });
     }
 
-    if (signInBtn && auth) {
+    if (signInBtn) {
       signInBtn.addEventListener("click", async () => {
-        statusMsg.textContent = "";
-        try {
-          const result = await signInWithPopup(auth, provider);
-          if (result && result.user) {
-            console.log("[Auth] User signed in:", result.user.displayName, result.user.photoURL);
-          }
-        } catch (err) {
-          console.error(err);
-          statusMsg.textContent = err.message;
+        if (window.AppAuth) {
+          try {
+            await window.AppAuth.signIn();
+          } catch (e) {}
         }
       });
     }
 
-    if (signOutBtn && auth) {
+    if (signOutBtn) {
       signOutBtn.addEventListener("click", async () => {
-        try {
-          await signOut(auth);
-        } catch (err) {
-          console.error(err);
-          statusMsg.textContent = err.message;
+        if (window.AppAuth) {
+          try {
+            await window.AppAuth.signOut();
+          } catch (e) {}
         }
       });
     }
@@ -835,6 +983,24 @@
       <section id="view-home" class="view-panel active">
         <div class="t-ystack gap-6">
           
+          <!-- Top Google Ads Leaderboard Slot -->
+          <div class="ad-banner-slot ad-leaderboard" id="ad-slot-leaderboard">
+            <div class="t-xstack ai-center jc-between w-full" style="margin-bottom: 6px;">
+              <span class="ad-badge-label">
+                <span class="ad-badge-icon">Ad</span> Sponsored Advertisement
+              </span>
+              <span style="font-size: 11px; color: var(--color-text-muted);">Ads by Oz Network</span>
+            </div>
+            <a href="#/cart" class="ad-banner-content">
+              <div class="ad-creative-media">✨</div>
+              <div class="ad-text-wrap">
+                <span class="ad-headline">Emerald Cloud Supercard - Earn 5% Cashback on All Oz Handcrafted Artifacts</span>
+                <span class="ad-body-text">Apply in 60 seconds with zero annual fees. Instant approval &amp; $50 bonus checkout credit.</span>
+              </div>
+              <button class="ad-cta-btn" onclick="event.preventDefault(); location.hash='#/cart';">Apply Now &rarr;</button>
+            </a>
+          </div>
+
           <!-- Deal Ribbon / Flash Notification -->
           <div class="deal-ribbon">
             <div class="t-xstack ai-center gap-2">
@@ -907,6 +1073,24 @@
             <div class="product-grid" id="products-catalog-container">
               <!-- Rendered dynamically by JavaScript -->
             </div>
+          </div>
+
+          <!-- Bottom Footer Ad Banner Slot -->
+          <div class="ad-banner-slot ad-footer-unit" id="ad-slot-footer">
+            <div class="t-xstack ai-center jc-between w-full" style="margin-bottom: 6px;">
+              <span class="ad-badge-label">
+                <span class="ad-badge-icon">Ad</span> Google Ads Partner
+              </span>
+              <span style="font-size: 11px; color: var(--color-text-muted);">Ad Feedback &#9432;</span>
+            </div>
+            <a href="#/cart" class="ad-banner-content">
+              <div class="ad-creative-media" style="background: linear-gradient(135deg, #FBBC05, #EA4335);">🎁</div>
+              <div class="ad-text-wrap">
+                <span class="ad-headline">Free Next-Day Air Express Shipping on Orders Over $50</span>
+                <span class="ad-body-text">Upgrade your delivery speed automatically with Oz Prime Dispatch. Guaranteed arrival or full refund.</span>
+              </div>
+              <button class="ad-cta-btn" onclick="event.preventDefault(); location.hash='#/cart';">Learn More</button>
+            </a>
           </div>
 
         </div>
@@ -1206,7 +1390,7 @@
                 </div>
                 <div class="t-ystack gap-3">
                   <label style="font-size: var(--font-size-3); font-weight: 600;">Build Version</label>
-                  <input type="text" class="t-input" id="settings-build-tag" value="v1.0.8-46" readonly>
+                  <input type="text" class="t-input" id="settings-build-tag" value="v1.0.9-47" readonly>
                 </div>
               </div>
             </div>
@@ -1218,7 +1402,7 @@
     </main>
 
     <!-- Subtle Bottom Build Stamp -->
-    <div class="build-watermark" id="build-tag">v1.0.8-46</div>
+    <div class="build-watermark" id="build-tag">v1.0.9-47</div>
 
   </div>
 
@@ -1446,10 +1630,38 @@
 
       const items = activeFilter === "all" ? PRODUCTS : PRODUCTS.filter(p => p.category === activeFilter);
 
-      grid.innerHTML = items.map(p => {
+      let html = "";
+      items.forEach((p, idx) => {
         const aspectClass = p.aspect || "medium";
         const tag = p.tag || p.category;
-        return `
+        
+        // Sponsored In-feed Ad Pin after 2nd product
+        if (idx === 2) {
+          html += `
+            <div class="collage-pin ad-pin" onclick="location.hash='#/cart'">
+              <div class="collage-pin-media compact" style="background: linear-gradient(135deg, #4285F4, #34A853); font-size: 2.4rem;">
+                <span>🚀</span>
+                <div class="collage-pin-overlay">
+                  <span class="ad-badge-icon" style="background: rgba(0,0,0,0.6); color: #fff; padding: 2px 4px;">Ad</span>
+                </div>
+              </div>
+              <div class="collage-pin-body">
+                <div class="t-xstack ai-center jc-between">
+                  <span class="collage-pin-tag" style="color: var(--primary);">Sponsored &bull; Ad</span>
+                  <span style="font-size: var(--font-size-1); color: var(--color-text-muted);">Google Ads</span>
+                </div>
+                <h3 class="collage-pin-title">Oz Cloud Storage Pro</h3>
+                <p class="collage-pin-desc">Secure, encrypted cloud storage for your 3D assets &amp; portfolio designs with ultra-fast CDN delivery.</p>
+                <div class="collage-pin-footer">
+                  <span style="font-weight: 700; font-size: var(--font-size-4); color: var(--primary);">$4.99/mo</span>
+                  <button class="t-btn t-btn-primary t-btn-sm" onclick="event.stopPropagation(); location.hash='#/cart';">Get Offer</button>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        html += `
           <div class="collage-pin" onclick="location.hash='#/product/${p.id}'">
             <div class="collage-pin-media ${aspectClass}">
               <span>${p.icon}</span>
@@ -1476,7 +1688,9 @@
             </div>
           </div>
         `;
-      }).join("");
+      });
+
+      grid.innerHTML = html;
     }
 
     // Filter pill interactions on Home
@@ -1617,16 +1831,13 @@
     window.openAuthModal = openAuthModal;
     window.closeAuthModal = closeAuthModal;
 
-    if (modalSignInBtn && auth) {
+    if (modalSignInBtn) {
       modalSignInBtn.addEventListener('click', async () => {
         closeAuthModal();
-        try {
-          const result = await signInWithPopup(auth, provider);
-          if (result && result.user) {
-            console.log("[Auth] Signed in via modal:", result.user.displayName);
-          }
-        } catch (err) {
-          console.error(err);
+        if (window.AppAuth) {
+          try {
+            await window.AppAuth.signIn();
+          } catch (e) {}
         }
       });
     }
@@ -1664,13 +1875,13 @@
       }
     });
 
-    if (navMenuSignoutBtn && auth) {
+    if (navMenuSignoutBtn) {
       navMenuSignoutBtn.addEventListener('click', async () => {
         closeNavProfileMenu();
-        try {
-          await signOut(auth);
-        } catch (err) {
-          console.error(err);
+        if (window.AppAuth) {
+          try {
+            await window.AppAuth.signOut();
+          } catch (e) {}
         }
       });
     }
@@ -1844,6 +2055,13 @@
     window.setAuthState = updateAuthGatedUI;
     window.handleRoute = handleRoute;
     updateAuthGatedUI(false); // Default to guest state until Firebase confirms user state
+
+    // Immediate initial page content rendering to prevent blank screen or render flickering
+    loadCart();
+    renderHomePinterestCollage();
+    renderCatalog();
+    renderCartUI();
+    handleRoute();
 
     // Theme Switcher Controller
     const themeModePicker = document.getElementById('theme-mode-picker');

@@ -55,6 +55,19 @@ class TestDeploymentSetup(unittest.TestCase):
             self.assertIn('deal-ribbon', content)
             # Route guard check & auth prompt
             self.assertIn('openAuthModal', content)
+            # Global AppAuth bridge
+            self.assertIn('window.AppAuth', content)
+            self.assertIn('AppAuth.signIn()', content)
+            self.assertIn('AppAuth.signOut()', content)
+            # Google Ads Styled spaces
+            self.assertIn('ad-banner-slot', content)
+            self.assertIn('ad-leaderboard', content)
+            self.assertIn('ad-footer-unit', content)
+            self.assertIn('ad-pin', content)
+            self.assertIn('Sponsored Advertisement', content)
+            # Immediate synchronous initialization & non-blank startup
+            self.assertIn('renderHomePinterestCollage();', content)
+            self.assertIn('renderCatalog();', content)
             # Ensure "Welcome back" was removed from Home
             self.assertNotIn('id="home-user-welcome"', content)
 

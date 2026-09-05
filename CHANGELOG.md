@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] - 2026-09-05
 
 ### Added
+- **Global `window.AppAuth` Authentication Bridge**:
+  - Resolved module-scoping limitation that isolated Firebase popup triggers from top-level event handlers.
+  - Exposed universal methods `window.AppAuth.signIn()`, `window.AppAuth.signOut()`, and `window.AppAuth.getCurrentUser()`.
+  - Wired all sign-in triggers (Top navigation guest Log In button, Universal Auth Modal popup button, Settings Account subpanel button) to the bridge with error handling.
+- **Immediate Initial Rendering (Zero Blank Start)**:
+  - Invoked immediate synchronous rendering routines (`loadCart()`, `renderHomePinterestCollage()`, `renderCatalog()`, `renderCartUI()`, `handleRoute()`) directly on script evaluation alongside `DOMContentLoaded` listeners.
+  - Eliminates initial blank white screen delay prior to asynchronous module loading.
+- **Google Ads Styled Responsive Ad Units**:
+  - Top leaderboard ad banner unit (`.ad-banner-slot.ad-leaderboard`) with official Ad badge, partner attribution, gradient artwork, and CTA button.
+  - In-feed sponsored pin in the Pinterest-style masonry feed (`.collage-pin.ad-pin`) with responsive aspect styling and promotional callout.
+  - Footer display ad unit (`.ad-banner-slot.ad-footer-unit`) for delivery discounts and partner offers.
+- Incremented build version to `v1.0.9-47` in `public/version.json` and UI watermarks.
+- Updated automated test suite in `tests/test_deploy.py` to assert `AppAuth` bridge wiring, ad slot components, and immediate render routines.
+
 - **Unified Storefront (Amazon + Pinterest + Walmart Experience)**:
   - Merged Home and Shop into a single, seamless, high-engagement storefront page.
   - Flash Sale deal ribbon with animated gradient highlights and discount callouts.
