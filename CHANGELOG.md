@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - Lightweight theme management runtime (`public/tamagui-theme.js`) providing theme switching, sub-theme selection, local persistence, media query listening, and state event subscriptions.
 - Updated `public/index.html` UI showcase demonstrating the design system, theme switching, interactive modal and controls while preserving Firebase Google Auth SSO.
 - Added comprehensive unit tests in `tests/test_deploy.py` for design system tokens, themes, sub-themes, and theme engine functionality.
+- Updated GitHub Actions workflow triggers in `.github/workflows/google-cloudrun-docker.yml` to include `cursor/**` branches and `pull_request` events.
 - Logged Firebase deployment CLI authentication requirement in `error.log`.
 
 ## [1.0.0] - 2026-09-03

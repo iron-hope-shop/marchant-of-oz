@@ -6,6 +6,8 @@ on:
       - main
       - master
       - feature/ipad-app
+      - 'cursor/**'
+  pull_request:
   workflow_dispatch:
 
 env:
