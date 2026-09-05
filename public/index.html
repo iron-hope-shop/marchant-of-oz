@@ -849,17 +849,28 @@
     }
 
     /* Enhanced Discovery & Engagement Widgets */
-    .widget-shelf-card {
-      background: var(--bg-surface);
+    .curated-shelf-card {
+      background: linear-gradient(145deg, var(--bg-surface), var(--bg-element));
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-6);
-      padding: var(--space-4) var(--space-5);
+      padding: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-3);
       box-shadow: var(--shadow-2);
       transition: all var(--transition-normal);
+      position: relative;
+      overflow: hidden;
     }
-    .widget-shelf-card:hover {
-      border-color: var(--border-focus);
+    .curated-shelf-card:hover {
+      border-color: var(--primary);
       box-shadow: var(--shadow-3);
+      transform: translateY(-2px);
+    }
+    .curated-shelf-card.featured-spotlight {
+      border: 2px solid var(--primary);
+      background: radial-gradient(circle at top right, var(--primary-subtle), var(--bg-surface));
     }
 
     .editorial-quote-card {
@@ -885,100 +896,6 @@
       opacity: 0.15;
       line-height: 1;
       pointer-events: none;
-    }
-
-    .interactive-minigame-card {
-      background: linear-gradient(145deg, var(--bg-surface), var(--bg-element));
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-6);
-      padding: var(--space-5);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: var(--space-3);
-      box-shadow: var(--shadow-2);
-      position: relative;
-      overflow: hidden;
-    }
-    .interactive-minigame-card.featured-spin {
-      border: 2px solid var(--primary);
-      background: radial-gradient(circle at center, var(--primary-subtle), var(--bg-surface));
-    }
-
-    .minigame-wheel {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      border: 4px solid var(--primary);
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: conic-gradient(
-        #3b82f6 0deg 60deg,
-        #10b981 60deg 120deg,
-        #f59e0b 120deg 180deg,
-        #ec4899 180deg 240deg,
-        #8b5cf6 240deg 300deg,
-        #06b6d4 300deg 360deg
-      );
-      box-shadow: var(--shadow-3);
-      transition: transform 3s cubic-bezier(0.15, 0.9, 0.2, 1);
-    }
-    .minigame-wheel-center {
-      width: 50px;
-      height: 50px;
-      background: var(--bg-surface);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--shadow-2);
-      font-weight: 800;
-      font-size: 18px;
-      color: var(--primary);
-      border: 2px solid var(--border-subtle);
-    }
-    .minigame-pointer {
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 8px solid transparent;
-      border-right: 8px solid transparent;
-      border-top: 14px solid var(--color-red-9);
-      z-index: 2;
-    }
-
-    .mystery-box-item {
-      background: var(--bg-element);
-      border: 2px dashed var(--border-subtle);
-      border-radius: var(--radius-5);
-      padding: var(--space-4);
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-2);
-      transition: all var(--transition-fast);
-      user-select: none;
-      min-height: 120px;
-    }
-    .mystery-box-item:hover {
-      border-color: var(--primary);
-      transform: scale(1.03);
-      background: var(--primary-subtle);
-    }
-    .mystery-box-item.opened {
-      border-style: solid;
-      border-color: var(--color-green-9);
-      background: var(--bg-surface);
-      cursor: default;
-      transform: none;
     }
 
     .icon-svg {
@@ -1627,7 +1544,11 @@
               <span style="font-size: 11px; color: var(--color-text-muted);">Ads by Oz Network</span>
             </div>
             <a href="#/cart" class="ad-banner-content">
-              <div class="ad-creative-media">${getLucideIconSvg("sparkles", 24)}</div>
+              <div class="ad-creative-media">
+                <span class="icon-svg" style="width: 24px; height: 24px; color: var(--primary);">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+                </span>
+              </div>
               <div class="ad-text-wrap">
                 <span class="ad-headline">Emerald Cloud Supercard - Earn 5% Cashback on All Oz Handcrafted Artifacts</span>
                 <span class="ad-body-text">Apply in 60 seconds with zero annual fees. Instant approval &amp; $50 bonus checkout credit.</span>
@@ -1677,66 +1598,66 @@
             </div>
           </div>
 
-          <!-- Interactive Gamification & Discovery Widgets Grid -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4);" id="home-interactive-widgets">
-            <!-- Mini-Game: Spin the Emerald Wheel -->
-            <div class="interactive-minigame-card featured-spin">
+          <!-- Curated Editorial & Discovery Shelves Grid -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4);" id="home-discovery-widgets">
+            <!-- Spotlight Shelf 1: Handcrafted Emerald Collection -->
+            <div class="curated-shelf-card featured-spotlight">
               <div class="t-xstack ai-center jc-between w-full">
-                <span class="t-badge t-badge-primary">Daily Mini-Game</span>
-                <span style="font-size: 11px; font-weight: 700; color: var(--primary);">Instant Checkout Promo</span>
+                <span class="t-badge t-badge-primary">Curator Spotlight</span>
+                <span style="font-size: 11px; font-weight: 700; color: var(--primary);">Featured Capsule</span>
               </div>
-              <h3 style="margin: 0; font-size: var(--font-size-5); font-weight: 800;">Spin the Fortune Wheel</h3>
-              <p style="margin: 0; font-size: var(--font-size-2); color: var(--color-text-subtle);">
-                Test your luck today to win up to <strong>30% OFF</strong> promo codes or free air delivery on your order!
-              </p>
-              
-              <div style="position: relative; margin: var(--space-2) 0;">
-                <div class="minigame-pointer"></div>
-                <div class="minigame-wheel" id="lucky-spin-wheel">
-                  <div class="minigame-wheel-center">OZ</div>
-                </div>
+              <div class="t-ystack gap-1">
+                <h3 style="margin: 0; font-size: var(--font-size-5); font-weight: 800;">The Emerald Luxe Collection</h3>
+                <p style="margin: 0; font-size: var(--font-size-2); color: var(--color-text-subtle);">
+                  Hand-stitched silk robes, velvet fedoras, and ambient crystal glass crafted by Oz master artisans.
+                </p>
               </div>
-
-              <div id="wheel-result-msg" style="min-height: 20px; font-size: var(--font-size-2); font-weight: 700; color: var(--primary);"></div>
-              <button class="t-btn t-btn-primary t-btn-sm" id="spin-wheel-btn" onclick="spinLuckyWheel();" style="width: 100%;">
-                Spin Now (Free Daily Chance)
-              </button>
+              <div class="t-xstack ai-center jc-between" style="margin-top: var(--space-2);">
+                <span style="font-size: var(--font-size-2); font-weight: 600; color: var(--color-text-muted);">From $64.00</span>
+                <button class="t-btn t-btn-primary t-btn-sm" onclick="executeSearch('emerald');">
+                  Explore Collection &rarr;
+                </button>
+              </div>
             </div>
 
-            <!-- Mini-Game: Daily Mystery Artifact Box -->
-            <div class="interactive-minigame-card">
+            <!-- Spotlight Shelf 2: Steampunk & Clockwork Tech -->
+            <div class="curated-shelf-card">
               <div class="t-xstack ai-center jc-between w-full">
-                <span class="t-badge t-badge-info">Explorer Box</span>
-                <span style="font-size: 11px; font-weight: 700; color: var(--color-text-muted);">Pick 1 of 3</span>
+                <span class="t-badge t-badge-info">Trending Style</span>
+                <span style="font-size: 11px; font-weight: 700; color: var(--color-text-muted);">Artisan Hardware</span>
               </div>
-              <h3 style="margin: 0; font-size: var(--font-size-5); font-weight: 800;">Daily Mystery Gift</h3>
-              <p style="margin: 0; font-size: var(--font-size-2); color: var(--color-text-subtle);">
-                Unbox rare collector coins, VIP shipping tiers, or $15 mystery credits.
-              </p>
-
-              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); width: 100%; margin: var(--space-2) 0;" id="mystery-boxes-row">
-                <div class="mystery-box-item" onclick="openMysteryBox(1, this);">
-                  <div id="mbox-icon-1" class="icon-svg" style="width: 32px; height: 32px; color: var(--primary);">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
-                  </div>
-                  <span style="font-size: 11px; font-weight: 700;">Box #1</span>
-                </div>
-                <div class="mystery-box-item" onclick="openMysteryBox(2, this);">
-                  <div id="mbox-icon-2" class="icon-svg" style="width: 32px; height: 32px; color: var(--primary);">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
-                  </div>
-                  <span style="font-size: 11px; font-weight: 700;">Box #2</span>
-                </div>
-                <div class="mystery-box-item" onclick="openMysteryBox(3, this);">
-                  <div id="mbox-icon-3" class="icon-svg" style="width: 32px; height: 32px; color: var(--primary);">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
-                  </div>
-                  <span style="font-size: 11px; font-weight: 700;">Box #3</span>
-                </div>
+              <div class="t-ystack gap-1">
+                <h3 style="margin: 0; font-size: var(--font-size-5); font-weight: 800;">Steampunk &amp; Kinetic Gear</h3>
+                <p style="margin: 0; font-size: var(--font-size-2); color: var(--color-text-subtle);">
+                  Mechanical heart chronometers, precision brass movements, and vintage copper timepieces.
+                </p>
               </div>
+              <div class="t-xstack ai-center jc-between" style="margin-top: var(--space-2);">
+                <span style="font-size: var(--font-size-2); font-weight: 600; color: var(--color-text-muted);">Popular Gear</span>
+                <button class="t-btn t-btn-subtle t-btn-sm" onclick="executeSearch('steampunk');">
+                  View Curated Gear &rarr;
+                </button>
+              </div>
+            </div>
 
-              <div id="mystery-result-msg" style="min-height: 20px; font-size: var(--font-size-2); font-weight: 700; color: var(--color-green-11);"></div>
-              <button class="t-btn t-btn-ghost t-btn-sm" onclick="resetMysteryBoxes();" style="width: 100%;">Reset Box Game</button>
+            <!-- Spotlight Shelf 3: Ambient Glow & Lighting FX -->
+            <div class="curated-shelf-card">
+              <div class="t-xstack ai-center jc-between w-full">
+                <span class="t-badge t-badge-warning" style="background: #ffe629; color: #1c1c1c;">Staff Pick</span>
+                <span style="font-size: 11px; font-weight: 700; color: var(--color-text-muted);">Atmosphere</span>
+              </div>
+              <div class="t-ystack gap-1">
+                <h3 style="margin: 0; font-size: var(--font-size-5); font-weight: 800;">Ambient Glow &amp; FX</h3>
+                <p style="margin: 0; font-size: var(--font-size-2); color: var(--color-text-subtle);">
+                  Prism crystal lanterns, levitating moon orbs, and dusk-to-dawn mood luminaires for your space.
+                </p>
+              </div>
+              <div class="t-xstack ai-center jc-between" style="margin-top: var(--space-2);">
+                <span style="font-size: var(--font-size-2); font-weight: 600; color: var(--color-text-muted);">Free Air Delivery</span>
+                <button class="t-btn t-btn-subtle t-btn-sm" onclick="executeSearch('lighting');">
+                  Browse Lighting &rarr;
+                </button>
+              </div>
             </div>
           </div>
 
@@ -2885,80 +2806,11 @@
       }
     ];
 
-    // Mini-Game: Fortune Wheel & Mystery Box Interactive Logic
-    let isWheelSpinning = false;
-    let wheelDeg = 0;
-    function spinLuckyWheel() {
-      if (isWheelSpinning) return;
-      isWheelSpinning = true;
-      const wheel = document.getElementById("lucky-spin-wheel");
-      const msgEl = document.getElementById("wheel-result-msg");
-      const spinBtn = document.getElementById("spin-wheel-btn");
-      if (msgEl) msgEl.textContent = "Spinning the Emerald Wheel of Fortune...";
-      if (spinBtn) spinBtn.disabled = true;
-
-      const randomExtraTurns = 5 + Math.floor(Math.random() * 5);
-      const randomSegment = Math.floor(Math.random() * 360);
-      wheelDeg += (randomExtraTurns * 360) + randomSegment;
-
-      if (wheel) {
-        wheel.style.transform = `rotate(${wheelDeg}deg)`;
-      }
-
-      setTimeout(() => {
-        isWheelSpinning = false;
-        if (spinBtn) spinBtn.disabled = false;
-        const rewards = [
-          "🎉 Winner! 25% OFF Coupon Applied: EMERALD25",
-          "✨ Jackpot! Free VIP Next-Day Air Express Shipping unlocked!",
-          "💎 Lucky Day! 15% OFF Storewide with code: OZLUCKY",
-          "🎁 Mystery Perk! $10 Credit applied to your cart!",
-          "🔥 Flash Perk! 30% OFF on all Lighting & Decor with code: GLOW30"
-        ];
-        const chosen = rewards[Math.floor(Math.random() * rewards.length)];
-        if (msgEl) msgEl.innerHTML = `<span style="color: var(--color-green-11);">${chosen}</span>`;
-        recordRetailMetric("minigame_wheel_spin", { prize: chosen, finalDegree: wheelDeg });
-      }, 3200);
+    // Curated Editorial Discovery Shelves Logic
+    function browseDiscoveryShelf(topic) {
+      executeSearch(topic);
     }
-    window.spinLuckyWheel = spinLuckyWheel;
-
-    let mysteryBoxOpened = false;
-    function openMysteryBox(boxNum, boxEl) {
-      if (mysteryBoxOpened) return;
-      mysteryBoxOpened = true;
-      const resultMsg = document.getElementById("mystery-result-msg");
-      const iconEl = document.getElementById(`mbox-icon-${boxNum}`);
-      if (boxEl) boxEl.classList.add("opened");
-
-      const prizes = [
-        "Unboxed: 20% Instant Cart Discount Voucher!",
-        "Unboxed: Rare Collector Emerald Badge + $15 Credit!",
-        "Unboxed: Free Artisan Handcrafted Keychain with your next order!"
-      ];
-      const outcome = prizes[(boxNum - 1) % prizes.length];
-      if (iconEl) {
-        iconEl.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`;
-      }
-      if (resultMsg) {
-        resultMsg.innerHTML = `<span style="color: var(--color-green-11);">🎁 ${outcome}</span>`;
-      }
-      recordRetailMetric("minigame_mystery_box_opened", { boxNumber: boxNum, outcome });
-    }
-    window.openMysteryBox = openMysteryBox;
-
-    function resetMysteryBoxes() {
-      mysteryBoxOpened = false;
-      const resultMsg = document.getElementById("mystery-result-msg");
-      if (resultMsg) resultMsg.textContent = "";
-      for (let i = 1; i <= 3; i++) {
-        const box = document.getElementById(`mbox-icon-${i}`);
-        if (box && box.parentElement) {
-          box.parentElement.classList.remove("opened");
-          box.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>`;
-        }
-      }
-    }
-    window.resetMysteryBoxes = resetMysteryBoxes;
+    window.browseDiscoveryShelf = browseDiscoveryShelf;
 
     // Dedicated Search Results Page State & Handlers
     let searchPageQuery = "";
@@ -3097,6 +2949,20 @@
       renderSearchResults();
     }
     window.handleSearchPageSortChange = handleSearchPageSortChange;
+
+    const searchPageDeptFilters = document.getElementById("search-page-dept-filters");
+    if (searchPageDeptFilters) {
+      searchPageDeptFilters.addEventListener("click", (e) => {
+        const btn = e.target.closest(".collage-filter-btn");
+        if (btn && btn.dataset.searchFilter) {
+          searchPageActiveFilter = btn.dataset.searchFilter;
+          searchPageDeptFilters.querySelectorAll(".collage-filter-btn").forEach(b => {
+            b.classList.toggle("active", b.dataset.searchFilter === searchPageActiveFilter);
+          });
+          renderSearchResults();
+        }
+      });
+    }
 
     let activeFilter = "all";
     let searchQuery = "";
@@ -3683,17 +3549,17 @@
             </div>
 
             <!-- Quirky Editorial Discovery Card -->
-            <div class="editorial-quote-card" onclick="spinLuckyWheel();">
+            <div class="editorial-quote-card" onclick="executeSearch('${editorial.theme || 'artisan'}');">
               <div class="t-xstack ai-center jc-between">
                 <span class="t-badge t-badge-info">${editorial.badge}</span>
-                <span style="font-size: 11px; color: var(--primary); font-weight: 700;">Click to Spin Wheel &rarr;</span>
+                <span style="font-size: 11px; color: var(--primary); font-weight: 700;">Explore Curated Topic &rarr;</span>
               </div>
               <p style="margin: var(--space-2) 0; font-style: italic; font-weight: 600; font-size: var(--font-size-4); color: var(--color-text); line-height: 1.4;">
                 ${editorial.quote}
               </p>
               <div class="t-xstack ai-center jc-between">
                 <span style="font-size: var(--font-size-2); color: var(--color-text-muted); font-weight: 600;">— ${editorial.author}</span>
-                <button class="t-btn t-btn-ghost t-btn-sm" onclick="event.stopPropagation(); spinLuckyWheel();">Try Luck</button>
+                <button class="t-btn t-btn-ghost t-btn-sm" onclick="event.stopPropagation(); executeSearch('${editorial.theme || 'artisan'}');">Discover</button>
               </div>
             </div>
           `;

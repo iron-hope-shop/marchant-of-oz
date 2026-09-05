@@ -4,19 +4,20 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] - 2026-09-05
 
-### Added
-- **Dedicated Search Results View & Navigation**:
-  - Implemented a dedicated Search Results view (`#/search?q=...` and `#/search?dept=...`) with sorting options, department filters, and empty-state handling.
-  - Top navigation search queries (input + enter, suggestions pills, trending chips) now navigate directly to the dedicated Search view without filtering the home feed inline.
-- **Industry-Leading Lucide SVG Icon System**:
-  - Completely removed emojis across the application (product catalog, navigation, cart, drawer, headers, and buttons) and replaced them with crisp Lucide/Tabler SVG vector icons.
-  - Implemented `LUCIDE_ICONS` vector dictionary and `getLucideIconSvg()` rendering helper.
-- **Interactive Gamification, Discovery Widgets & Quirky Editorial Ads**:
-  - Added "Spin the Fortune Wheel" mini-game (`#lucky-spin-wheel`) with animated conic gradient physics and real-time promo rewards (up to 30% off, free air shipping).
-  - Added "Daily Mystery Gift" boxes (`#mystery-boxes-row`) allowing daily prize unboxing.
-  - Added quirky editorial ad and quote cards (`.editorial-quote-card`) distributed naturally throughout the feed to encourage exploration and engagement.
-- Incremented build version to `v1.3.0-52` in `public/version.json` and UI watermarks.
+### Fixed & Refined
+- **Literal SVG String Template Bug Fix**:
+  - Fixed an unparsed template literal in the home page leaderboard ad slot by converting raw `${getLucideIconSvg("sparkles", 24)}` to an inline Lucide SVG vector icon markup.
+- **Dedicated Search Results View & Filter Navigation**:
+  - Ensured all search triggers (top nav search input upon enter/click, dropdown suggestions, trending discovery chips, and department filters) cleanly route to the dedicated Search Results view (`#/search?q=...` or `#/search?dept=...`).
+  - Added click handlers to the department filter pills on the search results view.
+- **Removed Gambling / Luck Games & Added Curated Discovery Shelves**:
+  - Removed all gambling/chance mini-games (Spin the Fortune Wheel and Daily Mystery Box) from the application.
+  - Replaced with rich e-commerce discovery spotlight widgets (`.curated-shelf-card`): The Emerald Luxe Collection, Steampunk & Kinetic Gear, and Ambient Glow & FX.
+  - Updated quirky editorial cards to route users directly to curated search discovery topics instead of minigames.
+- Incremented build version to `v1.3.1-53` in `public/version.json` and UI watermarks.
 - Updated automated unit test suite in `tests/test_deploy.py` (all 9 tests passing).
+
+## [1.3.0] - 2026-09-05
 
 - **GDPR & CCPA Compliant Cookie Consent Banner & Privacy Hub**:
   - Added slide-up cookie disclaimer banner (`#cookie-banner-box`) with quick actions: Accept All, Decline Non-Essential, and Customize Choices.

@@ -72,11 +72,13 @@ class TestDeploymentSetup(unittest.TestCase):
             self.assertIn('executeSearch', content)
             self.assertIn('renderSearchResults', content)
             self.assertIn('resetSearchPageQuery', content)
-            # Interactive Discovery Mini-Games & Editorial Quote Cards
-            self.assertIn('lucky-spin-wheel', content)
-            self.assertIn('spinLuckyWheel', content)
-            self.assertIn('openMysteryBox', content)
+            # Curated Editorial Discovery Shelves & Quote Cards (No gambling)
+            self.assertIn('curated-shelf-card', content)
+            self.assertIn('browseDiscoveryShelf', content)
             self.assertIn('editorial-quote-card', content)
+            self.assertNotIn('lucky-spin-wheel', content)
+            self.assertNotIn('spinLuckyWheel', content)
+            self.assertNotIn('openMysteryBox', content)
             # Lucide SVG Icon System
             self.assertIn('getLucideIconSvg', content)
             self.assertIn('LUCIDE_ICONS', content)
