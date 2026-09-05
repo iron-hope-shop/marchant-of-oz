@@ -1,13 +1,13 @@
 /**
- * Tamagui-like Design System & Theme Engine (Zero Dependency)
+ * Modern Design System & Theme Engine (Zero Dependency)
  * 
  * Features:
  * - Design Tokens: Spacing, Radius, Typography, Shadows, Z-index, Transitions
- * - 12-step Color Scales (Radix / Tamagui standard) for Gray, Blue, Red, Green, Yellow, Purple, Pink, Orange
+ * - 12-step Color Scales (12-step standard) for Gray, Blue, Red, Green, Yellow, Purple, Pink, Orange
  * - Base Themes: Light & Dark
  * - Sub-Themes: light_blue, dark_blue, light_purple, dark_purple, light_green, dark_green, light_red, dark_red, light_orange, dark_orange, etc.
  * - Inversion & Component Themes: Card, Dialog, Sheet, Button, Input, Switch, Select, Tooltip, Badge, Avatar, Separator, etc.
- * - Tamagui Core Layout Primitives: YStack, XStack, ZStack, Group, Spacer, Container
+ * - Core Layout Primitives: YStack, XStack, ZStack, Group, Spacer, Container
  * - Interactive States: hover, active, focus, disabled, pressStyle
  */
 
@@ -16,7 +16,7 @@
      Base Design Tokens (Independent of Theme)
      ========================================================================== */
   
-  /* Spacing Scale (Tamagui $size / $space standard) */
+  /* Spacing Scale */
   --space-0: 0px;
   --space-0-5: 2px;
   --space-1: 4px;
@@ -116,7 +116,7 @@
 }
 
 /* ==========================================================================
-   Color Palettes (12-Step Radix / Tamagui Scales)
+   Color Palettes (12-Step Color Scales)
    ========================================================================== */
 
 /* Light Base Color Scales */
@@ -405,7 +405,7 @@
 }
 
 /* ==========================================================================
-   Tamagui Sub-Themes (Color Variants)
+   Sub-Themes (Color Variants)
    ========================================================================== */
 
 /* Blue Sub-Theme */
@@ -493,7 +493,7 @@ body {
 }
 
 /* ==========================================================================
-   Tamagui Core Stacks & Layout Primitives
+   Core Stacks & Layout Primitives
    ========================================================================== */
 
 /* YStack (Vertical Flex) */
@@ -590,7 +590,7 @@ body {
 .w-full { width: 100%; }
 
 /* ==========================================================================
-   Tamagui Components
+   UI Components
    ========================================================================== */
 
 /* 1. Card / Panel */

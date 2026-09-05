@@ -35,6 +35,14 @@ class TestDeploymentSetup(unittest.TestCase):
             self.assertIn('view-settings', content)
             self.assertIn('settings-subpanel-themes', content)
             self.assertIn('app-footer', content)
+            self.assertIn('build-number', content)
+
+    def test_version_json_exists(self):
+        self.assertTrue(os.path.exists('public/version.json'))
+        with open('public/version.json', 'r') as f:
+            content = f.read()
+            self.assertIn('"buildNumber"', content)
+            self.assertIn('"version"', content)
 
     def test_tamagui_css_design_system(self):
         self.assertTrue(os.path.exists('public/tamagui.css'))

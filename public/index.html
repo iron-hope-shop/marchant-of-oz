@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Merchant of Oz - Tamagui Design System</title>
+  <title>Merchant of Oz</title>
   
-  <!-- Tamagui Design System CSS -->
+  <!-- Design System CSS -->
   <link rel="stylesheet" href="tamagui.css">
   <script src="tamagui-theme.js"></script>
 
@@ -47,12 +47,6 @@
     .swatch-orange { background-color: #f76808; }
     .swatch-pink { background-color: #d6409f; }
     .swatch-yellow { background-color: #ffe629; }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: var(--space-6);
-    }
 
     .code-preview {
       font-family: var(--font-family-mono);
@@ -182,7 +176,7 @@
           if (loginSection) loginSection.style.display = "block";
           if (userProfile) userProfile.style.display = "none";
           if (navUserAvatar) {
-            navUserAvatar.textContent = "TO";
+            navUserAvatar.textContent = "MO";
           }
         }
       });
@@ -196,11 +190,11 @@
     <header class="t-nav">
       <div class="t-xstack ai-center gap-3">
         <div class="t-avatar" id="nav-user-avatar" style="background-color: var(--primary); color: #fff; font-weight: bold;">
-          TO
+          MO
         </div>
         <div class="t-ystack">
           <span style="font-weight: 700; font-size: var(--font-size-5); letter-spacing: -0.02em;">Merchant of Oz</span>
-          <span style="font-size: var(--font-size-2); color: var(--color-text-muted);">Tamagui Design System</span>
+          <span style="font-size: var(--font-size-2); color: var(--color-text-muted);">Application Workspace</span>
         </div>
       </div>
 
@@ -236,20 +230,20 @@
 
       <!-- View 2: Application / Auth Portal -->
       <section id="view-app" class="view-panel">
-        <div class="grid-2">
+        <div class="t-ystack ai-center">
           <!-- Auth & Profile Card -->
-          <div class="t-card t-card-hover t-ystack jc-between">
+          <div class="t-card t-card-hover t-ystack jc-between" style="max-width: 460px; width: 100%;">
             <div>
               <div class="t-xstack ai-center jc-between t-card-header">
                 <div>
                   <h1 class="t-card-title">Merchant of Oz</h1>
-                  <p class="t-card-subtitle">Google Cloud Run (iron-hope-shop-ff854)</p>
+                  <p class="t-card-subtitle">Authentication Portal</p>
                 </div>
                 <span class="t-badge t-badge-primary">v11 Auth</span>
               </div>
 
               <p style="color: var(--color-text-subtle); font-size: var(--font-size-4);">
-                Production SSO reverse-proxy application styled with a pure CSS Tamagui design system and customizable runtime themes.
+                Secure single sign-on access with themed UI components and session management.
               </p>
 
               <div class="t-separator"></div>
@@ -281,63 +275,7 @@
             </div>
 
             <div class="t-card-footer">
-              <span style="font-size: var(--font-size-2); color: var(--color-text-muted);">Cloud Run &middot; Nginx Proxy</span>
-            </div>
-          </div>
-
-          <!-- Tamagui Interactive Primitives -->
-          <div class="t-card t-card-hover t-ystack gap-5">
-            <div>
-              <div class="t-xstack ai-center jc-between t-card-header">
-                <h2 class="t-card-title">Tamagui Primitives</h2>
-                <span class="t-badge t-badge-primary">Theme Adapt</span>
-              </div>
-              <p class="t-card-subtitle">Layout stacks, buttons, switches, and interactive state styles.</p>
-            </div>
-
-            <!-- Inputs & Groups -->
-            <div class="t-ystack gap-3">
-              <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Input &amp; Group Primitive</label>
-              <div class="t-group">
-                <input type="text" class="t-input" placeholder="Enter query..." value="tamagui-zero-dep">
-                <button class="t-btn t-btn-primary">Search</button>
-              </div>
-            </div>
-
-            <!-- Buttons & Switches -->
-            <div class="t-ystack gap-3">
-              <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Variants &amp; Switches</label>
-              <div class="t-xstack ai-center gap-3 flex-wrap">
-                <button class="t-btn t-btn-primary">Primary</button>
-                <button class="t-btn t-btn-subtle">Subtle</button>
-                <button class="t-btn t-btn-ghost">Ghost</button>
-                
-                <div class="t-spacer-flex"></div>
-
-                <label class="t-switch" title="Toggle Demo State">
-                  <input type="checkbox" checked id="demo-toggle">
-                  <span class="t-switch-thumb"></span>
-                </label>
-              </div>
-            </div>
-
-            <!-- Badges & Tooltips -->
-            <div class="t-ystack gap-3">
-              <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Badges &amp; Tooltip</label>
-              <div class="t-xstack ai-center gap-2 flex-wrap">
-                <span class="t-badge t-badge-primary">Active Theme Badge</span>
-                <span class="t-badge">Neutral</span>
-                
-                <div class="t-tooltip-trigger">
-                  <button class="t-btn t-btn-sm">Hover me</button>
-                  <div class="t-tooltip t-tooltip-primary">Tamagui Tooltip!</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Modal Trigger Demo -->
-            <div class="t-card-footer">
-              <button class="t-btn t-btn-sm" id="open-modal-btn">Preview Modal Dialog</button>
+              <span style="font-size: var(--font-size-2); color: var(--color-text-muted);">Session Portal</span>
             </div>
           </div>
         </div>
@@ -366,6 +304,8 @@
             
             <!-- Settings Subpanel: Themes -->
             <div id="settings-subpanel-themes" class="settings-subpanel active t-ystack gap-6">
+              
+              <!-- Theme Selection Card -->
               <div class="t-card t-ystack gap-6">
                 <div>
                   <h2 class="t-card-title">Theme &amp; Appearance</h2>
@@ -402,7 +342,7 @@
 
                 <!-- Live State Output -->
                 <div class="t-ystack gap-2">
-                  <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Live Theme State Engine</label>
+                  <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Active Theme State</label>
                   <pre class="code-preview" id="theme-state-output">{
   "theme": "light",
   "resolvedTheme": "light",
@@ -410,6 +350,63 @@
 }</pre>
                 </div>
               </div>
+
+              <!-- Interactive Component Primitives Preview within Themes -->
+              <div class="t-card t-ystack gap-5">
+                <div>
+                  <div class="t-xstack ai-center jc-between t-card-header">
+                    <h2 class="t-card-title">Theme Primitives &amp; Controls</h2>
+                    <span class="t-badge t-badge-primary">Live Preview</span>
+                  </div>
+                  <p class="t-card-subtitle">Test how layout stacks, inputs, switches, badges, and modals render under the active theme.</p>
+                </div>
+
+                <!-- Inputs & Groups -->
+                <div class="t-ystack gap-3">
+                  <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Input &amp; Group Primitive</label>
+                  <div class="t-group">
+                    <input type="text" class="t-input" placeholder="Search query..." value="design-tokens">
+                    <button class="t-btn t-btn-primary">Search</button>
+                  </div>
+                </div>
+
+                <!-- Buttons & Switches -->
+                <div class="t-ystack gap-3">
+                  <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Button Variants &amp; Switches</label>
+                  <div class="t-xstack ai-center gap-3 flex-wrap">
+                    <button class="t-btn t-btn-primary">Primary</button>
+                    <button class="t-btn t-btn-subtle">Subtle</button>
+                    <button class="t-btn t-btn-ghost">Ghost</button>
+                    
+                    <div class="t-spacer-flex"></div>
+
+                    <label class="t-switch" title="Toggle Demo State">
+                      <input type="checkbox" checked id="demo-toggle">
+                      <span class="t-switch-thumb"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Badges & Tooltips -->
+                <div class="t-ystack gap-3">
+                  <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Badges &amp; Tooltips</label>
+                  <div class="t-xstack ai-center gap-2 flex-wrap">
+                    <span class="t-badge t-badge-primary">Active Theme Badge</span>
+                    <span class="t-badge">Neutral Badge</span>
+                    
+                    <div class="t-tooltip-trigger">
+                      <button class="t-btn t-btn-sm">Hover me</button>
+                      <div class="t-tooltip t-tooltip-primary">Interactive Tooltip!</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Modal Trigger Demo -->
+                <div class="t-card-footer">
+                  <button class="t-btn t-btn-sm" id="open-modal-btn">Preview Modal Dialog</button>
+                </div>
+              </div>
+
             </div>
 
             <!-- Settings Subpanel: General -->
@@ -419,8 +416,8 @@
                 <p class="t-card-subtitle">Manage environment endpoints and application preferences.</p>
                 <div class="t-separator"></div>
                 <div class="t-ystack gap-3">
-                  <label style="font-size: var(--font-size-3); font-weight: 600;">Service Endpoint</label>
-                  <input type="text" class="t-input" value="https://merchant-of-oz-zk4so6dwua-uc.a.run.app" readonly>
+                  <label style="font-size: var(--font-size-3); font-weight: 600;">Application Name</label>
+                  <input type="text" class="t-input" value="Merchant of Oz" readonly>
                 </div>
               </div>
             </div>
@@ -429,7 +426,7 @@
             <div id="settings-subpanel-account" class="settings-subpanel">
               <div class="t-card t-ystack gap-4">
                 <h2 class="t-card-title">Account Settings</h2>
-                <p class="t-card-subtitle">Firebase Authentication profile and permissions.</p>
+                <p class="t-card-subtitle">Authentication profile and permissions.</p>
                 <div class="t-separator"></div>
                 <p style="font-size: var(--font-size-4); color: var(--color-text-subtle);">
                   Sign in through the Portal tab to view and manage your authenticated session details.
@@ -449,13 +446,13 @@
         <div class="t-xstack ai-center gap-3">
           <span style="font-weight: 600; color: var(--color-text);">Merchant of Oz</span>
           <span>&middot;</span>
-          <span>Cloud Run: <code>iron-hope-shop-ff854</code></span>
+          <span>Version: <code id="build-version">v1.0.4</code></span>
           <span>&middot;</span>
-          <span>Region: <code>us-central1</code></span>
+          <span>Build: <code id="build-number">#42</code></span>
         </div>
         <div class="t-xstack ai-center gap-3">
-          <span class="t-badge">Nginx Proxy :8080</span>
-          <span class="t-badge t-badge-primary">Tamagui Design System</span>
+          <span class="t-badge t-badge-primary" id="build-env">Production</span>
+          <span class="t-badge" id="build-date">2026-09-05</span>
         </div>
       </div>
     </footer>
@@ -466,11 +463,11 @@
   <div class="t-modal-overlay" id="demo-modal">
     <div class="t-modal-content t-ystack gap-4">
       <div class="t-xstack ai-center jc-between">
-        <h3 style="margin: 0; font-size: var(--font-size-7);">Tamagui Modal Dialog</h3>
+        <h3 style="margin: 0; font-size: var(--font-size-7);">Modal Dialog</h3>
         <button class="t-btn t-btn-ghost t-btn-sm" id="close-modal-btn">&times;</button>
       </div>
       <p style="color: var(--color-text-subtle); margin: 0;">
-        This dialog renders with Tamagui-grade blur overlays, spring transitions, and adaptive theme elevation.
+        This dialog renders with backdrop blur overlays, spring transitions, and adaptive theme elevation.
       </p>
       <div class="t-xstack jc-end gap-3" style="margin-top: var(--space-4);">
         <button class="t-btn t-btn-ghost" id="cancel-modal-btn">Cancel</button>
@@ -480,6 +477,27 @@
   </div>
 
   <script>
+    // Load Internal Build Details
+    async function loadBuildInfo() {
+      try {
+        const res = await fetch('version.json');
+        if (res.ok) {
+          const data = await res.json();
+          const vEl = document.getElementById('build-version');
+          const bEl = document.getElementById('build-number');
+          const envEl = document.getElementById('build-env');
+          const dateEl = document.getElementById('build-date');
+          if (vEl && data.version) vEl.textContent = `v${data.version}`;
+          if (bEl && data.buildNumber) bEl.textContent = `#${data.buildNumber}`;
+          if (envEl && data.environment) envEl.textContent = data.environment;
+          if (dateEl && data.buildDate) dateEl.textContent = data.buildDate.split('T')[0];
+        }
+      } catch (err) {
+        // Fallback to default rendered values
+      }
+    }
+    loadBuildInfo();
+
     // Navigation Tab Switching
     function switchNavTab(tabName) {
       document.querySelectorAll('.t-nav-tab').forEach(btn => {
@@ -550,15 +568,16 @@
       }
     }
 
-    if (window.TamaguiTheme) {
-      TamaguiTheme.subscribe(updateActiveThemeUI);
-      updateActiveThemeUI(TamaguiTheme.getState());
+    const themeController = window.ThemeEngine || window.TamaguiTheme;
+    if (themeController) {
+      themeController.subscribe(updateActiveThemeUI);
+      updateActiveThemeUI(themeController.getState());
 
       if (themeModePicker) {
         themeModePicker.addEventListener('click', (e) => {
           const btn = e.target.closest('.t-theme-pill');
           if (btn && btn.dataset.mode) {
-            TamaguiTheme.setTheme(btn.dataset.mode);
+            themeController.setTheme(btn.dataset.mode);
           }
         });
       }
@@ -567,7 +586,7 @@
         subthemePicker.addEventListener('click', (e) => {
           const btn = e.target.closest('.t-color-swatch');
           if (btn && btn.dataset.color) {
-            TamaguiTheme.setSubTheme(btn.dataset.color);
+            themeController.setSubTheme(btn.dataset.color);
           }
         });
       }

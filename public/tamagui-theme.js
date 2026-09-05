@@ -1,5 +1,5 @@
 /**
- * Tamagui Theme Engine Runtime (Zero Dependencies)
+ * Design System Theme Engine (Zero Dependencies)
  * 
  * Provides theme management, sub-theme switching, system preference detection,
  * and event emission for theme changes.
@@ -11,13 +11,15 @@
   } else if (typeof module === 'object' && module.exports) {
     module.exports = factory();
   } else {
-    root.TamaguiTheme = factory();
+    const engine = factory();
+    root.ThemeEngine = engine;
+    root.TamaguiTheme = engine; // Backward compatibility alias
   }
 }(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
-  const THEME_STORAGE_KEY = 'tamagui_theme';
-  const SUBTHEME_STORAGE_KEY = 'tamagui_subtheme';
+  const THEME_STORAGE_KEY = 'app_theme';
+  const SUBTHEME_STORAGE_KEY = 'app_subtheme';
 
   const validThemes = ['light', 'dark', 'system'];
   const validSubThemes = ['blue', 'purple', 'green', 'red', 'orange', 'pink', 'yellow'];
@@ -46,7 +48,7 @@
     getStoredTheme() {
       try {
         if (typeof localStorage !== 'undefined') {
-          return localStorage.getItem(THEME_STORAGE_KEY);
+          return localStorage.getItem(THEME_STORAGE_KEY) || localStorage.getItem('tamagui_theme');
         }
       } catch (e) {
         // Fallback if localStorage is inaccessible
@@ -57,7 +59,7 @@
     getStoredSubTheme() {
       try {
         if (typeof localStorage !== 'undefined') {
-          return localStorage.getItem(SUBTHEME_STORAGE_KEY);
+          return localStorage.getItem(SUBTHEME_STORAGE_KEY) || localStorage.getItem('tamagui_subtheme');
         }
       } catch (e) {
         // Fallback
@@ -74,7 +76,7 @@
 
     setTheme(themeName) {
       if (!validThemes.includes(themeName)) {
-        console.warn(`[TamaguiTheme] Invalid theme: ${themeName}. Supported: ${validThemes.join(', ')}`);
+        console.warn(`[ThemeEngine] Invalid theme: ${themeName}. Supported: ${validThemes.join(', ')}`);
         return;
       }
       this.theme = themeName;
@@ -90,7 +92,7 @@
 
     setSubTheme(subThemeName) {
       if (!validSubThemes.includes(subThemeName)) {
-        console.warn(`[TamaguiTheme] Invalid sub-theme: ${subThemeName}. Supported: ${validSubThemes.join(', ')}`);
+        console.warn(`[ThemeEngine] Invalid sub-theme: ${subThemeName}. Supported: ${validSubThemes.join(', ')}`);
         return;
       }
       this.subTheme = subThemeName;
@@ -144,7 +146,7 @@
         try {
           fn(state);
         } catch (err) {
-          console.error('[TamaguiTheme] Listener error:', err);
+          console.error('[ThemeEngine] Listener error:', err);
         }
       });
     }

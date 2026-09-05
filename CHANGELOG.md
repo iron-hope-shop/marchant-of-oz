@@ -5,25 +5,24 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] - 2026-09-05
 
 ### Added
-- Zero-dependency Tamagui-inspired UI design system (`public/tamagui.css`) with:
+- Zero-dependency UI design system (`public/tamagui.css`) with:
   - Design tokens for sizing, spacing ($size/$space), radius, typography, shadows, transitions, and z-indices.
-  - 12-step Radix/Tamagui color scales for Gray, Blue, Purple, Green, Red, Orange, Pink, and Yellow.
+  - 12-step color scales for Gray, Blue, Purple, Green, Red, Orange, Pink, and Yellow.
   - Light and Dark base themes with system auto-detection and sub-theme color palettes (`blue`, `purple`, `green`, `red`, `orange`, `pink`, `yellow`).
-  - Tamagui layout primitives: `YStack`, `XStack`, `ZStack`, `Group`, and `Spacer`.
+  - Core layout primitives: `YStack`, `XStack`, `ZStack`, `Group`, and `Spacer`.
   - Component library: `Card`, `Button` (primary, subtle, ghost, destructive, sizes), `Input`/`Textarea`, `Switch`, `Badge`, `Avatar`, `Separator`, `Tooltip` (with `.t-tooltip-primary` adaptive color support), and `Modal Dialog`.
   - Distinct badge variants separating semantic statuses (`.t-badge-warning`, `.t-badge-danger`, `.t-badge-success`, `.t-badge-info`) from raw palette colors (`.t-badge-yellow`, `.t-badge-red`, `.t-badge-blue`, `.t-badge-purple`, `.t-badge-green`, `.t-badge-orange`, `.t-badge-pink`, `.t-badge-gray`).
   - Top navigation bar component (`.t-nav`, `.t-nav-tabs`, `.t-nav-tab`).
   - Left drawer navigation layout (`.t-drawer-layout`, `.t-drawer-nav`, `.t-drawer-item`, `.t-drawer-content`).
-  - Persistent bottom footer for environment and build details.
+  - Persistent bottom footer displaying internal application build metadata.
+- Internal version and build tracker (`public/version.json`) with version number, build number, and build date.
 - Lightweight theme management runtime (`public/tamagui-theme.js`) providing theme switching, sub-theme selection, local persistence, media query listening, and state event subscriptions.
 - Redesigned `public/index.html` application shell with:
   - Sticky top navigation across views (`Home`, `Portal`, `Settings`).
   - Clean, dedicated blank Home screen.
-  - Settings screen with a left drawer navigation containing `Themes` (color mode switcher, sub-theme picker, live engine output), `General`, and `Account`.
-  - Dedicated bottom footer displaying Cloud Run environment & build details.
+  - Settings screen with a left drawer navigation containing `Themes` (color mode switcher, sub-theme picker, live engine output, and interactive component primitives preview), `General`, and `Account`.
+  - Dedicated bottom footer displaying internal application build numbers and versioning.
   - Preserved Firebase Google Auth SSO workflow.
-- Lightweight theme management runtime (`public/tamagui-theme.js`) providing theme switching, sub-theme selection, local persistence, media query listening, and state event subscriptions.
-- Updated `public/index.html` UI showcase demonstrating the design system, theme switching, interactive modal and controls while preserving Firebase Google Auth SSO.
 - Added comprehensive unit tests in `tests/test_deploy.py` for design system tokens, themes, sub-themes, and theme engine functionality.
 - Updated GitHub Actions workflow triggers in `.github/workflows/google-cloudrun-docker.yml` to include `cursor/**` branches and `pull_request` events.
 - Logged Firebase deployment CLI authentication requirement in `error.log`.
