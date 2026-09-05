@@ -72,6 +72,7 @@ class TestDeploymentSetup(unittest.TestCase):
             self.assertIn('.t-badge-danger', content)
             self.assertIn('.t-badge-red', content)
             self.assertIn('.t-avatar', content)
+            self.assertIn('.t-tooltip-primary', content)
 
     def test_tamagui_theme_js_engine(self):
         self.assertTrue(os.path.exists('public/tamagui-theme.js'))
