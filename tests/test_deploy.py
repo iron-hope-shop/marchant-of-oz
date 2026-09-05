@@ -53,6 +53,17 @@ class TestDeploymentSetup(unittest.TestCase):
             self.assertIn('hero-collage-banner', content)
             self.assertIn('products-catalog-container', content)
             self.assertIn('deal-ribbon', content)
+            # Seamless fluid storefront discovery, search, tags & sorting
+            self.assertIn('storefront-discovery-bar', content)
+            self.assertIn('store-search-input', content)
+            self.assertIn('store-search-clear', content)
+            self.assertIn('trending-tags-container', content)
+            self.assertIn('trending-tag-pill', content)
+            self.assertIn('store-sort-select', content)
+            self.assertIn('getFilteredProducts', content)
+            self.assertIn('resetStoreFilters', content)
+            self.assertIn('feed-filter-indicator', content)
+            self.assertIn('feed-empty-message', content)
             # Route guard check & auth prompt
             self.assertIn('openAuthModal', content)
             # Global AppAuth bridge

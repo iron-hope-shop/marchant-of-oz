@@ -340,7 +340,7 @@
       text-align: center;
     }
 
-    /* Storefront Hybrid Sections (Amazon/Pinterest/Walmart) */
+    /* Storefront Seamless Fluid Feed & Discovery Styles */
     .deal-ribbon {
       background: linear-gradient(90deg, var(--primary), var(--color-purple-9));
       color: var(--primary-text);
@@ -353,13 +353,121 @@
       gap: var(--space-2);
     }
 
+    .storefront-discovery-bar {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-6);
+      padding: var(--space-4);
+      box-shadow: var(--shadow-1);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .store-search-container {
+      position: relative;
+      width: 100%;
+    }
+
+    .store-search-input-wrap {
+      display: flex;
+      align-items: center;
+      background: var(--bg-element);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: var(--space-1-5) var(--space-4);
+      transition: all var(--transition-fast);
+    }
+
+    .store-search-input-wrap:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px var(--primary-subtle);
+      background: var(--bg-surface);
+    }
+
+    .store-search-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: var(--space-1) var(--space-2);
+      font-size: var(--font-size-3);
+      color: var(--color-text);
+      outline: none;
+    }
+
+    .store-search-clear-btn {
+      background: transparent;
+      border: none;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      font-size: var(--font-size-3);
+      padding: 0 4px;
+      display: none;
+    }
+
+    .store-search-clear-btn:hover {
+      color: var(--color-text);
+    }
+
+    .discovery-controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    .trending-tags-wrap {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+
+    .trending-tag-pill {
+      font-size: var(--font-size-1);
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      background: var(--bg-element);
+      color: var(--color-text-subtle);
+      border: 1px solid var(--border-subtle);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .trending-tag-pill:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-subtle);
+    }
+
+    .sort-filter-select {
+      background: var(--bg-element);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-4);
+      padding: var(--space-1-5) var(--space-3);
+      font-size: var(--font-size-2);
+      color: var(--color-text);
+      outline: none;
+      cursor: pointer;
+      transition: border-color var(--transition-fast);
+    }
+
+    .sort-filter-select:focus {
+      border-color: var(--primary);
+    }
+
     .section-heading-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      margin-top: var(--space-2);
+      margin-top: var(--space-1);
     }
+
     .collage-filters {
       display: flex;
       align-items: center;
@@ -390,6 +498,16 @@
       background-color: var(--primary);
       color: var(--primary-text);
       border-color: var(--primary);
+    }
+
+    .feed-empty-state {
+      padding: var(--space-8);
+      text-align: center;
+      background: var(--bg-surface);
+      border: 1px dashed var(--border-subtle);
+      border-radius: var(--radius-6);
+      width: 100%;
+      margin: var(--space-4) 0;
     }
 
     /* Google Ads Styled Responsive Ad Units */
@@ -1023,26 +1141,27 @@
                 Explore, Collect &amp; Shop
               </h1>
               <p style="margin: 0; color: var(--color-text-subtle); font-size: var(--font-size-4); line-height: var(--line-height-3);">
-                Your all-in-one shopping destination. Browse visual Pinterest-style inspiration pins, or scroll straight into categorized product collections below.
+                Your all-in-one shopping destination. Browse visual inspiration pins, discover collections, or search across categories in a continuous scroll.
               </p>
             </div>
             <div class="t-xstack ai-center gap-3">
-              <a href="#products-grid-anchor" class="t-btn t-btn-primary" onclick="document.getElementById('products-grid-section').scrollIntoView({behavior: 'smooth'}); return false;">
-                Browse Catalog &darr;
-              </a>
-              <a href="#/cart" class="t-btn t-btn-subtle">Shopping Cart 🛒</a>
+              <a href="#/cart" class="t-btn t-btn-primary">View Cart 🛒</a>
+              <button class="t-btn t-btn-subtle" onclick="document.getElementById('store-search-input').focus();">Search Store 🔍</button>
             </div>
           </div>
 
-          <!-- Category Filter Bar (Affects both Masonry & Catalog) -->
-          <div class="t-ystack gap-2">
-            <div class="section-heading-row">
-              <div class="t-xstack ai-center gap-2">
-                <h2 style="margin: 0; font-size: var(--font-size-6); font-weight: 700;">Trending Feed</h2>
-                <span class="t-badge t-badge-primary">Masonry Discovery</span>
+          <!-- Comprehensive Discovery & Categories Bar (Search, Category Pills, Trending Tags, Sort) -->
+          <div class="storefront-discovery-bar" id="storefront-discovery-bar">
+            <!-- Search & Autocomplete Row -->
+            <div class="store-search-container">
+              <div class="store-search-input-wrap">
+                <span style="font-size: var(--font-size-4); margin-right: 6px; color: var(--color-text-muted);">🔍</span>
+                <input type="text" id="store-search-input" class="store-search-input" placeholder="Search products, keywords, categories, or styles (e.g. ruby, emerald, steampunk, lighting)..." autocomplete="off" />
+                <button type="button" id="store-search-clear" class="store-search-clear-btn" title="Clear search">&times;</button>
               </div>
-              <span style="font-size: var(--font-size-2); color: var(--color-text-muted);">Interactive visual board</span>
             </div>
+
+            <!-- Categories Tabs & Filter Bar -->
             <div class="collage-filters" id="collage-filter-bar">
               <button class="collage-filter-btn active" data-filter="all">All Items</button>
               <button class="collage-filter-btn" data-filter="Apparel">Apparel</button>
@@ -1051,20 +1170,61 @@
               <button class="collage-filter-btn" data-filter="Homeware">Homeware</button>
               <button class="collage-filter-btn" data-filter="Lighting">Lighting</button>
             </div>
+
+            <!-- Discover Controls: Trending Topic Chips & Quick Sort Options -->
+            <div class="discovery-controls-row">
+              <div class="trending-tags-wrap" id="trending-tags-container">
+                <span style="font-size: var(--font-size-1); font-weight: 700; color: var(--color-text-muted); text-transform: uppercase;">Discover:</span>
+                <button class="trending-tag-pill" data-query="sparkle">✨ Sparkle</button>
+                <button class="trending-tag-pill" data-query="steampunk">⚙️ Steampunk</button>
+                <button class="trending-tag-pill" data-query="emerald">💎 Emerald</button>
+                <button class="trending-tag-pill" data-query="artisan">🏺 Artisan</button>
+                <button class="trending-tag-pill" data-query="lighting">🏮 Glow</button>
+                <button class="trending-tag-pill" data-query="sale">🔥 Under $50</button>
+              </div>
+
+              <div class="t-xstack ai-center gap-2">
+                <label for="store-sort-select" style="font-size: var(--font-size-2); color: var(--color-text-muted); white-space: nowrap;">Sort by:</label>
+                <select id="store-sort-select" class="sort-filter-select">
+                  <option value="featured">Featured Picks</option>
+                  <option value="price-asc">Price: Low to High</option>
+                  <option value="price-desc">Price: High to Low</option>
+                  <option value="name-asc">Alphabetical (A-Z)</option>
+                </select>
+              </div>
+            </div>
           </div>
 
-          <!-- Section A: Pinterest-Style Masonry Grid -->
-          <div class="pinterest-collage" id="home-pinterest-grid">
-            <!-- Populated dynamically by JavaScript -->
+          <!-- Seamless Fluid Discovery Feed: Continuous Pinterest Masonry Stream -->
+          <div class="t-ystack gap-3">
+            <div class="section-heading-row">
+              <div class="t-xstack ai-center gap-2">
+                <h2 style="margin: 0; font-size: var(--font-size-6); font-weight: 700;" id="feed-heading-title">Live Discovery Stream</h2>
+                <span class="t-badge t-badge-primary" id="feed-count-badge">9 Items in Store</span>
+              </div>
+              <span style="font-size: var(--font-size-2); color: var(--color-text-muted);" id="feed-filter-indicator">Showing all items</span>
+            </div>
+
+            <!-- Pinterest-Style Masonry Grid -->
+            <div class="pinterest-collage" id="home-pinterest-grid">
+              <!-- Populated dynamically by JavaScript -->
+            </div>
+
+            <!-- Empty Search State -->
+            <div id="feed-empty-message" class="feed-empty-state" style="display: none;">
+              <span style="font-size: 2.5rem;">🔍</span>
+              <h3 style="margin: var(--space-2) 0 var(--space-1) 0; font-size: var(--font-size-5);">No matching items found</h3>
+              <p style="margin: 0 0 var(--space-4) 0; color: var(--color-text-subtle); font-size: var(--font-size-3);">Try searching for different keywords, categories, or clearing active filters.</p>
+              <button class="t-btn t-btn-primary t-btn-sm" onclick="resetStoreFilters();">Reset Filters</button>
+            </div>
           </div>
 
-          <!-- Section B: Structured Catalog Grid (Walmart/Amazon Product Shelf) -->
-          <div class="t-ystack gap-4" id="products-grid-section" style="margin-top: var(--space-4);">
-            <div class="t-separator"></div>
+          <!-- Structured Catalog Grid (Walmart/Amazon Product Shelf) -->
+          <div class="t-ystack gap-3" id="products-grid-section">
             <div class="section-heading-row">
               <div>
-                <h2 style="margin: 0; font-size: var(--font-size-7); font-weight: 700;">Full Product Catalog</h2>
-                <p style="margin: var(--space-1) 0 0 0; color: var(--color-text-subtle); font-size: var(--font-size-3);">Structured shelf inventory with quick specifications and instant cart additions.</p>
+                <h2 style="margin: 0; font-size: var(--font-size-6); font-weight: 700;">Catalog Shelf</h2>
+                <p style="margin: 2px 0 0 0; color: var(--color-text-subtle); font-size: var(--font-size-2);">Instant shelf view with specifications and cart additions.</p>
               </div>
               <span class="t-badge t-badge-info" id="catalog-count-badge">9 Items in Store</span>
             </div>
@@ -1568,6 +1728,8 @@
     ];
 
     let activeFilter = "all";
+    let searchQuery = "";
+    let activeSort = "featured";
 
     let cart = [];
     const CART_STORAGE_KEY = "oz_cart_items";
@@ -1623,12 +1785,101 @@
       saveCart();
     }
 
-    // Render Pinterest-Style Collage on Home
+    // Filter and sort products according to current active category, search query, and sort order
+    function getFilteredProducts() {
+      let items = [...PRODUCTS];
+
+      // 1. Category filter
+      if (activeFilter !== "all") {
+        items = items.filter(p => p.category.toLowerCase() === activeFilter.toLowerCase());
+      }
+
+      // 2. Search query filter (matches name, description, category, or tag)
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase().trim();
+        if (q === "sale") {
+          items = items.filter(p => p.price < 50);
+        } else {
+          items = items.filter(p => 
+            p.name.toLowerCase().includes(q) ||
+            p.description.toLowerCase().includes(q) ||
+            p.category.toLowerCase().includes(q) ||
+            (p.tag && p.tag.toLowerCase().includes(q))
+          );
+        }
+      }
+
+      // 3. Sorting
+      if (activeSort === "price-asc") {
+        items.sort((a, b) => a.price - b.price);
+      } else if (activeSort === "price-desc") {
+        items.sort((a, b) => b.price - a.price);
+      } else if (activeSort === "name-asc") {
+        items.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      return items;
+    }
+
+    // Reset all storefront discovery filters
+    function resetStoreFilters() {
+      activeFilter = "all";
+      searchQuery = "";
+      activeSort = "featured";
+
+      const searchInput = document.getElementById("store-search-input");
+      const clearBtn = document.getElementById("store-search-clear");
+      const sortSelect = document.getElementById("store-sort-select");
+
+      if (searchInput) searchInput.value = "";
+      if (clearBtn) clearBtn.style.display = "none";
+      if (sortSelect) sortSelect.value = "featured";
+
+      const filterBar = document.getElementById("collage-filter-bar");
+      if (filterBar) {
+        filterBar.querySelectorAll(".collage-filter-btn").forEach(btn => {
+          btn.classList.toggle("active", btn.dataset.filter === "all");
+        });
+      }
+
+      renderHomePinterestCollage();
+      renderCatalog();
+    }
+    window.resetStoreFilters = resetStoreFilters;
+
+    // Render Pinterest-Style Collage on Home with Fluid Continuous Layout
     function renderHomePinterestCollage() {
       const grid = document.getElementById("home-pinterest-grid");
+      const emptyMsg = document.getElementById("feed-empty-message");
+      const feedCount = document.getElementById("feed-count-badge");
+      const feedIndicator = document.getElementById("feed-filter-indicator");
       if (!grid) return;
 
-      const items = activeFilter === "all" ? PRODUCTS : PRODUCTS.filter(p => p.category === activeFilter);
+      const items = getFilteredProducts();
+
+      // Update counters & indicator
+      if (feedCount) {
+        feedCount.textContent = `${items.length} Item${items.length === 1 ? '' : 's'}`;
+      }
+      if (feedIndicator) {
+        if (searchQuery.trim() && activeFilter !== "all") {
+          feedIndicator.textContent = `Category: ${activeFilter} | Query: "${searchQuery.trim()}"`;
+        } else if (searchQuery.trim()) {
+          feedIndicator.textContent = `Matching "${searchQuery.trim()}"`;
+        } else if (activeFilter !== "all") {
+          feedIndicator.textContent = `Category: ${activeFilter}`;
+        } else {
+          feedIndicator.textContent = "Showing all items";
+        }
+      }
+
+      if (items.length === 0) {
+        grid.innerHTML = "";
+        if (emptyMsg) emptyMsg.style.display = "block";
+        return;
+      }
+
+      if (emptyMsg) emptyMsg.style.display = "none";
 
       let html = "";
       items.forEach((p, idx) => {
@@ -1704,7 +1955,62 @@
             b.classList.toggle("active", b === btn);
           });
           renderHomePinterestCollage();
+          renderCatalog();
         }
+      });
+    }
+
+    // Search bar input & autocomplete listener
+    const searchInput = document.getElementById("store-search-input");
+    const searchClear = document.getElementById("store-search-clear");
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
+        searchQuery = e.target.value;
+        if (searchClear) {
+          searchClear.style.display = searchQuery ? "inline-block" : "none";
+        }
+        renderHomePinterestCollage();
+        renderCatalog();
+      });
+    }
+    if (searchClear) {
+      searchClear.addEventListener("click", () => {
+        if (searchInput) {
+          searchInput.value = "";
+          searchQuery = "";
+          searchClear.style.display = "none";
+          renderHomePinterestCollage();
+          renderCatalog();
+          searchInput.focus();
+        }
+      });
+    }
+
+    // Discover Trending Chips listener
+    const trendingTagsContainer = document.getElementById("trending-tags-container");
+    if (trendingTagsContainer) {
+      trendingTagsContainer.addEventListener("click", (e) => {
+        const pill = e.target.closest(".trending-tag-pill");
+        if (pill && pill.dataset.query) {
+          const q = pill.dataset.query;
+          if (searchInput) {
+            searchInput.value = q;
+            searchQuery = q;
+            if (searchClear) searchClear.style.display = "inline-block";
+          }
+          renderHomePinterestCollage();
+          renderCatalog();
+        }
+      });
+    }
+
+    // Sort select listener
+    const sortSelect = document.getElementById("store-sort-select");
+    if (sortSelect) {
+      sortSelect.addEventListener("change", (e) => {
+        activeSort = e.target.value;
+        renderHomePinterestCollage();
+        renderCatalog();
       });
     }
 
@@ -1712,9 +2018,13 @@
       const container = document.getElementById("products-catalog-container");
       if (!container) return;
       const countBadge = document.getElementById("catalog-count-badge");
-      const items = activeFilter === "all" ? PRODUCTS : PRODUCTS.filter(p => p.category === activeFilter);
+      const items = getFilteredProducts();
       if (countBadge) {
         countBadge.textContent = `${items.length} Item${items.length === 1 ? '' : 's'} in Store`;
+      }
+      if (items.length === 0) {
+        container.innerHTML = `<div style="grid-column: 1 / -1; padding: var(--space-4); text-align: center; color: var(--color-text-muted); font-size: var(--font-size-3);">No products matching active filters.</div>`;
+        return;
       }
       container.innerHTML = items.map(p => `
         <div class="product-card" onclick="location.hash='#/product/${p.id}'">

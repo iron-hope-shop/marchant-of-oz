@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] - 2026-09-05
 
 ### Added
+- **Seamless Fluid Storefront Feed & Discovery Bar**:
+  - Eliminated hard visual separators and jarring section breaks across the main store scroll for a continuous, flowing discovery stream.
+  - Added integrated Discovery Bar (`#storefront-discovery-bar`) featuring:
+    - Real-time instant search input with live keyword matching against product names, descriptions, categories, and tags.
+    - Clear search button with quick reset functionality.
+    - Category pill switcher (`All Items`, `Apparel`, `Footwear`, `Accessories`, `Homeware`, `Lighting`).
+    - Trending discovery topic chips (`✨ Sparkle`, `⚙️ Steampunk`, `💎 Emerald`, `🏺 Artisan`, `🏮 Glow`, `🔥 Under $50`).
+    - Dynamic sorting options (Featured Picks, Price: Low to High, Price: High to Low, Alphabetical A-Z).
+    - Live feed filter indicator and empty-state guidance with one-click filter reset.
+- Incremented build version to `v1.1.0-48` in `public/version.json` and UI watermarks.
+- Updated automated unit test suite in `tests/test_deploy.py` to assert fluid discovery feed components, search inputs, trending chips, and sort controls.
+
 - **Global `window.AppAuth` Authentication Bridge**:
   - Resolved module-scoping limitation that isolated Firebase popup triggers from top-level event handlers.
   - Exposed universal methods `window.AppAuth.signIn()`, `window.AppAuth.signOut()`, and `window.AppAuth.getCurrentUser()`.

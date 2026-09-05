@@ -12,6 +12,11 @@ Resolution: Add FIREBASE_TOKEN or GCP service account credentials to execute dir
 Issue: Sign-in buttons located outside the ES module script were encountering unhandled reference errors due to lexical scoping of `auth` and `provider` inside `<script type="module">`.
 Resolution: Established global `window.AppAuth` bridge with promises for `.signIn()` and `.signOut()`, wired all click handlers to the bridge, and invoked synchronous rendering to eliminate any initial blank screen delay.
 
+[2026-09-05T05:05:00Z] Storefront Feed Flow & Discovery Upgrade:
+Issue: Hard visual breaks and rigid separators disrupted continuous browsing flow on main storefront.
+Resolution: Refactored main scroll into a seamless fluid feed with live keyword search, discovery chips, categories filter, and price/alphabetical sorting.
+
+
 
 
 
