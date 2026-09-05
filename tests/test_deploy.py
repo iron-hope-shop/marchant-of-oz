@@ -29,6 +29,12 @@ class TestDeploymentSetup(unittest.TestCase):
             self.assertIn('iron-hope-shop-ff854', content)
             self.assertIn('tamagui.css', content)
             self.assertIn('tamagui-theme.js', content)
+            self.assertIn('t-nav', content)
+            self.assertIn('t-drawer-nav', content)
+            self.assertIn('view-home', content)
+            self.assertIn('view-settings', content)
+            self.assertIn('settings-subpanel-themes', content)
+            self.assertIn('app-footer', content)
 
     def test_tamagui_css_design_system(self):
         self.assertTrue(os.path.exists('public/tamagui.css'))
@@ -73,6 +79,9 @@ class TestDeploymentSetup(unittest.TestCase):
             self.assertIn('.t-badge-red', content)
             self.assertIn('.t-avatar', content)
             self.assertIn('.t-tooltip-primary', content)
+            self.assertIn('.t-nav', content)
+            self.assertIn('.t-drawer-layout', content)
+            self.assertIn('.t-drawer-nav', content)
 
     def test_tamagui_theme_js_engine(self):
         self.assertTrue(os.path.exists('public/tamagui-theme.js'))

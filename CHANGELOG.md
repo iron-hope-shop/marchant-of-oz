@@ -12,8 +12,16 @@ All notable changes to this project will be documented in this file.
   - Tamagui layout primitives: `YStack`, `XStack`, `ZStack`, `Group`, and `Spacer`.
   - Component library: `Card`, `Button` (primary, subtle, ghost, destructive, sizes), `Input`/`Textarea`, `Switch`, `Badge`, `Avatar`, `Separator`, `Tooltip` (with `.t-tooltip-primary` adaptive color support), and `Modal Dialog`.
   - Distinct badge variants separating semantic statuses (`.t-badge-warning`, `.t-badge-danger`, `.t-badge-success`, `.t-badge-info`) from raw palette colors (`.t-badge-yellow`, `.t-badge-red`, `.t-badge-blue`, `.t-badge-purple`, `.t-badge-green`, `.t-badge-orange`, `.t-badge-pink`, `.t-badge-gray`).
-  - Updated Sign Out button to use theme-adaptive `.t-btn-primary` rather than static hardcoded red destructive style.
-  - Streamlined UI showcase removing redundant demo badges.
+  - Top navigation bar component (`.t-nav`, `.t-nav-tabs`, `.t-nav-tab`).
+  - Left drawer navigation layout (`.t-drawer-layout`, `.t-drawer-nav`, `.t-drawer-item`, `.t-drawer-content`).
+  - Persistent bottom footer for environment and build details.
+- Lightweight theme management runtime (`public/tamagui-theme.js`) providing theme switching, sub-theme selection, local persistence, media query listening, and state event subscriptions.
+- Redesigned `public/index.html` application shell with:
+  - Sticky top navigation across views (`Home`, `Portal`, `Settings`).
+  - Clean, dedicated blank Home screen.
+  - Settings screen with a left drawer navigation containing `Themes` (color mode switcher, sub-theme picker, live engine output), `General`, and `Account`.
+  - Dedicated bottom footer displaying Cloud Run environment & build details.
+  - Preserved Firebase Google Auth SSO workflow.
 - Lightweight theme management runtime (`public/tamagui-theme.js`) providing theme switching, sub-theme selection, local persistence, media query listening, and state event subscriptions.
 - Updated `public/index.html` UI showcase demonstrating the design system, theme switching, interactive modal and controls while preserving Firebase Google Auth SSO.
 - Added comprehensive unit tests in `tests/test_deploy.py` for design system tokens, themes, sub-themes, and theme engine functionality.

@@ -1090,3 +1090,103 @@ body {
 .t-color-swatch.active {
   border-color: var(--color-text);
 }
+
+/* 11. Top Navigation Bar */
+.t-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: var(--space-3) var(--space-6);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-index-2);
+}
+
+.t-nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.t-nav-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-4);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-subtle);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-4);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.t-nav-tab:hover {
+  color: var(--color-text);
+  background-color: var(--bg-element);
+}
+
+.t-nav-tab.active {
+  color: var(--primary);
+  background-color: var(--primary-subtle);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* 12. Drawer / Sidebar Navigation */
+.t-drawer-layout {
+  display: flex;
+  gap: var(--space-6);
+  width: 100%;
+}
+
+.t-drawer-nav {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  flex-shrink: 0;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-6);
+  box-shadow: var(--shadow-1);
+}
+
+.t-drawer-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2-5) var(--space-3);
+  font-size: var(--font-size-4);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-subtle);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-4);
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition-fast);
+  width: 100%;
+}
+
+.t-drawer-item:hover {
+  color: var(--color-text);
+  background-color: var(--bg-element);
+}
+
+.t-drawer-item.active {
+  color: var(--primary);
+  background-color: var(--primary-subtle);
+  font-weight: var(--font-weight-semibold);
+}
+
+.t-drawer-content {
+  flex: 1;
+  min-width: 0;
+}
+
