@@ -239,7 +239,127 @@
       overflow: hidden;
     }
 
-    /* Filter pills on Home */
+    /* Top Navigation Profile Dropdown & Auth Button */
+    .nav-user-dropdown-container {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .nav-profile-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-full);
+      background-color: var(--bg-element);
+      border: 1px solid var(--border-subtle);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      user-select: none;
+    }
+
+    .nav-profile-trigger:hover {
+      border-color: var(--primary);
+      background-color: var(--primary-subtle);
+    }
+
+    .nav-profile-menu {
+      position: absolute;
+      top: calc(100% + var(--space-2));
+      right: 0;
+      width: 240px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-5);
+      box-shadow: var(--shadow-4);
+      padding: var(--space-2);
+      display: none;
+      flex-direction: column;
+      gap: var(--space-1);
+      z-index: var(--z-index-dropdown);
+      animation: navDropdownFade 0.15s ease-out;
+    }
+
+    .nav-profile-menu.open {
+      display: flex;
+    }
+
+    @keyframes navDropdownFade {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .nav-menu-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-3);
+      color: var(--color-text);
+      font-size: var(--font-size-3);
+      font-weight: 500;
+      text-decoration: none;
+      background: transparent;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      transition: background-color var(--transition-fast);
+    }
+
+    .nav-menu-item:hover {
+      background-color: var(--bg-element);
+      color: var(--primary);
+    }
+
+    .nav-menu-item.danger:hover {
+      color: var(--color-red-11);
+      background-color: var(--color-red-3);
+    }
+
+    .nav-menu-header {
+      padding: var(--space-2) var(--space-3) var(--space-2) var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: var(--space-1);
+    }
+
+    /* Universal Auth Modal & Readonly Lock */
+    .readonly-locked-view {
+      position: relative;
+      opacity: 0.65;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .readonly-banner-callout {
+      background: linear-gradient(135deg, var(--bg-surface), var(--primary-subtle));
+      border: 1px dashed var(--primary);
+      border-radius: var(--radius-6);
+      padding: var(--space-5) var(--space-6);
+      text-align: center;
+    }
+
+    /* Storefront Hybrid Sections (Amazon/Pinterest/Walmart) */
+    .deal-ribbon {
+      background: linear-gradient(90deg, var(--primary), var(--color-purple-9));
+      color: var(--primary-text);
+      padding: var(--space-2-5) var(--space-4);
+      border-radius: var(--radius-5);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .section-heading-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-top: var(--space-2);
+    }
     .collage-filters {
       display: flex;
       align-items: center;
@@ -637,94 +757,158 @@
 
     <!-- Top Navigation Bar -->
     <header class="t-nav">
+      <!-- Left: Logo & Storefront Branding -->
       <div class="t-xstack ai-center gap-3">
-        <a href="#/account" class="t-avatar" id="nav-user-avatar" style="background-color: var(--primary); color: #fff; font-weight: bold; cursor: pointer; text-decoration: none;" title="Account / Profile">
-          MO
+        <a href="#/home" class="t-avatar" style="background-color: var(--primary); color: #fff; font-weight: bold; text-decoration: none;" title="Merchant of Oz Storefront">
+          OZ
         </a>
         <div class="t-ystack">
           <a href="#/home" style="text-decoration: none; color: inherit;">
             <span style="font-weight: 700; font-size: var(--font-size-5); letter-spacing: -0.02em;">Merchant of Oz</span>
           </a>
-          <span style="font-size: var(--font-size-2); color: var(--color-text-muted);">E-Commerce Workspace</span>
+          <span style="font-size: var(--font-size-2); color: var(--color-text-muted);">Unified Storefront</span>
         </div>
       </div>
 
-      <!-- Main Navigation Tabs & Links -->
-      <nav class="t-nav-tabs" id="main-nav-tabs">
-        <a href="#/home" class="t-nav-tab active" data-route="home">Home</a>
-        <a href="#/shop" class="t-nav-tab" data-route="shop">Shop</a>
-        <a href="#/cart" class="t-nav-tab" data-route="cart" style="position: relative;">
-          Cart
-          <span id="cart-counter-badge" class="cart-badge" style="display: none;">0</span>
-        </a>
-        <!-- Dynamic Auth/Settings Tab (Settings when logged in, Login when guest) -->
-        <a href="#/settings" class="t-nav-tab" data-route="settings" id="nav-settings-tab" style="display: none;">Settings</a>
-        <a href="#/login" class="t-nav-tab" data-route="login" id="nav-login-tab">Log In</a>
-      </nav>
+      <!-- Center / Right: Navigation Tabs -->
+      <div class="t-xstack ai-center gap-4">
+        <nav class="t-nav-tabs" id="main-nav-tabs">
+          <a href="#/home" class="t-nav-tab active" data-route="home">Store</a>
+          <a href="#/cart" class="t-nav-tab" data-route="cart" style="position: relative;">
+            Cart
+            <span id="cart-counter-badge" class="cart-badge" style="display: none;">0</span>
+          </a>
+        </nav>
+
+        <!-- Right: Dynamic User Avatar Dropdown (when Authed) OR Log In Button (when Guest) -->
+        <div class="nav-user-dropdown-container" id="nav-user-area">
+          <!-- Guest State: Log In Button -->
+          <button class="t-btn t-btn-primary t-btn-sm" id="nav-guest-login-btn" onclick="openAuthModal();">
+            <svg width="16" height="16" viewBox="0 0 18 18" style="margin-right: 4px;">
+              <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.616z"/>
+              <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
+              <path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.173 0 7.547 0 9s.347 2.827.957 4.039l3.007-2.332z"/>
+              <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/>
+            </svg>
+            Log In
+          </button>
+
+          <!-- Authed State: User Avatar Trigger + Dropdown Menu -->
+          <div id="nav-authed-profile-wrapper" style="display: none; position: relative;">
+            <div class="nav-profile-trigger" id="nav-profile-trigger" title="Account Menu">
+              <div class="t-avatar" id="nav-user-avatar" style="background-color: var(--primary); color: #fff; font-weight: bold; width: 32px; height: 32px;">
+                MO
+              </div>
+              <span id="nav-profile-name" style="font-size: var(--font-size-3); font-weight: 600; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">User</span>
+              <span style="font-size: var(--font-size-2); color: var(--color-text-muted);">▼</span>
+            </div>
+
+            <!-- Dropdown Menu -->
+            <div class="nav-profile-menu" id="nav-profile-menu">
+              <div class="nav-menu-header">
+                <div style="font-weight: 700; font-size: var(--font-size-3);" id="nav-menu-user-name">User</div>
+                <div style="font-size: var(--font-size-1); color: var(--color-text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" id="nav-menu-user-email">user@example.com</div>
+              </div>
+              <a href="#/settings/themes" class="nav-menu-item" onclick="closeNavProfileMenu();">
+                <span>🎨</span> Theme &amp; Appearance
+              </a>
+              <a href="#/settings/account" class="nav-menu-item" onclick="closeNavProfileMenu();">
+                <span>👤</span> Account Settings
+              </a>
+              <a href="#/settings/general" class="nav-menu-item" onclick="closeNavProfileMenu();">
+                <span>⚙️</span> General Settings
+              </a>
+              <div class="t-separator" style="margin: var(--space-1) 0;"></div>
+              <button class="nav-menu-item danger" id="nav-menu-signout-btn" style="width: 100%;">
+                <span>🚪</span> Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </header>
 
     <!-- Main Content Area -->
     <main class="app-main">
 
-      <!-- View 1: Home Screen (Pinterest-style E-Commerce Shopping Collage) -->
+      <!-- View 1: Unified Storefront (Amazon + Pinterest + Walmart Experience) -->
       <section id="view-home" class="view-panel active">
         <div class="t-ystack gap-6">
           
-          <!-- Hero Header Banner with Collage Inspiration -->
+          <!-- Deal Ribbon / Flash Notification -->
+          <div class="deal-ribbon">
+            <div class="t-xstack ai-center gap-2">
+              <span class="t-badge t-badge-warning" style="background-color: #ffe629; color: #1c1c1c; font-weight: 700;">FLASH SALE</span>
+              <span style="font-weight: 600; font-size: var(--font-size-3);">Spring Refresh: Up to 35% off handcrafted Oz artifacts &amp; ambient lighting</span>
+            </div>
+            <a href="#/cart" class="t-btn t-btn-ghost t-btn-sm" style="color: #fff; border: 1px solid rgba(255,255,255,0.4);">
+              View Deals &rarr;
+            </a>
+          </div>
+
+          <!-- Hero Promo Banner -->
           <div class="hero-collage-banner t-xstack ai-center jc-between flex-wrap gap-4">
             <div class="t-ystack gap-2" style="max-width: 580px;">
               <div class="t-xstack ai-center gap-2">
-                <span class="t-badge t-badge-primary">Curated Showcase</span>
-                <span class="t-badge t-badge-info">Masonry Feed</span>
+                <span class="t-badge t-badge-primary">Curated Marketplace</span>
+                <span class="t-badge t-badge-info">Radix Colorway Engine</span>
               </div>
               <h1 style="margin: 0; font-size: var(--font-size-9); font-weight: 800; letter-spacing: -0.03em;">
-                Discover &amp; Collect
+                Explore, Collect &amp; Shop
               </h1>
               <p style="margin: 0; color: var(--color-text-subtle); font-size: var(--font-size-4); line-height: var(--line-height-3);">
-                Explore curated items, trending artifacts, and design inspiration for your digital space. Tap any card to view specs or add instantly to your cart.
+                Your all-in-one shopping destination. Browse visual Pinterest-style inspiration pins, or scroll straight into categorized product collections below.
               </p>
             </div>
             <div class="t-xstack ai-center gap-3">
-              <a href="#/shop" class="t-btn t-btn-primary">All Products &rarr;</a>
-              <a href="#/cart" class="t-btn t-btn-subtle">Cart 🛒</a>
+              <a href="#products-grid-anchor" class="t-btn t-btn-primary" onclick="document.getElementById('products-grid-section').scrollIntoView({behavior: 'smooth'}); return false;">
+                Browse Catalog &darr;
+              </a>
+              <a href="#/cart" class="t-btn t-btn-subtle">Shopping Cart 🛒</a>
             </div>
           </div>
 
-          <!-- Category Filter Pills -->
-          <div class="collage-filters" id="collage-filter-bar">
-            <button class="collage-filter-btn active" data-filter="all">All Pins</button>
-            <button class="collage-filter-btn" data-filter="Apparel">Apparel</button>
-            <button class="collage-filter-btn" data-filter="Footwear">Footwear</button>
-            <button class="collage-filter-btn" data-filter="Accessories">Accessories</button>
-            <button class="collage-filter-btn" data-filter="Homeware">Homeware</button>
-            <button class="collage-filter-btn" data-filter="Lighting">Lighting</button>
+          <!-- Category Filter Bar (Affects both Masonry & Catalog) -->
+          <div class="t-ystack gap-2">
+            <div class="section-heading-row">
+              <div class="t-xstack ai-center gap-2">
+                <h2 style="margin: 0; font-size: var(--font-size-6); font-weight: 700;">Trending Feed</h2>
+                <span class="t-badge t-badge-primary">Masonry Discovery</span>
+              </div>
+              <span style="font-size: var(--font-size-2); color: var(--color-text-muted);">Interactive visual board</span>
+            </div>
+            <div class="collage-filters" id="collage-filter-bar">
+              <button class="collage-filter-btn active" data-filter="all">All Items</button>
+              <button class="collage-filter-btn" data-filter="Apparel">Apparel</button>
+              <button class="collage-filter-btn" data-filter="Footwear">Footwear</button>
+              <button class="collage-filter-btn" data-filter="Accessories">Accessories</button>
+              <button class="collage-filter-btn" data-filter="Homeware">Homeware</button>
+              <button class="collage-filter-btn" data-filter="Lighting">Lighting</button>
+            </div>
           </div>
 
-          <!-- Pinterest-Style Masonry Grid -->
+          <!-- Section A: Pinterest-Style Masonry Grid -->
           <div class="pinterest-collage" id="home-pinterest-grid">
             <!-- Populated dynamically by JavaScript -->
           </div>
 
-        </div>
-      </section>
-
-      <!-- View 2: Shop / E-Commerce Catalog View -->
-      <section id="view-shop" class="view-panel">
-        <div class="t-ystack gap-6">
-          <div class="t-xstack ai-center jc-between flex-wrap gap-3">
-            <div>
-              <h2 style="margin: 0; font-size: var(--font-size-8); font-weight: 700;">Product Catalog</h2>
-              <p style="margin: var(--space-1) 0 0 0; color: var(--color-text-subtle); font-size: var(--font-size-4);">Select items to view details or add to your shopping cart.</p>
+          <!-- Section B: Structured Catalog Grid (Walmart/Amazon Product Shelf) -->
+          <div class="t-ystack gap-4" id="products-grid-section" style="margin-top: var(--space-4);">
+            <div class="t-separator"></div>
+            <div class="section-heading-row">
+              <div>
+                <h2 style="margin: 0; font-size: var(--font-size-7); font-weight: 700;">Full Product Catalog</h2>
+                <p style="margin: var(--space-1) 0 0 0; color: var(--color-text-subtle); font-size: var(--font-size-3);">Structured shelf inventory with quick specifications and instant cart additions.</p>
+              </div>
+              <span class="t-badge t-badge-info" id="catalog-count-badge">9 Items in Store</span>
             </div>
-            <div class="t-xstack ai-center gap-2">
-              <a href="#/cart" class="t-btn t-btn-subtle">View Cart 🛒</a>
+
+            <!-- Product Grid -->
+            <div class="product-grid" id="products-catalog-container">
+              <!-- Rendered dynamically by JavaScript -->
             </div>
           </div>
 
-          <!-- Product Grid -->
-          <div class="product-grid" id="products-catalog-container">
-            <!-- Rendered dynamically by JavaScript -->
-          </div>
         </div>
       </section>
 
@@ -1022,7 +1206,7 @@
                 </div>
                 <div class="t-ystack gap-3">
                   <label style="font-size: var(--font-size-3); font-weight: 600;">Build Version</label>
-                  <input type="text" class="t-input" id="settings-build-tag" value="v1.0.7-45" readonly>
+                  <input type="text" class="t-input" id="settings-build-tag" value="v1.0.8-46" readonly>
                 </div>
               </div>
             </div>
@@ -1034,8 +1218,39 @@
     </main>
 
     <!-- Subtle Bottom Build Stamp -->
-    <div class="build-watermark" id="build-tag">v1.0.7-45</div>
+    <div class="build-watermark" id="build-tag">v1.0.8-46</div>
 
+  </div>
+
+  <!-- Universal Sign-In Prompt Modal -->
+  <div class="t-modal-overlay" id="auth-prompt-modal">
+    <div class="t-modal-content t-ystack gap-4" style="max-width: 440px; text-align: center;">
+      <div class="t-xstack ai-center jc-between">
+        <span class="t-badge t-badge-primary">Account Required</span>
+        <button class="t-btn t-btn-ghost t-btn-sm" onclick="closeAuthModal();">&times;</button>
+      </div>
+      <div class="t-avatar t-avatar-xl" style="background-color: var(--primary-subtle); color: var(--primary); font-size: var(--font-size-9); align-self: center;">
+        👤
+      </div>
+      <div class="t-ystack gap-1">
+        <h3 style="margin: 0; font-size: var(--font-size-7); font-weight: 700;">Sign in to Continue</h3>
+        <p style="margin: 0; color: var(--color-text-subtle); font-size: var(--font-size-3); line-height: var(--line-height-3);">
+          Access custom themes, avatar customization, and workspace settings by signing in with your Google account.
+        </p>
+      </div>
+      <div class="t-ystack gap-3" style="margin-top: var(--space-2);">
+        <button class="t-btn t-btn-primary w-full" id="modal-signin-btn">
+          <svg width="18" height="18" viewBox="0 0 18 18" style="margin-right: 6px;">
+            <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.616z"/>
+            <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
+            <path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.173 0 7.547 0 9s.347 2.827.957 4.039l3.007-2.332z"/>
+            <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/>
+          </svg>
+          Sign in with Google
+        </button>
+        <button class="t-btn t-btn-ghost w-full" onclick="closeAuthModal();">Cancel</button>
+      </div>
+    </div>
   </div>
 
   <!-- Modal Dialog Primitive -->
@@ -1282,28 +1497,12 @@
     function renderCatalog() {
       const container = document.getElementById("products-catalog-container");
       if (!container) return;
-      container.innerHTML = PRODUCTS.map(p => `
-        <div class="product-card" onclick="location.hash='#/product/${p.id}'">
-          <div class="product-img-box">${p.icon}</div>
-          <div class="t-ystack gap-2" style="padding: var(--space-4); flex: 1;">
-            <div class="t-xstack ai-center jc-between">
-              <span class="t-badge">${p.category}</span>
-              <span style="font-weight: 700; font-size: var(--font-size-5); color: var(--primary);">$${p.price.toFixed(2)}</span>
-            </div>
-            <h3 style="margin: 0; font-size: var(--font-size-5); font-weight: 700;">${p.name}</h3>
-            <p style="margin: 0; color: var(--color-text-subtle); font-size: var(--font-size-3); line-height: var(--line-height-3); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-              ${p.description}
-            </p>
-            <div class="t-xstack ai-center jc-between" style="margin-top: auto; padding-top: var(--space-2);">
-              <a href="#/product/${p.id}" class="t-btn t-btn-ghost t-btn-sm" onclick="event.stopPropagation();">Details</a>
-              <button class="t-btn t-btn-primary t-btn-sm" onclick="event.stopPropagation(); addToCart('${p.id}');">Add to Cart</button>
-            </div>
-          </div>
-        </div>
-      `).join("");
-    }
-      if (!container) return;
-      container.innerHTML = PRODUCTS.map(p => `
+      const countBadge = document.getElementById("catalog-count-badge");
+      const items = activeFilter === "all" ? PRODUCTS : PRODUCTS.filter(p => p.category === activeFilter);
+      if (countBadge) {
+        countBadge.textContent = `${items.length} Item${items.length === 1 ? '' : 's'} in Store`;
+      }
+      container.innerHTML = items.map(p => `
         <div class="product-card" onclick="location.hash='#/product/${p.id}'">
           <div class="product-img-box">${p.icon}</div>
           <div class="t-ystack gap-2" style="padding: var(--space-4); flex: 1;">
@@ -1403,6 +1602,79 @@
     window.removeFromCart = removeFromCart;
     window.updateCartQuantity = updateCartQuantity;
 
+    // Universal Auth Modal Handlers
+    const authPromptModal = document.getElementById('auth-prompt-modal');
+    const modalSignInBtn = document.getElementById('modal-signin-btn');
+
+    function openAuthModal() {
+      if (authPromptModal) authPromptModal.classList.add('active');
+    }
+
+    function closeAuthModal() {
+      if (authPromptModal) authPromptModal.classList.remove('active');
+    }
+
+    window.openAuthModal = openAuthModal;
+    window.closeAuthModal = closeAuthModal;
+
+    if (modalSignInBtn && auth) {
+      modalSignInBtn.addEventListener('click', async () => {
+        closeAuthModal();
+        try {
+          const result = await signInWithPopup(auth, provider);
+          if (result && result.user) {
+            console.log("[Auth] Signed in via modal:", result.user.displayName);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    }
+
+    // Top Navigation Avatar Dropdown Controller
+    const navProfileTrigger = document.getElementById('nav-profile-trigger');
+    const navProfileMenu = document.getElementById('nav-profile-menu');
+    const navMenuSignoutBtn = document.getElementById('nav-menu-signout-btn');
+
+    function toggleNavProfileMenu(force) {
+      if (!navProfileMenu) return;
+      if (typeof force === 'boolean') {
+        navProfileMenu.classList.toggle('open', force);
+      } else {
+        navProfileMenu.classList.toggle('open');
+      }
+    }
+
+    function closeNavProfileMenu() {
+      if (navProfileMenu) navProfileMenu.classList.remove('open');
+    }
+
+    window.closeNavProfileMenu = closeNavProfileMenu;
+
+    if (navProfileTrigger) {
+      navProfileTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleNavProfileMenu();
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      if (navProfileMenu && !e.target.closest('#nav-authed-profile-wrapper')) {
+        closeNavProfileMenu();
+      }
+    });
+
+    if (navMenuSignoutBtn && auth) {
+      navMenuSignoutBtn.addEventListener('click', async () => {
+        closeNavProfileMenu();
+        try {
+          await signOut(auth);
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    }
+
     // SPA Hash Router Implementation
     function handleRoute() {
       const hash = window.location.hash || "#/home";
@@ -1411,17 +1683,16 @@
       const rootRoute = parts[0];
       const subParam = parts[1];
 
-      // Route Guarding: Lock all settings sub-routes if unauthenticated
+      // Route Guarding: If guest accesses settings / themes / account, enforce read-only / prompt
       if ((rootRoute === "settings" || rootRoute === "account") && !isUserAuthenticated) {
-        // Redirect unauthenticated guests to login / account auth panel
-        window.location.hash = "#/login";
-        return;
+        // Open universal auth modal prompt and fall back cleanly to settings preview with banner
+        openAuthModal();
       }
 
       // Highlight active navigation tab
       document.querySelectorAll("#main-nav-tabs .t-nav-tab").forEach(tab => {
         const routeAttr = tab.getAttribute("data-route");
-        if (routeAttr === rootRoute || (rootRoute === "login" && routeAttr === "login") || (rootRoute === "account" && routeAttr === "settings")) {
+        if (routeAttr === rootRoute || (rootRoute === "shop" && routeAttr === "home")) {
           tab.classList.add("active");
         } else {
           tab.classList.remove("active");
@@ -1433,13 +1704,10 @@
         panel.classList.remove("active");
       });
 
-      if (rootRoute === "home") {
+      if (rootRoute === "home" || rootRoute === "shop") {
         const p = document.getElementById("view-home");
         if (p) p.classList.add("active");
         renderHomePinterestCollage();
-      } else if (rootRoute === "shop") {
-        const p = document.getElementById("view-shop");
-        if (p) p.classList.add("active");
         renderCatalog();
       } else if (rootRoute === "product") {
         const p = document.getElementById("view-product");
@@ -1469,6 +1737,7 @@
         const p = document.getElementById("view-home");
         if (p) p.classList.add("active");
         renderHomePinterestCollage();
+        renderCatalog();
       }
 
       window.scrollTo(0, 0);
@@ -1534,10 +1803,11 @@
     let isUserAuthenticated = false;
     const authLockedPanel = document.getElementById('theme-controls-auth-panel');
     const guestBanner = document.getElementById('theme-controls-guest-banner');
-    const navSettingsTab = document.getElementById('nav-settings-tab');
-    const navLoginTab = document.getElementById('nav-login-tab');
-    const homeSettingsBtn = document.getElementById('home-settings-btn');
-    const homeLoginBtn = document.getElementById('home-login-btn');
+    const navGuestLoginBtn = document.getElementById('nav-guest-login-btn');
+    const navAuthedProfileWrapper = document.getElementById('nav-authed-profile-wrapper');
+    const navProfileName = document.getElementById('nav-profile-name');
+    const navMenuUserName = document.getElementById('nav-menu-user-name');
+    const navMenuUserEmail = document.getElementById('nav-menu-user-email');
 
     function updateAuthGatedUI(isAuthenticated) {
       isUserAuthenticated = !!isAuthenticated;
@@ -1548,20 +1818,21 @@
         guestBanner.style.display = isUserAuthenticated ? 'none' : 'flex';
       }
 
-      // Dynamic top nav toggle: Log In tab for guests vs Settings tab for users
-      if (navSettingsTab) {
-        navSettingsTab.style.display = isUserAuthenticated ? 'inline-flex' : 'none';
+      // Dynamic top nav toggle: Log In button for guests vs User Profile Dropdown on the right for signed-in users
+      if (navGuestLoginBtn) {
+        navGuestLoginBtn.style.display = isUserAuthenticated ? 'none' : 'inline-flex';
       }
-      if (navLoginTab) {
-        navLoginTab.style.display = isUserAuthenticated ? 'none' : 'inline-flex';
+      if (navAuthedProfileWrapper) {
+        navAuthedProfileWrapper.style.display = isUserAuthenticated ? 'inline-block' : 'none';
       }
 
-      // Dynamic home action buttons
-      if (homeSettingsBtn) {
-        homeSettingsBtn.style.display = isUserAuthenticated ? 'inline-block' : 'none';
-      }
-      if (homeLoginBtn) {
-        homeLoginBtn.style.display = isUserAuthenticated ? 'none' : 'inline-block';
+      // Update name / email in dropdown
+      if (currentUser && isUserAuthenticated) {
+        const name = currentUser.displayName || (currentUser.providerData && currentUser.providerData[0]?.displayName) || "User";
+        const email = currentUser.email || (currentUser.providerData && currentUser.providerData[0]?.email) || "";
+        if (navProfileName) navProfileName.textContent = name;
+        if (navMenuUserName) navMenuUserName.textContent = name;
+        if (navMenuUserEmail) navMenuUserEmail.textContent = email;
       }
 
       // Re-evaluate current active route styling

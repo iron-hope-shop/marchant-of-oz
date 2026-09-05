@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] - 2026-09-05
 
 ### Added
+- **Unified Storefront (Amazon + Pinterest + Walmart Experience)**:
+  - Merged Home and Shop into a single, seamless, high-engagement storefront page.
+  - Flash Sale deal ribbon with animated gradient highlights and discount callouts.
+  - Curated Hero promo with instant catalog smooth-scrolling.
+  - Interactive Pinterest-style masonry discovery collage with real-time category filter synchronization.
+  - Full structured product shelf catalog embedded directly on the main page.
+- **Top Navigation User Avatar Dropdown & Guest Action**:
+  - Relocated user profile to the far right of the top navigation.
+  - When authenticated: Displays the user's Google/Custom avatar with an interactive dropdown menu providing quick access to Theme Customization, Account Settings, General Preferences, and Sign Out.
+  - When guest: Replaces avatar with a prominent Google Sign-In button.
+- **Universal Auth Modal & Read-Only Access Gate**:
+  - Added `#auth-prompt-modal` dialog that appears seamlessly when guests try to access restricted account/theme capabilities.
+  - Retained read-only previews with clear lock callouts for signed-out visitors.
+- Incremented build version to `v1.0.8-46` in `public/version.json` and UI watermarks.
+- Updated unit test suite in `tests/test_deploy.py` to assert unified storefront elements, right-aligned avatar dropdown, and universal auth prompt modal.
 - **Pinterest-Style Masonry Shopping Collage on Home**:
   - Replaced legacy empty state / welcome message with a Pinterest-inspired responsive masonry feed (`.pinterest-collage`, `.collage-pin`).
   - Varying pin card heights (`tall`, `medium`, `compact`, `featured`), vibrant gradient backdrops, categories, custom tags (`Bestseller`, `Handmade`, `Steampunk`, `Ambient Glow`), and quick-add overlay actions.
