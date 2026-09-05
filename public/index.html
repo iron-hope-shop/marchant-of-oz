@@ -121,7 +121,158 @@
       background-color: var(--primary-subtle);
     }
 
-    /* E-commerce Catalog Grid & Cards */
+    /* Pinterest-Style Shopping Collage / Masonry Styles */
+    .pinterest-collage {
+      columns: 3 240px;
+      column-gap: var(--space-4);
+      width: 100%;
+    }
+
+    .collage-pin {
+      break-inside: avoid;
+      margin-bottom: var(--space-4);
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-6);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+      cursor: pointer;
+    }
+
+    .collage-pin:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-3);
+      border-color: var(--primary);
+    }
+
+    .collage-pin-media {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      user-select: none;
+      transition: opacity var(--transition-fast);
+    }
+
+    .collage-pin-media.tall {
+      height: 280px;
+      background: linear-gradient(145deg, var(--bg-element), var(--primary-subtle));
+      font-size: 4.5rem;
+    }
+
+    .collage-pin-media.medium {
+      height: 200px;
+      background: linear-gradient(135deg, var(--bg-surface), var(--bg-element));
+      font-size: 3.5rem;
+    }
+
+    .collage-pin-media.compact {
+      height: 140px;
+      background: linear-gradient(120deg, var(--primary-subtle), var(--bg-element));
+      font-size: 2.8rem;
+    }
+
+    .collage-pin-media.featured {
+      height: 240px;
+      background: radial-gradient(circle at top right, var(--primary-subtle), var(--bg-surface));
+      font-size: 4rem;
+    }
+
+    .collage-pin-overlay {
+      position: absolute;
+      top: var(--space-2);
+      right: var(--space-2);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+
+    .collage-pin:hover .collage-pin-overlay {
+      opacity: 1;
+    }
+
+    .collage-pin-body {
+      padding: var(--space-3) var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1-5);
+    }
+
+    .collage-pin-tag {
+      font-size: var(--font-size-1);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .collage-pin-title {
+      margin: 0;
+      font-size: var(--font-size-4);
+      font-weight: 700;
+      line-height: var(--line-height-3);
+    }
+
+    .collage-pin-desc {
+      margin: 0;
+      color: var(--color-text-subtle);
+      font-size: var(--font-size-2);
+      line-height: var(--line-height-2);
+    }
+
+    .collage-pin-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: var(--space-2);
+      padding-top: var(--space-2);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .hero-collage-banner {
+      background: linear-gradient(135deg, var(--bg-surface), var(--primary-subtle));
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-8);
+      padding: var(--space-6) var(--space-8);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Filter pills on Home */
+    .collage-filters {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      overflow-x: auto;
+      padding-bottom: var(--space-1);
+    }
+
+    .collage-filter-btn {
+      padding: var(--space-1-5) var(--space-3-5);
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-subtle);
+      background-color: var(--bg-surface);
+      color: var(--color-text-subtle);
+      font-size: var(--font-size-3);
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--transition-fast);
+    }
+
+    .collage-filter-btn:hover {
+      border-color: var(--primary);
+      color: var(--color-text);
+    }
+
+    .collage-filter-btn.active {
+      background-color: var(--primary);
+      color: var(--primary-text);
+      border-color: var(--primary);
+    }
+
+    /* Product Grid for Catalog */
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -169,7 +320,19 @@
       box-shadow: var(--shadow-1);
     }
 
+    @media (max-width: 900px) {
+      .pinterest-collage {
+        columns: 2 200px;
+      }
+    }
+
     @media (max-width: 640px) {
+      .pinterest-collage {
+        columns: 1 100%;
+      }
+      .hero-collage-banner {
+        padding: var(--space-4);
+      }
       .t-drawer-layout {
         flex-direction: column;
       }
@@ -458,18 +621,11 @@
           if (userEmail) userEmail.textContent = email;
           
           updateAllAvatars();
-
-          if (homeUserWelcome) {
-            homeUserWelcome.textContent = `Welcome back, ${name}`;
-          }
           setAuthUIState(true);
         } else {
           if (loginSection) loginSection.style.display = "block";
           if (userProfile) userProfile.style.display = "none";
           updateAllAvatars();
-          if (homeUserWelcome) {
-            homeUserWelcome.textContent = "Welcome Home";
-          }
           setAuthUIState(false);
         }
       });
@@ -510,35 +666,45 @@
     <!-- Main Content Area -->
     <main class="app-main">
 
-      <!-- View 1: Home Screen -->
+      <!-- View 1: Home Screen (Pinterest-style E-Commerce Shopping Collage) -->
       <section id="view-home" class="view-panel active">
         <div class="t-ystack gap-6">
-          <div class="empty-state t-ystack ai-center gap-4">
-            <div class="t-avatar t-avatar-xl" style="background-color: var(--primary-subtle); color: var(--primary); font-size: var(--font-size-9);">
-              🏪
-            </div>
-            <div class="t-ystack ai-center gap-1">
-              <h2 id="home-user-welcome" style="margin: 0; font-size: var(--font-size-8); font-weight: 700;">Welcome Home</h2>
-              <p style="margin: 0; color: var(--color-text-subtle); max-width: 460px;">
-                Explore modern storefront products, manage your shopping cart, or customize themes after signing in.
+          
+          <!-- Hero Header Banner with Collage Inspiration -->
+          <div class="hero-collage-banner t-xstack ai-center jc-between flex-wrap gap-4">
+            <div class="t-ystack gap-2" style="max-width: 580px;">
+              <div class="t-xstack ai-center gap-2">
+                <span class="t-badge t-badge-primary">Curated Showcase</span>
+                <span class="t-badge t-badge-info">Masonry Feed</span>
+              </div>
+              <h1 style="margin: 0; font-size: var(--font-size-9); font-weight: 800; letter-spacing: -0.03em;">
+                Discover &amp; Collect
+              </h1>
+              <p style="margin: 0; color: var(--color-text-subtle); font-size: var(--font-size-4); line-height: var(--line-height-3);">
+                Explore curated items, trending artifacts, and design inspiration for your digital space. Tap any card to view specs or add instantly to your cart.
               </p>
             </div>
-            <div class="t-xstack ai-center gap-3" style="margin-top: var(--space-2);">
-              <a href="#/shop" class="t-btn t-btn-primary">Browse Catalog</a>
-              <a href="#/settings" class="t-btn t-btn-ghost" id="home-settings-btn" style="display: none;">Workspace Settings</a>
-              <a href="#/login" class="t-btn t-btn-subtle" id="home-login-btn">Log In</a>
+            <div class="t-xstack ai-center gap-3">
+              <a href="#/shop" class="t-btn t-btn-primary">All Products &rarr;</a>
+              <a href="#/cart" class="t-btn t-btn-subtle">Cart 🛒</a>
             </div>
           </div>
 
-          <!-- Quick Featured Promo -->
-          <div class="t-card t-xstack ai-center jc-between flex-wrap gap-4">
-            <div class="t-ystack gap-1">
-              <span class="t-badge t-badge-primary">Featured Spring Collection</span>
-              <h3 style="margin: var(--space-1) 0 0 0; font-size: var(--font-size-6);">Designed with Radix 12-Step Color Tokens</h3>
-              <p style="margin: 0; color: var(--color-text-subtle); font-size: var(--font-size-3);">Zero external dependencies. Dynamic colorway themes adapted directly from user preferences.</p>
-            </div>
-            <a href="#/shop" class="t-btn t-btn-primary">Shop Now &rarr;</a>
+          <!-- Category Filter Pills -->
+          <div class="collage-filters" id="collage-filter-bar">
+            <button class="collage-filter-btn active" data-filter="all">All Pins</button>
+            <button class="collage-filter-btn" data-filter="Apparel">Apparel</button>
+            <button class="collage-filter-btn" data-filter="Footwear">Footwear</button>
+            <button class="collage-filter-btn" data-filter="Accessories">Accessories</button>
+            <button class="collage-filter-btn" data-filter="Homeware">Homeware</button>
+            <button class="collage-filter-btn" data-filter="Lighting">Lighting</button>
           </div>
+
+          <!-- Pinterest-Style Masonry Grid -->
+          <div class="pinterest-collage" id="home-pinterest-grid">
+            <!-- Populated dynamically by JavaScript -->
+          </div>
+
         </div>
       </section>
 
@@ -856,7 +1022,7 @@
                 </div>
                 <div class="t-ystack gap-3">
                   <label style="font-size: var(--font-size-3); font-weight: 600;">Build Version</label>
-                  <input type="text" class="t-input" id="settings-build-tag" value="v1.0.6-44" readonly>
+                  <input type="text" class="t-input" id="settings-build-tag" value="v1.0.7-45" readonly>
                 </div>
               </div>
             </div>
@@ -868,7 +1034,7 @@
     </main>
 
     <!-- Subtle Bottom Build Stamp -->
-    <div class="build-watermark" id="build-tag">v1.0.6-44</div>
+    <div class="build-watermark" id="build-tag">v1.0.7-45</div>
 
   </div>
 
@@ -908,12 +1074,14 @@
     }
     loadBuildInfo();
 
-    // E-Commerce Catalog Data & Cart State
+    // E-Commerce Catalog Data & Extended Collage Artifacts
     const PRODUCTS = [
       {
         id: "prod-1",
         name: "Emerald Silk Robe",
         category: "Apparel",
+        tag: "Handmade",
+        aspect: "tall",
         price: 89.00,
         icon: "👘",
         description: "Luxurious pure silk robe tailored with fine craftsmanship and inspired by Emerald City elegance. Features lightweight breathable weave, waist tie, and deep side pockets."
@@ -922,6 +1090,8 @@
         id: "prod-2",
         name: "Ruby Crimson Slippers",
         category: "Footwear",
+        tag: "Bestseller",
+        aspect: "featured",
         price: 129.50,
         icon: "👠",
         description: "Iconic hand-finished glittering footwear built with ultra-cushioned memory foam soles and dazzling reflective sparkle."
@@ -930,6 +1100,8 @@
         id: "prod-3",
         name: "Mechanical Heart Chrono",
         category: "Accessories",
+        tag: "Steampunk",
+        aspect: "medium",
         price: 195.00,
         icon: "⚙️",
         description: "Steampunk-inspired mechanical clockwork pendant crafted with polished brass gears and precision movement."
@@ -938,6 +1110,8 @@
         id: "prod-4",
         name: "Golden Brick Brew Mug",
         category: "Homeware",
+        tag: "Artisan",
+        aspect: "compact",
         price: 24.00,
         icon: "☕",
         description: "Double-walled ceramic mug featuring metallic golden luster glaze. Keeps hot beverages piping hot for hours."
@@ -946,6 +1120,8 @@
         id: "prod-5",
         name: "Yellow Road Tote Bag",
         category: "Accessories",
+        tag: "Eco-Friendly",
+        aspect: "medium",
         price: 34.95,
         icon: "👜",
         description: "Heavy-duty organic canvas tote with reinforced handles, internal organizer pockets, and water-repellent coating."
@@ -954,11 +1130,45 @@
         id: "prod-6",
         name: "Prism Crystal Lantern",
         category: "Lighting",
+        tag: "Ambient Glow",
+        aspect: "tall",
         price: 78.00,
         icon: "🏮",
         description: "Ambient multi-color LED lantern with rechargeable battery, touch dimmer, and spectral refraction crystal glass."
+      },
+      {
+        id: "prod-7",
+        name: "Velvet Emerald Fedora",
+        category: "Apparel",
+        tag: "New Arrival",
+        aspect: "compact",
+        price: 64.00,
+        icon: "🎩",
+        description: "Bespoke wool velvet brim hat crafted with satin interior lining and golden brass buckle accent."
+      },
+      {
+        id: "prod-8",
+        name: "Copper Hourglass Timer",
+        category: "Homeware",
+        tag: "Collectible",
+        aspect: "tall",
+        price: 49.00,
+        icon: "⏳",
+        description: "Hand-blown borosilicate glass encased in antique brushed copper columns with obsidian black sand."
+      },
+      {
+        id: "prod-9",
+        name: "Aura Optical Sunglasses",
+        category: "Accessories",
+        tag: "UV400 Polarized",
+        aspect: "medium",
+        price: 85.00,
+        icon: "🕶️",
+        description: "Geometric lightweight titanium frames with gradient rainbow polarization and anti-scratch coating."
       }
     ];
+
+    let activeFilter = "all";
 
     let cart = [];
     const CART_STORAGE_KEY = "oz_cart_items";
@@ -1014,8 +1224,84 @@
       saveCart();
     }
 
+    // Render Pinterest-Style Collage on Home
+    function renderHomePinterestCollage() {
+      const grid = document.getElementById("home-pinterest-grid");
+      if (!grid) return;
+
+      const items = activeFilter === "all" ? PRODUCTS : PRODUCTS.filter(p => p.category === activeFilter);
+
+      grid.innerHTML = items.map(p => {
+        const aspectClass = p.aspect || "medium";
+        const tag = p.tag || p.category;
+        return `
+          <div class="collage-pin" onclick="location.hash='#/product/${p.id}'">
+            <div class="collage-pin-media ${aspectClass}">
+              <span>${p.icon}</span>
+              <div class="collage-pin-overlay">
+                <button class="t-btn t-btn-primary t-btn-sm" onclick="event.stopPropagation(); addToCart('${p.id}');" title="Quick Add">
+                  + Add
+                </button>
+              </div>
+            </div>
+            <div class="collage-pin-body">
+              <div class="t-xstack ai-center jc-between">
+                <span class="collage-pin-tag" style="color: var(--primary);">${tag}</span>
+                <span style="font-size: var(--font-size-2); color: var(--color-text-muted);">${p.category}</span>
+              </div>
+              <h3 class="collage-pin-title">${p.name}</h3>
+              <p class="collage-pin-desc">${p.description}</p>
+              <div class="collage-pin-footer">
+                <span style="font-weight: 700; font-size: var(--font-size-4); color: var(--color-text);">$${p.price.toFixed(2)}</span>
+                <div class="t-xstack ai-center gap-2">
+                  <a href="#/product/${p.id}" class="t-btn t-btn-ghost t-btn-sm" onclick="event.stopPropagation();">Inspect</a>
+                  <button class="t-btn t-btn-primary t-btn-sm" onclick="event.stopPropagation(); addToCart('${p.id}');">Buy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // Filter pill interactions on Home
+    const filterBar = document.getElementById("collage-filter-bar");
+    if (filterBar) {
+      filterBar.addEventListener("click", (e) => {
+        const btn = e.target.closest(".collage-filter-btn");
+        if (btn && btn.dataset.filter) {
+          activeFilter = btn.dataset.filter;
+          filterBar.querySelectorAll(".collage-filter-btn").forEach(b => {
+            b.classList.toggle("active", b === btn);
+          });
+          renderHomePinterestCollage();
+        }
+      });
+    }
+
     function renderCatalog() {
       const container = document.getElementById("products-catalog-container");
+      if (!container) return;
+      container.innerHTML = PRODUCTS.map(p => `
+        <div class="product-card" onclick="location.hash='#/product/${p.id}'">
+          <div class="product-img-box">${p.icon}</div>
+          <div class="t-ystack gap-2" style="padding: var(--space-4); flex: 1;">
+            <div class="t-xstack ai-center jc-between">
+              <span class="t-badge">${p.category}</span>
+              <span style="font-weight: 700; font-size: var(--font-size-5); color: var(--primary);">$${p.price.toFixed(2)}</span>
+            </div>
+            <h3 style="margin: 0; font-size: var(--font-size-5); font-weight: 700;">${p.name}</h3>
+            <p style="margin: 0; color: var(--color-text-subtle); font-size: var(--font-size-3); line-height: var(--line-height-3); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+              ${p.description}
+            </p>
+            <div class="t-xstack ai-center jc-between" style="margin-top: auto; padding-top: var(--space-2);">
+              <a href="#/product/${p.id}" class="t-btn t-btn-ghost t-btn-sm" onclick="event.stopPropagation();">Details</a>
+              <button class="t-btn t-btn-primary t-btn-sm" onclick="event.stopPropagation(); addToCart('${p.id}');">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
       if (!container) return;
       container.innerHTML = PRODUCTS.map(p => `
         <div class="product-card" onclick="location.hash='#/product/${p.id}'">
@@ -1125,6 +1411,13 @@
       const rootRoute = parts[0];
       const subParam = parts[1];
 
+      // Route Guarding: Lock all settings sub-routes if unauthenticated
+      if ((rootRoute === "settings" || rootRoute === "account") && !isUserAuthenticated) {
+        // Redirect unauthenticated guests to login / account auth panel
+        window.location.hash = "#/login";
+        return;
+      }
+
       // Highlight active navigation tab
       document.querySelectorAll("#main-nav-tabs .t-nav-tab").forEach(tab => {
         const routeAttr = tab.getAttribute("data-route");
@@ -1143,6 +1436,7 @@
       if (rootRoute === "home") {
         const p = document.getElementById("view-home");
         if (p) p.classList.add("active");
+        renderHomePinterestCollage();
       } else if (rootRoute === "shop") {
         const p = document.getElementById("view-shop");
         if (p) p.classList.add("active");
@@ -1160,7 +1454,9 @@
         if (p) p.classList.add("active");
         
         let subTab = "themes";
-        if (rootRoute === "account" || rootRoute === "login" || subParam === "account") {
+        if (rootRoute === "login") {
+          subTab = "account";
+        } else if (rootRoute === "account" || subParam === "account") {
           subTab = "account";
         } else if (subParam === "general") {
           subTab = "general";
@@ -1172,6 +1468,7 @@
         // Fallback to home
         const p = document.getElementById("view-home");
         if (p) p.classList.add("active");
+        renderHomePinterestCollage();
       }
 
       window.scrollTo(0, 0);
@@ -1180,6 +1477,7 @@
     window.addEventListener("hashchange", handleRoute);
     window.addEventListener("DOMContentLoaded", () => {
       loadCart();
+      renderHomePinterestCollage();
       renderCatalog();
       renderCartUI();
       handleRoute();

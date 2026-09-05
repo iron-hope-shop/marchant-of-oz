@@ -45,6 +45,16 @@ class TestDeploymentSetup(unittest.TestCase):
             self.assertIn('nav-login-tab', content)
             self.assertIn('nav-settings-tab', content)
             self.assertIn('handleRoute', content)
+            # Pinterest collage elements on home
+            self.assertIn('home-pinterest-grid', content)
+            self.assertIn('pinterest-collage', content)
+            self.assertIn('collage-pin', content)
+            self.assertIn('collage-filter-bar', content)
+            self.assertIn('hero-collage-banner', content)
+            # Route guard check
+            self.assertIn('if ((rootRoute === "settings" || rootRoute === "account") && !isUserAuthenticated)', content)
+            # Ensure "Welcome back" was removed from Home
+            self.assertNotIn('id="home-user-welcome"', content)
 
     def test_version_json_exists(self):
         self.assertTrue(os.path.exists('public/version.json'))

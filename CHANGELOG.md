@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] - 2026-09-05
 
 ### Added
+- **Pinterest-Style Masonry Shopping Collage on Home**:
+  - Replaced legacy empty state / welcome message with a Pinterest-inspired responsive masonry feed (`.pinterest-collage`, `.collage-pin`).
+  - Varying pin card heights (`tall`, `medium`, `compact`, `featured`), vibrant gradient backdrops, categories, custom tags (`Bestseller`, `Handmade`, `Steampunk`, `Ambient Glow`), and quick-add overlay actions.
+  - Interactive category filter bar (`All Pins`, `Apparel`, `Footwear`, `Accessories`, `Homeware`, `Lighting`) with real-time DOM filtering.
+  - Responsive column adaptations for multi-device viewports.
+- **Strict Route Guarding for Settings**:
+  - Enforced unauthenticated guest lock on all settings routes (`#/settings`, `#/settings/*`, `#/account`), redirecting guests cleanly to the Google Sign-In panel (`#/login`).
+  - Removed "Welcome Back [User]" and account action buttons from Home to present a clean, distraction-free guest storefront.
+- Incremented build version to `v1.0.7-45` in `public/version.json` and UI watermarks.
+- Updated unit test suite in `tests/test_deploy.py` to assert Pinterest masonry elements, category filter bar, and route guard redirects.
 - **E-Commerce Routing & Storefront System**:
   - Hash-based Single Page App (SPA) router supporting routes: `#/home`, `#/shop`, `#/product/:id`, `#/cart`, `#/settings`, `#/settings/themes`, `#/settings/account`, `#/settings/general`, `#/login`.
   - Product Catalog grid with categories, pricing, item cards, and direct "Add to Cart" / "Details" actions.
