@@ -64,9 +64,22 @@ class TestDeploymentSetup(unittest.TestCase):
             self.assertIn('store-sort-select', content)
             self.assertIn('getFilteredProducts', content)
             self.assertIn('resetStoreFilters', content)
-            self.assertIn('syncDiscoverChipsState', content)
             self.assertIn('feed-filter-indicator', content)
             self.assertIn('feed-empty-message', content)
+            # Dedicated Search Results Page (#/search)
+            self.assertIn('view-search', content)
+            self.assertIn('search-results-grid', content)
+            self.assertIn('executeSearch', content)
+            self.assertIn('renderSearchResults', content)
+            self.assertIn('resetSearchPageQuery', content)
+            # Interactive Discovery Mini-Games & Editorial Quote Cards
+            self.assertIn('lucky-spin-wheel', content)
+            self.assertIn('spinLuckyWheel', content)
+            self.assertIn('openMysteryBox', content)
+            self.assertIn('editorial-quote-card', content)
+            # Lucide SVG Icon System
+            self.assertIn('getLucideIconSvg', content)
+            self.assertIn('LUCIDE_ICONS', content)
             # Dynamic Walmart-style cart quantity stepper buttons
             self.assertIn('qty-stepper-btn', content)
             self.assertIn('qty-endcap-btn', content)

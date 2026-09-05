@@ -848,7 +848,147 @@
       user-select: none;
     }
 
-    /* Cookie Banner & Consent Management Overlay */
+    /* Enhanced Discovery & Engagement Widgets */
+    .widget-shelf-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-6);
+      padding: var(--space-4) var(--space-5);
+      box-shadow: var(--shadow-2);
+      transition: all var(--transition-normal);
+    }
+    .widget-shelf-card:hover {
+      border-color: var(--border-focus);
+      box-shadow: var(--shadow-3);
+    }
+
+    .editorial-quote-card {
+      background: radial-gradient(circle at top right, var(--primary-subtle), var(--bg-surface));
+      border: 1px dashed var(--primary);
+      border-radius: var(--radius-6);
+      padding: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-3);
+      position: relative;
+      overflow: hidden;
+    }
+    .editorial-quote-card::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      right: 16px;
+      font-size: 80px;
+      font-family: serif;
+      color: var(--primary);
+      opacity: 0.15;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .interactive-minigame-card {
+      background: linear-gradient(145deg, var(--bg-surface), var(--bg-element));
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-6);
+      padding: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: var(--space-3);
+      box-shadow: var(--shadow-2);
+      position: relative;
+      overflow: hidden;
+    }
+    .interactive-minigame-card.featured-spin {
+      border: 2px solid var(--primary);
+      background: radial-gradient(circle at center, var(--primary-subtle), var(--bg-surface));
+    }
+
+    .minigame-wheel {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 4px solid var(--primary);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: conic-gradient(
+        #3b82f6 0deg 60deg,
+        #10b981 60deg 120deg,
+        #f59e0b 120deg 180deg,
+        #ec4899 180deg 240deg,
+        #8b5cf6 240deg 300deg,
+        #06b6d4 300deg 360deg
+      );
+      box-shadow: var(--shadow-3);
+      transition: transform 3s cubic-bezier(0.15, 0.9, 0.2, 1);
+    }
+    .minigame-wheel-center {
+      width: 50px;
+      height: 50px;
+      background: var(--bg-surface);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-2);
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--primary);
+      border: 2px solid var(--border-subtle);
+    }
+    .minigame-pointer {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 14px solid var(--color-red-9);
+      z-index: 2;
+    }
+
+    .mystery-box-item {
+      background: var(--bg-element);
+      border: 2px dashed var(--border-subtle);
+      border-radius: var(--radius-5);
+      padding: var(--space-4);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      transition: all var(--transition-fast);
+      user-select: none;
+      min-height: 120px;
+    }
+    .mystery-box-item:hover {
+      border-color: var(--primary);
+      transform: scale(1.03);
+      background: var(--primary-subtle);
+    }
+    .mystery-box-item.opened {
+      border-style: solid;
+      border-color: var(--color-green-9);
+      background: var(--bg-surface);
+      cursor: default;
+      transform: none;
+    }
+
+    .icon-svg {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
     .cookie-banner {
       position: fixed;
       bottom: var(--space-4);
@@ -1351,10 +1491,12 @@
       <!-- Center: Integrated Top Navigation Search Bar with Expandable Overlay -->
       <div class="nav-search-wrapper" id="nav-search-wrapper">
         <div class="nav-search-bar" id="nav-search-bar-box">
-          <span style="font-size: var(--font-size-3); margin-right: 4px; color: var(--color-text-muted);">🔍</span>
-          <input type="text" id="nav-search-input" class="nav-search-input" placeholder="Search 25+ products, tags, categories, styles..." autocomplete="off" />
+          <span class="icon-svg" style="width: 16px; height: 16px; margin-right: 6px; color: var(--color-text-muted);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </span>
+          <input type="text" id="nav-search-input" class="nav-search-input" placeholder="Search 26+ products, tags, categories, styles (Press Enter)..." autocomplete="off" />
           <button type="button" id="nav-search-clear" class="nav-search-clear-btn" title="Clear search">&times;</button>
-          <span class="nav-search-badge" id="nav-search-count-badge">25+ items</span>
+          <span class="nav-search-badge" id="nav-search-count-badge">26 items</span>
         </div>
 
         <!-- Expandable Autocomplete Overlay Menu (Suggestions, Categories, Ideas & Trending) -->
@@ -1362,40 +1504,40 @@
           <!-- Suggested Search Terms & Ideas -->
           <div class="t-ystack gap-2">
             <div class="search-section-header">
-              <span>💡 Trending Ideas &amp; Styles</span>
-              <span style="font-size: 11px; font-weight: normal; text-transform: none; color: var(--color-text-muted);">Click to filter</span>
+              <span>Trending Styles &amp; Queries</span>
+              <span style="font-size: 11px; font-weight: normal; text-transform: none; color: var(--color-text-muted);">Press to search</span>
             </div>
             <div class="search-tags-grid" id="search-trending-ideas">
-              <button class="search-suggestion-pill" data-search="emerald">💎 Emerald Luxe</button>
-              <button class="search-suggestion-pill" data-search="steampunk">⚙️ Steampunk Gear</button>
-              <button class="search-suggestion-pill" data-search="ruby">👠 Ruby Sparkle</button>
-              <button class="search-suggestion-pill" data-search="artisan">🏺 Handcrafted</button>
-              <button class="search-suggestion-pill" data-search="lighting">🏮 Ambient Glow</button>
-              <button class="search-suggestion-pill" data-search="cyberpunk">⚡ Cyber Neon</button>
-              <button class="search-suggestion-pill" data-search="sale">🔥 Under $50</button>
-              <button class="search-suggestion-pill" data-search="collectible">🏆 Collectibles</button>
+              <button class="search-suggestion-pill" data-search="emerald">Emerald Luxe</button>
+              <button class="search-suggestion-pill" data-search="steampunk">Steampunk Gear</button>
+              <button class="search-suggestion-pill" data-search="ruby">Ruby Sparkle</button>
+              <button class="search-suggestion-pill" data-search="artisan">Handcrafted</button>
+              <button class="search-suggestion-pill" data-search="lighting">Ambient Glow</button>
+              <button class="search-suggestion-pill" data-search="cyberpunk">Cyber Neon</button>
+              <button class="search-suggestion-pill" data-search="sale">Under $50</button>
+              <button class="search-suggestion-pill" data-search="collectible">Collectibles</button>
             </div>
           </div>
 
           <!-- Quick Category Portals -->
           <div class="t-ystack gap-2">
             <div class="search-section-header">
-              <span>📂 Browse Department</span>
+              <span>Browse Department</span>
             </div>
             <div class="search-tags-grid" id="search-category-shortcuts">
-              <button class="search-suggestion-pill" data-category="all">✨ All Departments</button>
-              <button class="search-suggestion-pill" data-category="Apparel">👗 Apparel &amp; Fashion</button>
-              <button class="search-suggestion-pill" data-category="Footwear">👟 Footwear</button>
-              <button class="search-suggestion-pill" data-category="Accessories">👜 Accessories &amp; Tech</button>
-              <button class="search-suggestion-pill" data-category="Homeware">☕ Homeware &amp; Decor</button>
-              <button class="search-suggestion-pill" data-category="Lighting">🏮 Lighting &amp; FX</button>
+              <button class="search-suggestion-pill" data-category="all">All Departments</button>
+              <button class="search-suggestion-pill" data-category="Apparel">Apparel &amp; Fashion</button>
+              <button class="search-suggestion-pill" data-category="Footwear">Footwear</button>
+              <button class="search-suggestion-pill" data-category="Accessories">Accessories &amp; Tech</button>
+              <button class="search-suggestion-pill" data-category="Homeware">Homeware &amp; Decor</button>
+              <button class="search-suggestion-pill" data-category="Lighting">Lighting &amp; FX</button>
             </div>
           </div>
 
           <!-- Live Top Matches Preview -->
           <div class="t-ystack gap-1" id="search-quick-matches-section">
             <div class="search-section-header">
-              <span>⚡ Popular Products</span>
+              <span>Instant Catalog Matches</span>
               <span id="search-matches-count" style="font-size: 11px; font-weight: normal; color: var(--color-text-muted);">Instant picks</span>
             </div>
             <div class="t-ystack gap-1" id="search-quick-matches-list">
@@ -1445,17 +1587,23 @@
                 <div style="font-size: var(--font-size-1); color: var(--color-text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" id="nav-menu-user-email">user@example.com</div>
               </div>
               <a href="#/settings/themes" class="nav-menu-item" onclick="closeNavProfileMenu();">
-                <span>🎨</span> Theme &amp; Appearance
+                <span class="icon-svg" style="width: 16px; height: 16px; color: var(--primary);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg></span> Theme &amp; Appearance
+              </a>
+              <a href="#/settings/inventory" class="nav-menu-item" onclick="closeNavProfileMenu();">
+                <span class="icon-svg" style="width: 16px; height: 16px; color: var(--primary);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span> Storefront CMS &amp; Stock
+              </a>
+              <a href="#/settings/privacy" class="nav-menu-item" onclick="closeNavProfileMenu();">
+                <span class="icon-svg" style="width: 16px; height: 16px; color: var(--primary);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span> Privacy &amp; Cookies
               </a>
               <a href="#/settings/account" class="nav-menu-item" onclick="closeNavProfileMenu();">
-                <span>👤</span> Account Settings
+                <span class="icon-svg" style="width: 16px; height: 16px; color: var(--primary);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Account Settings
               </a>
               <a href="#/settings/general" class="nav-menu-item" onclick="closeNavProfileMenu();">
-                <span>⚙️</span> General Settings
+                <span class="icon-svg" style="width: 16px; height: 16px; color: var(--primary);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span> General Settings
               </a>
               <div class="t-separator" style="margin: var(--space-1) 0;"></div>
               <button class="nav-menu-item danger" id="nav-menu-signout-btn" style="width: 100%;">
-                <span>🚪</span> Sign Out
+                <span class="icon-svg" style="width: 16px; height: 16px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span> Sign Out
               </button>
             </div>
           </div>
@@ -1479,7 +1627,7 @@
               <span style="font-size: 11px; color: var(--color-text-muted);">Ads by Oz Network</span>
             </div>
             <a href="#/cart" class="ad-banner-content">
-              <div class="ad-creative-media">✨</div>
+              <div class="ad-creative-media">${getLucideIconSvg("sparkles", 24)}</div>
               <div class="ad-text-wrap">
                 <span class="ad-headline">Emerald Cloud Supercard - Earn 5% Cashback on All Oz Handcrafted Artifacts</span>
                 <span class="ad-body-text">Apply in 60 seconds with zero annual fees. Instant approval &amp; $50 bonus checkout credit.</span>
@@ -1510,12 +1658,85 @@
                 Explore, Collect &amp; Shop
               </h1>
               <p style="margin: 0; color: var(--color-text-subtle); font-size: var(--font-size-4); line-height: var(--line-height-3);">
-                Browse 25+ handcrafted Oz treasures, inspiration pins, and boutique artifacts in a continuous, fluid masonry stream.
+                Browse 25+ handcrafted Oz treasures, inspiration pins, interactive discovery rewards, and boutique artifacts in a continuous, fluid masonry stream.
               </p>
             </div>
             <div class="t-xstack ai-center gap-3">
-              <a href="#/cart" class="t-btn t-btn-primary">View Cart 🛒</a>
-              <button class="t-btn t-btn-subtle" onclick="openNavSearchDropdown(); document.getElementById('nav-search-input').focus();">Search Store 🔍</button>
+              <a href="#/cart" class="t-btn t-btn-primary" style="display: inline-flex; align-items: center; gap: 6px;">
+                <span class="icon-svg" style="width: 16px; height: 16px;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                </span>
+                View Cart
+              </a>
+              <button class="t-btn t-btn-subtle" onclick="openNavSearchDropdown(); document.getElementById('nav-search-input').focus();" style="display: inline-flex; align-items: center; gap: 6px;">
+                <span class="icon-svg" style="width: 16px; height: 16px;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </span>
+                Search Store
+              </button>
+            </div>
+          </div>
+
+          <!-- Interactive Gamification & Discovery Widgets Grid -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4);" id="home-interactive-widgets">
+            <!-- Mini-Game: Spin the Emerald Wheel -->
+            <div class="interactive-minigame-card featured-spin">
+              <div class="t-xstack ai-center jc-between w-full">
+                <span class="t-badge t-badge-primary">Daily Mini-Game</span>
+                <span style="font-size: 11px; font-weight: 700; color: var(--primary);">Instant Checkout Promo</span>
+              </div>
+              <h3 style="margin: 0; font-size: var(--font-size-5); font-weight: 800;">Spin the Fortune Wheel</h3>
+              <p style="margin: 0; font-size: var(--font-size-2); color: var(--color-text-subtle);">
+                Test your luck today to win up to <strong>30% OFF</strong> promo codes or free air delivery on your order!
+              </p>
+              
+              <div style="position: relative; margin: var(--space-2) 0;">
+                <div class="minigame-pointer"></div>
+                <div class="minigame-wheel" id="lucky-spin-wheel">
+                  <div class="minigame-wheel-center">OZ</div>
+                </div>
+              </div>
+
+              <div id="wheel-result-msg" style="min-height: 20px; font-size: var(--font-size-2); font-weight: 700; color: var(--primary);"></div>
+              <button class="t-btn t-btn-primary t-btn-sm" id="spin-wheel-btn" onclick="spinLuckyWheel();" style="width: 100%;">
+                Spin Now (Free Daily Chance)
+              </button>
+            </div>
+
+            <!-- Mini-Game: Daily Mystery Artifact Box -->
+            <div class="interactive-minigame-card">
+              <div class="t-xstack ai-center jc-between w-full">
+                <span class="t-badge t-badge-info">Explorer Box</span>
+                <span style="font-size: 11px; font-weight: 700; color: var(--color-text-muted);">Pick 1 of 3</span>
+              </div>
+              <h3 style="margin: 0; font-size: var(--font-size-5); font-weight: 800;">Daily Mystery Gift</h3>
+              <p style="margin: 0; font-size: var(--font-size-2); color: var(--color-text-subtle);">
+                Unbox rare collector coins, VIP shipping tiers, or $15 mystery credits.
+              </p>
+
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); width: 100%; margin: var(--space-2) 0;" id="mystery-boxes-row">
+                <div class="mystery-box-item" onclick="openMysteryBox(1, this);">
+                  <div id="mbox-icon-1" class="icon-svg" style="width: 32px; height: 32px; color: var(--primary);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                  </div>
+                  <span style="font-size: 11px; font-weight: 700;">Box #1</span>
+                </div>
+                <div class="mystery-box-item" onclick="openMysteryBox(2, this);">
+                  <div id="mbox-icon-2" class="icon-svg" style="width: 32px; height: 32px; color: var(--primary);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                  </div>
+                  <span style="font-size: 11px; font-weight: 700;">Box #2</span>
+                </div>
+                <div class="mystery-box-item" onclick="openMysteryBox(3, this);">
+                  <div id="mbox-icon-3" class="icon-svg" style="width: 32px; height: 32px; color: var(--primary);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                  </div>
+                  <span style="font-size: 11px; font-weight: 700;">Box #3</span>
+                </div>
+              </div>
+
+              <div id="mystery-result-msg" style="min-height: 20px; font-size: var(--font-size-2); font-weight: 700; color: var(--color-green-11);"></div>
+              <button class="t-btn t-btn-ghost t-btn-sm" onclick="resetMysteryBoxes();" style="width: 100%;">Reset Box Game</button>
             </div>
           </div>
 
@@ -1535,14 +1756,14 @@
             <div class="discovery-controls-row">
               <div class="trending-tags-wrap" id="trending-tags-container">
                 <span style="font-size: var(--font-size-1); font-weight: 700; color: var(--color-text-muted); text-transform: uppercase;">Discover:</span>
-                <button class="trending-tag-pill" data-query="sparkle">✨ Sparkle</button>
-                <button class="trending-tag-pill" data-query="steampunk">⚙️ Steampunk</button>
-                <button class="trending-tag-pill" data-query="emerald">💎 Emerald</button>
-                <button class="trending-tag-pill" data-query="artisan">🏺 Artisan</button>
-                <button class="trending-tag-pill" data-query="lighting">🏮 Glow</button>
-                <button class="trending-tag-pill" data-query="cyberpunk">⚡ Cyberpunk</button>
-                <button class="trending-tag-pill" data-query="sale">🔥 Under $50</button>
-                <button class="trending-tag-pill" data-query="collectible">🏆 Collectible</button>
+                <button class="trending-tag-pill" data-query="sparkle">Sparkle</button>
+                <button class="trending-tag-pill" data-query="steampunk">Steampunk</button>
+                <button class="trending-tag-pill" data-query="emerald">Emerald</button>
+                <button class="trending-tag-pill" data-query="artisan">Artisan</button>
+                <button class="trending-tag-pill" data-query="lighting">Glow</button>
+                <button class="trending-tag-pill" data-query="cyberpunk">Cyberpunk</button>
+                <button class="trending-tag-pill" data-query="sale">Under $50</button>
+                <button class="trending-tag-pill" data-query="collectible">Collectible</button>
               </div>
 
               <div class="t-xstack ai-center gap-2">
@@ -1562,7 +1783,7 @@
             <div class="section-heading-row">
               <div class="t-xstack ai-center gap-2">
                 <h2 style="margin: 0; font-size: var(--font-size-6); font-weight: 700;" id="feed-heading-title">Live Discovery Stream</h2>
-                <span class="t-badge t-badge-primary" id="feed-count-badge">9 Items in Store</span>
+                <span class="t-badge t-badge-primary" id="feed-count-badge">26 Items in Store</span>
               </div>
               <span style="font-size: var(--font-size-2); color: var(--color-text-muted);" id="feed-filter-indicator">Showing all items</span>
             </div>
@@ -1574,7 +1795,9 @@
 
             <!-- Empty Search State -->
             <div id="feed-empty-message" class="feed-empty-state" style="display: none;">
-              <span style="font-size: 2.5rem;">🔍</span>
+              <div class="icon-svg" style="width: 48px; height: 48px; margin-bottom: 8px; color: var(--color-text-muted);">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              </div>
               <h3 style="margin: var(--space-2) 0 var(--space-1) 0; font-size: var(--font-size-5);">No matching items found</h3>
               <p style="margin: 0 0 var(--space-4) 0; color: var(--color-text-subtle); font-size: var(--font-size-3);">Try searching for different keywords, categories, or clearing active filters.</p>
               <button class="t-btn t-btn-primary t-btn-sm" onclick="resetStoreFilters();">Reset Filters</button>
@@ -1588,7 +1811,7 @@
                 <h2 style="margin: 0; font-size: var(--font-size-6); font-weight: 700;">Catalog Shelf</h2>
                 <p style="margin: 2px 0 0 0; color: var(--color-text-subtle); font-size: var(--font-size-2);">Instant shelf view with specifications and cart additions.</p>
               </div>
-              <span class="t-badge t-badge-info" id="catalog-count-badge">9 Items in Store</span>
+              <span class="t-badge t-badge-info" id="catalog-count-badge">26 Items in Store</span>
             </div>
 
             <!-- Product Grid -->
@@ -1606,7 +1829,11 @@
               <span style="font-size: 11px; color: var(--color-text-muted);">Ad Feedback &#9432;</span>
             </div>
             <a href="#/cart" class="ad-banner-content">
-              <div class="ad-creative-media" style="background: linear-gradient(135deg, #FBBC05, #EA4335);">🎁</div>
+              <div class="ad-creative-media" style="background: linear-gradient(135deg, #FBBC05, #EA4335);">
+                <div class="icon-svg" style="width: 24px; height: 24px; color: #fff;">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                </div>
+              </div>
               <div class="ad-text-wrap">
                 <span class="ad-headline">Free Next-Day Air Express Shipping on Orders Over $50</span>
                 <span class="ad-body-text">Upgrade your delivery speed automatically with Oz Prime Dispatch. Guaranteed arrival or full refund.</span>
@@ -1615,6 +1842,72 @@
             </a>
           </div>
 
+        </div>
+      </section>
+
+      <!-- View 2: Dedicated Search Results Page -->
+      <section id="view-search" class="view-panel">
+        <div class="t-ystack gap-6">
+          <div class="t-card t-ystack gap-4">
+            <div class="t-xstack ai-center jc-between flex-wrap gap-3">
+              <div class="t-ystack gap-1">
+                <div class="t-xstack ai-center gap-2">
+                  <span class="t-badge t-badge-primary">Search Results</span>
+                  <span id="search-page-query-badge" class="t-badge t-badge-info">Query: all</span>
+                </div>
+                <h1 style="margin: 0; font-size: var(--font-size-8); font-weight: 800;" id="search-page-heading">Search Results</h1>
+                <p style="margin: 0; color: var(--color-text-subtle); font-size: var(--font-size-3);" id="search-page-subheading">
+                  Showing matching handcrafted artifacts, collections, and catalog items.
+                </p>
+              </div>
+              <div class="t-xstack ai-center gap-2">
+                <a href="#/home" class="t-btn t-btn-ghost t-btn-sm">&larr; Back to Store</a>
+                <button class="t-btn t-btn-subtle t-btn-sm" onclick="resetSearchPageQuery();">Clear Search</button>
+              </div>
+            </div>
+
+            <!-- Search Page Filter Bar -->
+            <div class="t-separator"></div>
+            <div class="t-xstack ai-center jc-between flex-wrap gap-3">
+              <div class="t-xstack ai-center gap-2 flex-wrap" id="search-page-dept-filters">
+                <button class="collage-filter-btn active" data-search-filter="all">All Departments</button>
+                <button class="collage-filter-btn" data-search-filter="Apparel">Apparel</button>
+                <button class="collage-filter-btn" data-search-filter="Footwear">Footwear</button>
+                <button class="collage-filter-btn" data-search-filter="Accessories">Accessories</button>
+                <button class="collage-filter-btn" data-search-filter="Homeware">Homeware</button>
+                <button class="collage-filter-btn" data-search-filter="Lighting">Lighting</button>
+              </div>
+              <div class="t-xstack ai-center gap-2">
+                <label for="search-page-sort" style="font-size: var(--font-size-2); color: var(--color-text-muted);">Sort:</label>
+                <select id="search-page-sort" class="sort-filter-select" onchange="handleSearchPageSortChange(this.value);">
+                  <option value="featured">Best Matches</option>
+                  <option value="price-asc">Price: Low to High</option>
+                  <option value="price-desc">Price: High to Low</option>
+                  <option value="name-asc">Alphabetical (A-Z)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Search Results Grid -->
+          <div class="product-grid" id="search-results-grid">
+            <!-- Dynamically populated via JS -->
+          </div>
+
+          <!-- Empty Search State for Search View -->
+          <div id="search-page-empty-msg" class="feed-empty-state" style="display: none;">
+            <div class="icon-svg" style="width: 48px; height: 48px; margin-bottom: 8px; color: var(--color-text-muted);">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </div>
+            <h3 style="margin: var(--space-2) 0 var(--space-1) 0; font-size: var(--font-size-6);">No matching results found</h3>
+            <p style="margin: 0 0 var(--space-4) 0; color: var(--color-text-subtle); font-size: var(--font-size-3);" id="search-empty-feedback">
+              We couldn't find any items matching your search query. Try broader keywords or explore trending styles.
+            </p>
+            <div class="t-xstack jc-center gap-2">
+              <button class="t-btn t-btn-primary t-btn-sm" onclick="location.hash='#/home';">Back to Discovery Feed</button>
+              <button class="t-btn t-btn-subtle t-btn-sm" onclick="executeSearch('all');">View All Products</button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1673,7 +1966,9 @@
 
           <!-- Empty Cart State -->
           <div id="cart-empty-message" class="empty-state t-ystack ai-center gap-3" style="display: none;">
-            <span style="font-size: var(--font-size-9);">🛒</span>
+            <div class="icon-svg" style="width: 56px; height: 56px; color: var(--color-text-muted);">
+              <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+            </div>
             <p style="margin: 0; color: var(--color-text-subtle);">Your shopping cart is currently empty.</p>
             <a href="#/shop" class="t-btn t-btn-primary">Browse Products</a>
           </div>
@@ -1701,19 +1996,19 @@
           <aside class="t-drawer-nav" id="settings-drawer-nav">
             <span style="font-size: var(--font-size-2); font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); padding: var(--space-2) var(--space-3);">Settings</span>
             <a href="#/settings/themes" class="t-drawer-item active" data-settings-route="themes" style="text-decoration: none;">
-              <span>🎨</span> Themes
+              <span class="icon-svg" style="width: 16px; height: 16px; color: var(--primary);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg></span> Themes
             </a>
             <a href="#/settings/inventory" class="t-drawer-item" data-settings-route="inventory" style="text-decoration: none;">
-              <span>📦</span> CMS &amp; Inventory
+              <span class="icon-svg" style="width: 16px; height: 16px; color: var(--primary);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span> CMS &amp; Inventory
             </a>
             <a href="#/settings/privacy" class="t-drawer-item" data-settings-route="privacy" style="text-decoration: none;">
-              <span>🍪</span> Privacy &amp; Cookies
+              <span class="icon-svg" style="width: 16px; height: 16px; color: var(--primary);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span> Privacy &amp; Cookies
             </a>
             <a href="#/settings/account" class="t-drawer-item" data-settings-route="account" style="text-decoration: none;">
-              <span>👤</span> Account
+              <span class="icon-svg" style="width: 16px; height: 16px; color: var(--primary);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Account
             </a>
             <a href="#/settings/general" class="t-drawer-item" data-settings-route="general" style="text-decoration: none;">
-              <span>⚙️</span> General
+              <span class="icon-svg" style="width: 16px; height: 16px; color: var(--primary);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span> General
             </a>
           </aside>
 
@@ -1766,15 +2061,15 @@
               <div class="t-card t-ystack gap-6">
                 <div class="t-xstack ai-center jc-between t-card-header">
                   <div>
-                    <h2 class="t-card-title">📦 Storefront CMS &amp; Inventory Management</h2>
+                    <h2 class="t-card-title">Storefront CMS &amp; Inventory Management</h2>
                     <p class="t-card-subtitle">Live stock ledger, SKU management, price editing, and static storage bucket synchronization.</p>
                   </div>
                   <div class="t-xstack ai-center gap-2">
-                    <button class="t-btn t-btn-subtle t-btn-sm" id="cms-sync-bucket-btn">
-                      <span>☁️</span> Sync Cloud Bucket
+                    <button class="t-btn t-btn-subtle t-btn-sm" id="cms-sync-bucket-btn" style="display: inline-flex; align-items: center; gap: 4px;">
+                      <span class="icon-svg" style="width: 14px; height: 14px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></span> Sync Cloud Bucket
                     </button>
-                    <button class="t-btn t-btn-primary t-btn-sm" id="cms-add-product-btn">
-                      <span>➕</span> New SKU
+                    <button class="t-btn t-btn-primary t-btn-sm" id="cms-add-product-btn" style="display: inline-flex; align-items: center; gap: 4px;">
+                      <span class="icon-svg" style="width: 14px; height: 14px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span> New SKU
                     </button>
                   </div>
                 </div>
@@ -2094,7 +2389,7 @@
                       <label style="font-size: var(--font-size-3); font-weight: 600;">Custom Profile Picture</label>
                       <label class="avatar-upload-dropzone t-xstack ai-center jc-center gap-2">
                         <input type="file" id="avatar-file-input" accept="image/jpeg,image/png,image/webp,image/gif" style="display: none;">
-                        <span>📷</span>
+                        <span class="icon-svg" style="width: 20px; height: 20px; color: var(--primary);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></span>
                         <span style="font-size: var(--font-size-3); color: var(--color-text-subtle);">Click to upload custom avatar (Sanitized Canvas / max 2MB)</span>
                       </label>
                       <div id="avatar-upload-error" style="color: var(--color-red-11); font-size: var(--font-size-2); min-height: 16px;"></div>
@@ -2144,8 +2439,8 @@
         <span class="t-badge t-badge-primary">Account Required</span>
         <button class="t-btn t-btn-ghost t-btn-sm" onclick="closeAuthModal();">&times;</button>
       </div>
-      <div class="t-avatar t-avatar-xl" style="background-color: var(--primary-subtle); color: var(--primary); font-size: var(--font-size-9); align-self: center;">
-        👤
+      <div class="t-avatar t-avatar-xl" style="background-color: var(--primary-subtle); color: var(--primary); font-size: var(--font-size-9); align-self: center; display: flex; align-items: center; justify-content: center;">
+        <span class="icon-svg" style="width: 40px; height: 40px;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
       </div>
       <div class="t-ystack gap-1">
         <h3 style="margin: 0; font-size: var(--font-size-7); font-weight: 700;">Sign in to Continue</h3>
@@ -2189,7 +2484,7 @@
   <div class="cookie-banner" id="cookie-banner-box">
     <div class="t-xstack ai-center jc-between gap-3">
       <div class="t-xstack ai-center gap-3">
-        <span style="font-size: 28px;">🍪</span>
+        <span class="icon-svg" style="width: 32px; height: 32px; color: var(--primary);"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 14v.01"/></svg></span>
         <div class="t-ystack gap-1">
           <span style="font-weight: 700; font-size: var(--font-size-4);">We value your shopping experience and privacy</span>
           <p style="margin: 0; font-size: var(--font-size-2); color: var(--color-text-subtle); line-height: 1.4;">
@@ -2206,6 +2501,49 @@
   </div>
 
   <script>
+    // Industry-leading Lucide SVG icon helper dictionary
+    const LUCIDE_ICONS = {
+      "robe": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
+      "slippers": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16v-2.38C4 11.5 5.5 10 8 10h8c2.5 0 4 1.5 4 3.62V16"/><path d="M2 17a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-1H2v1z"/></svg>`,
+      "gears": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+      "coffee": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M6 2v2"/><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`,
+      "bag": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
+      "lamp": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2v1"/><path d="M12 7a5 5 0 0 0-5 5c0 2 1.5 3.5 3 4.5v.5h4v-.5c1.5-1 3-2.5 3-4.5a5 5 0 0 0-5-5Z"/></svg>`,
+      "hat": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h20"/><path d="M5 18a7 7 0 0 1 14 0"/><path d="M6 18V8a6 6 0 0 1 12 0v10"/></svg>`,
+      "hourglass": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg>`,
+      "glasses": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="15" r="4"/><circle cx="18" cy="15" r="4"/><path d="M14 15a2 2 0 0 0-4 0"/><path d="M2.5 13 5 7c.7-1.3 1.4-2 3-2"/><path d="M21.5 13 19 7c-.7-1.3-1.4-2-3-2"/></svg>`,
+      "sneakers": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 13h6l1 2h7l2-2.5 1.5 1v3.5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-3a1 1 0 0 1 1.5-1Z"/><path d="M14 8l-3.5 5"/></svg>`,
+      "bulb": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>`,
+      "teapot": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10a6 6 0 0 1-12 0c0-2.5 2-4 6-4s6 1.5 6 4z"/><path d="M12 2v4"/><path d="M2 11c1 2 2 3 4 3"/><path d="M18 9c2.5 0 4 1 4 3s-1.5 3-4 3"/></svg>`,
+      "jacket": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10h12V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>`,
+      "watch": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83"/><path d="M7.49 6.65l.35-3.83a2 2 0 0 1 2-1.82h4.34a2 2 0 0 1 2 1.82l.35 3.83"/></svg>`,
+      "wine": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z"/></svg>`,
+      "sparkles": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>`,
+      "boots": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17v-4l4-8h6v8l6 3v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M4 14h16"/></svg>`,
+      "scarf": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h8"/></svg>`,
+      "torch": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m20 10-4 4"/><path d="m4 14 4-4"/><circle cx="17" cy="7" r="3"/><circle cx="7" cy="17" r="3"/></svg>`,
+      "key": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>`,
+      "plant": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-9"/><path d="M12 13a5 5 0 0 0-5-5c0 4 5 5 5 5Z"/><path d="M12 13a5 5 0 0 1 5-5c0 4-5 5-5 5Z"/></svg>`,
+      "sweater": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10h12V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>`,
+      "loafers": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14h18v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3z"/><path d="M3 14c1-4 3-6 7-6h4c4 0 6 2 7 6"/></svg>`,
+      "visor": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12a10 10 0 0 1 20 0v2H2v-2z"/><path d="M6 14v4"/><path d="M18 14v4"/></svg>`,
+      "moon": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`,
+      "runner": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/></svg>`,
+      "box": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>`,
+      "search": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>`,
+      "cart": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>`,
+      "gift": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></svg>`,
+      "rocket": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>`,
+      "credit-card": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>`,
+      "vr": `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-2.5a1.5 1.5 0 0 1-1.2-.6l-1.6-2.1a1.5 1.5 0 0 0-2.4 0l-1.6 2.1a1.5 1.5 0 0 1-1.2.6H6a3 3 0 0 1-3-3V8z"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/></svg>`
+    };
+
+    function getLucideIconSvg(iconKey, size = 24) {
+      const svgCode = LUCIDE_ICONS[iconKey] || LUCIDE_ICONS["box"];
+      return `<div class="icon-svg" style="width: ${size}px; height: ${size}px; display: inline-flex; align-items: center; justify-content: center;">${svgCode}</div>`;
+    }
+    window.getLucideIconSvg = getLucideIconSvg;
+
     // Load Internal Build Details
     async function loadBuildInfo() {
       try {
@@ -2233,7 +2571,7 @@
         tag: "Handmade",
         aspect: "tall",
         price: 89.00,
-        icon: "👘",
+        icon: "robe",
         description: "Luxurious pure silk robe tailored with fine craftsmanship and inspired by Emerald City elegance. Features lightweight breathable weave, waist tie, and deep side pockets."
       },
       {
@@ -2243,7 +2581,7 @@
         tag: "Bestseller",
         aspect: "featured",
         price: 129.50,
-        icon: "👠",
+        icon: "slippers",
         description: "Iconic hand-finished glittering footwear built with ultra-cushioned memory foam soles and dazzling reflective sparkle."
       },
       {
@@ -2253,7 +2591,7 @@
         tag: "Steampunk",
         aspect: "medium",
         price: 195.00,
-        icon: "⚙️",
+        icon: "gears",
         description: "Steampunk-inspired mechanical clockwork pendant crafted with polished brass gears and precision movement."
       },
       {
@@ -2263,7 +2601,7 @@
         tag: "Artisan",
         aspect: "compact",
         price: 24.00,
-        icon: "☕",
+        icon: "coffee",
         description: "Double-walled ceramic mug featuring metallic golden luster glaze. Keeps hot beverages piping hot for hours."
       },
       {
@@ -2273,7 +2611,7 @@
         tag: "Eco-Friendly",
         aspect: "medium",
         price: 34.95,
-        icon: "👜",
+        icon: "bag",
         description: "Heavy-duty organic canvas tote with reinforced handles, internal organizer pockets, and water-repellent coating."
       },
       {
@@ -2283,7 +2621,7 @@
         tag: "Ambient Glow",
         aspect: "tall",
         price: 78.00,
-        icon: "🏮",
+        icon: "lamp",
         description: "Ambient multi-color LED lantern with rechargeable battery, touch dimmer, and spectral refraction crystal glass."
       },
       {
@@ -2293,7 +2631,7 @@
         tag: "New Arrival",
         aspect: "compact",
         price: 64.00,
-        icon: "🎩",
+        icon: "hat",
         description: "Bespoke wool velvet brim hat crafted with satin interior lining and golden brass buckle accent."
       },
       {
@@ -2303,7 +2641,7 @@
         tag: "Collectible",
         aspect: "tall",
         price: 49.00,
-        icon: "⏳",
+        icon: "hourglass",
         description: "Hand-blown borosilicate glass encased in antique brushed copper columns with obsidian black sand."
       },
       {
@@ -2313,7 +2651,7 @@
         tag: "UV400 Polarized",
         aspect: "medium",
         price: 85.00,
-        icon: "🕶️",
+        icon: "glasses",
         description: "Geometric lightweight titanium frames with gradient rainbow polarization and anti-scratch coating."
       },
       {
@@ -2323,7 +2661,7 @@
         tag: "Cyberpunk",
         aspect: "tall",
         price: 145.00,
-        icon: "👟",
+        icon: "sneakers",
         description: "Streetwear high-top sneakers with embedded rechargeable electroluminescent neon piping and reactive shock soles."
       },
       {
@@ -2333,7 +2671,7 @@
         tag: "Artisan",
         aspect: "medium",
         price: 112.00,
-        icon: "💡",
+        icon: "bulb",
         description: "Natural raw Brazilian quartz crystal mounted in satin brass fixture with warm ambient twilight dimming."
       },
       {
@@ -2343,7 +2681,7 @@
         tag: "Handmade",
         aspect: "compact",
         price: 58.00,
-        icon: "🫖",
+        icon: "teapot",
         description: "Cast iron teapot with hammered matte obsidian finish, removable stainless steel micro-mesh infuser, and 24k gold trim."
       },
       {
@@ -2353,7 +2691,7 @@
         tag: "Weatherproof",
         aspect: "tall",
         price: 180.00,
-        icon: "🧥",
+        icon: "jacket",
         description: "Triple-layer breathable stormproof membrane with thermal down filling and magnetic storm-flap closures."
       },
       {
@@ -2363,7 +2701,7 @@
         tag: "Steampunk",
         aspect: "compact",
         price: 92.00,
-        icon: "⏱️",
+        icon: "watch",
         description: "Hand-wound skeleton movement pocketwatch with Roman numeral dial, vintage chain, and fob clip."
       },
       {
@@ -2373,7 +2711,7 @@
         tag: "Dining",
         aspect: "medium",
         price: 42.00,
-        icon: "🍷",
+        icon: "wine",
         description: "Pair of hand-blown emerald tinted crystal tumblers and matching decanter with natural solid oak stopper."
       },
       {
@@ -2383,7 +2721,7 @@
         tag: "Ambient Glow",
         aspect: "featured",
         price: 65.00,
-        icon: "🔮",
+        icon: "sparkles",
         description: "Dynamic fluid ripple projector casting soothing northern lights water-refraction patterns across your ceiling."
       },
       {
@@ -2393,7 +2731,7 @@
         tag: "Bestseller",
         aspect: "tall",
         price: 165.00,
-        icon: "🥾",
+        icon: "boots",
         description: "Full-grain oiled leather Chelsea boots featuring Goodyear-welted construction and rugged Vibram lug outsoles."
       },
       {
@@ -2403,7 +2741,7 @@
         tag: "Handmade",
         aspect: "compact",
         price: 38.00,
-        icon: "🧣",
+        icon: "scarf",
         description: "Cashmere-blend wrap scarf hand-embroidered with metallic gold celestial constellations and fringed hems."
       },
       {
@@ -2413,7 +2751,7 @@
         tag: "Steampunk",
         aspect: "tall",
         price: 88.00,
-        icon: "🔦",
+        icon: "bulb",
         description: "Industrial steam-era table lamp with articulated brass joints, heavy cast base, and amber filament bulb."
       },
       {
@@ -2423,7 +2761,7 @@
         tag: "Everyday Carry",
         aspect: "compact",
         price: 19.50,
-        icon: "🗝️",
+        icon: "key",
         description: "Aircraft-grade titanium carabiner key organizer with integrated 200-lumen USB-C rechargeable torch."
       },
       {
@@ -2433,7 +2771,7 @@
         tag: "Artisan",
         aspect: "medium",
         price: 45.00,
-        icon: "🪴",
+        icon: "plant",
         description: "Geometric dodecahedron stained-glass plant terrarium handcrafted with lead-free brass solder."
       },
       {
@@ -2443,7 +2781,7 @@
         tag: "New Arrival",
         aspect: "featured",
         price: 98.00,
-        icon: "🧶",
+        icon: "sweater",
         description: "Ultra-soft chunky merino wool knit sweater with relaxed drop-shoulder silhouette and ribbed collar."
       },
       {
@@ -2453,7 +2791,7 @@
         tag: "Handmade",
         aspect: "compact",
         price: 110.00,
-        icon: "👞",
+        icon: "loafers",
         description: "Plush emerald jewel-tone velvet slip-on dress loafers with quilted satin footbeds and leather soles."
       },
       {
@@ -2463,7 +2801,7 @@
         tag: "Cyberpunk",
         aspect: "tall",
         price: 52.00,
-        icon: "🥽",
+        icon: "visor",
         description: "Futuristic semi-translucent visor glasses with dichroic holographic shift and UV400 wrap-around lens."
       },
       {
@@ -2473,7 +2811,7 @@
         tag: "Ambient Glow",
         aspect: "tall",
         price: 135.00,
-        icon: "🌕",
+        icon: "moon",
         description: "Magnetic levitating 3D-printed moon orb that spins frictionlessly while glowing in three customizable color temperatures."
       },
       {
@@ -2483,7 +2821,7 @@
         tag: "Eco-Friendly",
         aspect: "medium",
         price: 68.00,
-        icon: "🧶",
+        icon: "runner",
         description: "Natural hand-loomed herringbone patterned jute floor runner with non-slip organic latex backing."
       }
     ];
@@ -2497,7 +2835,7 @@
         source: "Google Ads",
         desc: "Secure encrypted cloud storage for your 3D assets &amp; portfolio designs with ultra-fast global CDN delivery.",
         price: "$4.99/mo",
-        icon: "🚀",
+        iconKey: "rocket",
         gradient: "linear-gradient(135deg, #4285F4, #34A853)",
         cta: "Get Offer"
       },
@@ -2508,7 +2846,7 @@
         source: "Oz Network",
         desc: "Earn 5% unlimited cashback on all artisan orders and unlock complimentary express next-day shipping.",
         price: "0% APR",
-        icon: "💳",
+        iconKey: "credit-card",
         gradient: "linear-gradient(135deg, #FBBC05, #EA4335)",
         cta: "Apply Now"
       },
@@ -2519,11 +2857,246 @@
         source: "Google Cloud Partner",
         desc: "Collaborate in real-time 3D spatial design rooms. Start your 30-day team trial with zero hardware lock-in.",
         price: "Free Trial",
-        icon: "🥽",
+        iconKey: "vr",
         gradient: "linear-gradient(135deg, #9333ea, #3b82f6)",
         cta: "Try Free"
       }
     ];
+
+    // Editorial Weird/Fun Quote & Ad Cards for Infinite Curiosity & Exploration
+    const EDITORIAL_DISCOVERY_CARDS = [
+      {
+        quote: "Somewhere over the rainbow, skateboards are made of emerald glass and the wifi never drops.",
+        author: "Dispatch from Emerald City",
+        badge: "Oz Editorial",
+        theme: "artisan"
+      },
+      {
+        quote: "There is no place like checkout with a 30% discount code.",
+        author: "The Good Witch of E-Commerce",
+        badge: "Shopping Lore",
+        theme: "sale"
+      },
+      {
+        quote: "Pay no attention to the man behind the curtain; he is just configuring Radix color tokens.",
+        author: "Design Systems Bulletin",
+        badge: "Behind the Scenes",
+        theme: "tech"
+      }
+    ];
+
+    // Mini-Game: Fortune Wheel & Mystery Box Interactive Logic
+    let isWheelSpinning = false;
+    let wheelDeg = 0;
+    function spinLuckyWheel() {
+      if (isWheelSpinning) return;
+      isWheelSpinning = true;
+      const wheel = document.getElementById("lucky-spin-wheel");
+      const msgEl = document.getElementById("wheel-result-msg");
+      const spinBtn = document.getElementById("spin-wheel-btn");
+      if (msgEl) msgEl.textContent = "Spinning the Emerald Wheel of Fortune...";
+      if (spinBtn) spinBtn.disabled = true;
+
+      const randomExtraTurns = 5 + Math.floor(Math.random() * 5);
+      const randomSegment = Math.floor(Math.random() * 360);
+      wheelDeg += (randomExtraTurns * 360) + randomSegment;
+
+      if (wheel) {
+        wheel.style.transform = `rotate(${wheelDeg}deg)`;
+      }
+
+      setTimeout(() => {
+        isWheelSpinning = false;
+        if (spinBtn) spinBtn.disabled = false;
+        const rewards = [
+          "🎉 Winner! 25% OFF Coupon Applied: EMERALD25",
+          "✨ Jackpot! Free VIP Next-Day Air Express Shipping unlocked!",
+          "💎 Lucky Day! 15% OFF Storewide with code: OZLUCKY",
+          "🎁 Mystery Perk! $10 Credit applied to your cart!",
+          "🔥 Flash Perk! 30% OFF on all Lighting & Decor with code: GLOW30"
+        ];
+        const chosen = rewards[Math.floor(Math.random() * rewards.length)];
+        if (msgEl) msgEl.innerHTML = `<span style="color: var(--color-green-11);">${chosen}</span>`;
+        recordRetailMetric("minigame_wheel_spin", { prize: chosen, finalDegree: wheelDeg });
+      }, 3200);
+    }
+    window.spinLuckyWheel = spinLuckyWheel;
+
+    let mysteryBoxOpened = false;
+    function openMysteryBox(boxNum, boxEl) {
+      if (mysteryBoxOpened) return;
+      mysteryBoxOpened = true;
+      const resultMsg = document.getElementById("mystery-result-msg");
+      const iconEl = document.getElementById(`mbox-icon-${boxNum}`);
+      if (boxEl) boxEl.classList.add("opened");
+
+      const prizes = [
+        "Unboxed: 20% Instant Cart Discount Voucher!",
+        "Unboxed: Rare Collector Emerald Badge + $15 Credit!",
+        "Unboxed: Free Artisan Handcrafted Keychain with your next order!"
+      ];
+      const outcome = prizes[(boxNum - 1) % prizes.length];
+      if (iconEl) {
+        iconEl.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`;
+      }
+      if (resultMsg) {
+        resultMsg.innerHTML = `<span style="color: var(--color-green-11);">🎁 ${outcome}</span>`;
+      }
+      recordRetailMetric("minigame_mystery_box_opened", { boxNumber: boxNum, outcome });
+    }
+    window.openMysteryBox = openMysteryBox;
+
+    function resetMysteryBoxes() {
+      mysteryBoxOpened = false;
+      const resultMsg = document.getElementById("mystery-result-msg");
+      if (resultMsg) resultMsg.textContent = "";
+      for (let i = 1; i <= 3; i++) {
+        const box = document.getElementById(`mbox-icon-${i}`);
+        if (box && box.parentElement) {
+          box.parentElement.classList.remove("opened");
+          box.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>`;
+        }
+      }
+    }
+    window.resetMysteryBoxes = resetMysteryBoxes;
+
+    // Dedicated Search Results Page State & Handlers
+    let searchPageQuery = "";
+    let searchPageActiveFilter = "all";
+    let searchPageActiveSort = "featured";
+
+    function executeSearch(query) {
+      if (!query || !query.trim()) return;
+      const q = query.trim();
+      searchPageQuery = q;
+      searchPageActiveFilter = "all";
+      searchPageActiveSort = "featured";
+      closeNavSearchDropdown();
+      window.location.hash = `#/search?q=${encodeURIComponent(q)}`;
+    }
+    window.executeSearch = executeSearch;
+
+    function renderSearchResults() {
+      const grid = document.getElementById("search-results-grid");
+      const emptyMsg = document.getElementById("search-page-empty-msg");
+      const heading = document.getElementById("search-page-heading");
+      const subheading = document.getElementById("search-page-subheading");
+      const queryBadge = document.getElementById("search-page-query-badge");
+      const emptyFeedback = document.getElementById("search-empty-feedback");
+      if (!grid) return;
+
+      const q = (searchPageQuery || "").toLowerCase().trim();
+      if (queryBadge) {
+        queryBadge.textContent = q ? `Query: "${searchPageQuery}"` : "All Items";
+      }
+      if (heading) {
+        heading.textContent = q ? `Results for "${searchPageQuery}"` : "All Store Products";
+      }
+
+      let items = [...PRODUCTS];
+
+      if (searchPageActiveFilter !== "all") {
+        items = items.filter(p => p.category.toLowerCase() === searchPageActiveFilter.toLowerCase());
+      }
+
+      if (q && q !== "all") {
+        if (q === "sale") {
+          items = items.filter(p => p.price < 50);
+        } else if (q === "ruby") {
+          items = items.filter(p => p.name.toLowerCase().includes("ruby") || p.description.toLowerCase().includes("ruby") || (p.tag && p.tag.toLowerCase().includes("bestseller")));
+        } else if (q === "emerald") {
+          items = items.filter(p => p.name.toLowerCase().includes("emerald") || p.description.toLowerCase().includes("emerald"));
+        } else if (q === "sparkle") {
+          items = items.filter(p => p.description.toLowerCase().includes("sparkle") || (p.tag && p.tag.toLowerCase().includes("bestseller")));
+        } else if (q === "steampunk") {
+          items = items.filter(p => (p.tag && p.tag.toLowerCase().includes("steampunk")) || p.description.toLowerCase().includes("brass") || p.description.toLowerCase().includes("mechanical"));
+        } else if (q === "lighting") {
+          items = items.filter(p => p.category.toLowerCase() === "lighting" || (p.tag && p.tag.toLowerCase().includes("ambient")));
+        } else if (q === "cyberpunk") {
+          items = items.filter(p => (p.tag && p.tag.toLowerCase().includes("cyberpunk")) || p.description.toLowerCase().includes("holographic") || p.description.toLowerCase().includes("neon"));
+        } else if (q === "collectible") {
+          items = items.filter(p => (p.tag && p.tag.toLowerCase().includes("collectible")) || p.description.toLowerCase().includes("clockwork") || p.description.toLowerCase().includes("titanium"));
+        } else if (q === "artisan") {
+          items = items.filter(p => (p.tag && (p.tag.toLowerCase().includes("artisan") || p.tag.toLowerCase().includes("handmade"))));
+        } else {
+          items = items.filter(p => 
+            p.name.toLowerCase().includes(q) ||
+            p.description.toLowerCase().includes(q) ||
+            p.category.toLowerCase().includes(q) ||
+            (p.tag && p.tag.toLowerCase().includes(q))
+          );
+        }
+      }
+
+      if (searchPageActiveSort === "price-asc") {
+        items.sort((a, b) => a.price - b.price);
+      } else if (searchPageActiveSort === "price-desc") {
+        items.sort((a, b) => b.price - a.price);
+      } else if (searchPageActiveSort === "name-asc") {
+        items.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      if (subheading) {
+        subheading.textContent = `Found ${items.length} matching product${items.length === 1 ? '' : 's'} across the Oz network.`;
+      }
+
+      if (items.length === 0) {
+        grid.innerHTML = "";
+        if (emptyMsg) emptyMsg.style.display = "block";
+        if (emptyFeedback) emptyFeedback.textContent = `No items found matching "${searchPageQuery}". Try adjusting your query or resetting department filters.`;
+        return;
+      }
+
+      if (emptyMsg) emptyMsg.style.display = "none";
+
+      grid.innerHTML = items.map(p => {
+        const actionBtn = renderProductActionButton(p.id, false);
+        return `
+          <div class="product-card" onclick="location.hash='#/product/${p.id}'">
+            <div class="product-img-box">
+              ${getLucideIconSvg(p.icon || "box", 64)}
+            </div>
+            <div class="product-card-body">
+              <div class="t-xstack ai-center jc-between">
+                <span class="product-category-pill">${p.category}</span>
+                <span style="font-size: var(--font-size-1); color: var(--primary); font-weight: 700;">${p.tag || 'In Stock'}</span>
+              </div>
+              <h3 class="product-title">${p.name}</h3>
+              <p class="product-desc">${p.description}</p>
+              <div class="product-card-footer">
+                <span class="product-price">$${p.price.toFixed(2)}</span>
+                <div class="t-xstack ai-center gap-2">
+                  <a href="#/product/${p.id}" class="t-btn t-btn-ghost t-btn-sm" onclick="event.stopPropagation();">Details</a>
+                  ${actionBtn}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function resetSearchPageQuery() {
+      searchPageQuery = "";
+      searchPageActiveFilter = "all";
+      searchPageActiveSort = "featured";
+      const filterWrap = document.getElementById("search-page-dept-filters");
+      if (filterWrap) {
+        filterWrap.querySelectorAll(".collage-filter-btn").forEach(b => {
+          b.classList.toggle("active", b.dataset.searchFilter === "all");
+        });
+      }
+      const sortEl = document.getElementById("search-page-sort");
+      if (sortEl) sortEl.value = "featured";
+      renderSearchResults();
+    }
+    window.resetSearchPageQuery = resetSearchPageQuery;
+
+    function handleSearchPageSortChange(val) {
+      searchPageActiveSort = val;
+      renderSearchResults();
+    }
+    window.handleSearchPageSortChange = handleSearchPageSortChange;
 
     let activeFilter = "all";
     let searchQuery = "";
@@ -3085,11 +3658,12 @@
         // Distribute Sponsored In-feed Ad Pins naturally after every 5 items in mass stream
         if ((idx === 2 || (idx > 2 && (idx - 2) % 6 === 0)) && adCursor < SPONSORED_ADS.length) {
           const ad = SPONSORED_ADS[adCursor % SPONSORED_ADS.length];
+          const editorial = EDITORIAL_DISCOVERY_CARDS[adCursor % EDITORIAL_DISCOVERY_CARDS.length];
           adCursor++;
           html += `
             <div class="collage-pin ad-pin" onclick="location.hash='#/cart'">
-              <div class="collage-pin-media compact" style="background: ${ad.gradient}; font-size: 2.4rem;">
-                <span>${ad.icon}</span>
+              <div class="collage-pin-media compact" style="background: ${ad.gradient};">
+                ${getLucideIconSvg(ad.iconKey || "rocket", 40)}
                 <div class="collage-pin-overlay">
                   <span class="ad-badge-icon" style="background: rgba(0,0,0,0.6); color: #fff; padding: 2px 4px;">Ad</span>
                 </div>
@@ -3107,13 +3681,28 @@
                 </div>
               </div>
             </div>
+
+            <!-- Quirky Editorial Discovery Card -->
+            <div class="editorial-quote-card" onclick="spinLuckyWheel();">
+              <div class="t-xstack ai-center jc-between">
+                <span class="t-badge t-badge-info">${editorial.badge}</span>
+                <span style="font-size: 11px; color: var(--primary); font-weight: 700;">Click to Spin Wheel &rarr;</span>
+              </div>
+              <p style="margin: var(--space-2) 0; font-style: italic; font-weight: 600; font-size: var(--font-size-4); color: var(--color-text); line-height: 1.4;">
+                ${editorial.quote}
+              </p>
+              <div class="t-xstack ai-center jc-between">
+                <span style="font-size: var(--font-size-2); color: var(--color-text-muted); font-weight: 600;">— ${editorial.author}</span>
+                <button class="t-btn t-btn-ghost t-btn-sm" onclick="event.stopPropagation(); spinLuckyWheel();">Try Luck</button>
+              </div>
+            </div>
           `;
         }
 
         html += `
           <div class="collage-pin" onclick="location.hash='#/product/${p.id}'">
             <div class="collage-pin-media ${aspectClass}">
-              <span>${p.icon}</span>
+              ${getLucideIconSvg(p.icon || "box", 54)}
               <div class="collage-pin-overlay">
                 ${overlayBtn}
               </div>
@@ -3181,7 +3770,7 @@
       matchesContainer.innerHTML = items.map(p => `
         <div class="search-quick-item" onclick="event.stopPropagation(); closeNavSearchDropdown(); location.hash='#/product/${p.id}';">
           <div class="t-xstack ai-center gap-3">
-            <span style="font-size: var(--font-size-6);">${p.icon}</span>
+            <span style="width: 28px; height: 28px; color: var(--primary); display: inline-flex; align-items: center; justify-content: center;">${getLucideIconSvg(p.icon || 'box', 24)}</span>
             <div class="t-ystack">
               <span style="font-weight: 700; font-size: var(--font-size-3);">${p.name}</span>
               <span style="font-size: var(--font-size-1); color: var(--color-text-muted);">${p.category} &bull; ${p.tag || 'Popular'}</span>
@@ -3203,14 +3792,17 @@
         if (navSearchClear) {
           navSearchClear.style.display = searchQuery ? "inline-block" : "none";
         }
-        syncDiscoverChipsState();
-        renderHomePinterestCollage();
-        renderCatalog();
         renderSearchSuggestionsPreview();
       });
 
       navSearchInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === "Escape") {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          const query = navSearchInput.value.trim();
+          if (query) {
+            executeSearch(query);
+          }
+        } else if (e.key === "Escape") {
           closeNavSearchDropdown();
         }
       });
@@ -3223,9 +3815,6 @@
           navSearchInput.value = "";
           searchQuery = "";
           navSearchClear.style.display = "none";
-          syncDiscoverChipsState();
-          renderHomePinterestCollage();
-          renderCatalog();
           renderSearchSuggestionsPreview();
           navSearchInput.focus();
         }
@@ -3239,20 +3828,7 @@
       }
     });
 
-    // Synchronize trending chips active highlight
-    function syncDiscoverChipsState() {
-      const q = searchQuery.toLowerCase().trim();
-      document.querySelectorAll(".trending-tag-pill").forEach(pill => {
-        const queryVal = (pill.dataset.query || "").toLowerCase();
-        pill.classList.toggle("active", q === queryVal && q !== "");
-      });
-      document.querySelectorAll(".search-suggestion-pill[data-search]").forEach(pill => {
-        const queryVal = (pill.dataset.search || "").toLowerCase();
-        pill.classList.toggle("active", q === queryVal && q !== "");
-      });
-    }
-
-    // Suggestions Pill clicks inside the search dropdown
+    // Suggestions Pill clicks inside the search dropdown - route to Search Page (#/search?q=...)
     const searchDropdown = document.getElementById("nav-search-dropdown");
     if (searchDropdown) {
       searchDropdown.addEventListener("click", (e) => {
@@ -3260,37 +3836,22 @@
         if (ideaBtn) {
           e.stopPropagation();
           const q = ideaBtn.dataset.search;
-          if (searchQuery.toLowerCase() === q.toLowerCase()) {
-            // Toggle off
-            searchQuery = "";
-            if (navSearchInput) navSearchInput.value = "";
-            if (navSearchClear) navSearchClear.style.display = "none";
-          } else {
-            searchQuery = q;
-            if (navSearchInput) navSearchInput.value = q;
-            if (navSearchClear) navSearchClear.style.display = "inline-block";
-          }
-          syncDiscoverChipsState();
-          renderHomePinterestCollage();
-          renderCatalog();
-          renderSearchSuggestionsPreview();
+          executeSearch(q);
           return;
         }
 
         const catBtn = e.target.closest(".search-suggestion-pill[data-category]");
         if (catBtn) {
           e.stopPropagation();
-          activeFilter = catBtn.dataset.category;
-          const filterBar = document.getElementById("collage-filter-bar");
-          if (filterBar) {
-            filterBar.querySelectorAll(".collage-filter-btn").forEach(b => {
-              b.classList.toggle("active", b.dataset.filter === activeFilter);
-            });
-          }
-          renderHomePinterestCollage();
-          renderCatalog();
-          renderSearchSuggestionsPreview();
+          const cat = catBtn.dataset.category;
           closeNavSearchDropdown();
+          if (cat === "all") {
+            executeSearch("all");
+          } else {
+            searchPageActiveFilter = cat;
+            searchPageQuery = "";
+            window.location.hash = `#/search?dept=${encodeURIComponent(cat)}`;
+          }
         }
       });
     }
@@ -3302,21 +3863,7 @@
         const pill = e.target.closest(".trending-tag-pill");
         if (pill && pill.dataset.query) {
           const q = pill.dataset.query;
-          if (searchQuery.toLowerCase() === q.toLowerCase()) {
-            // UNSELECT / TOGGLE RESET: clicking the active chip resets search
-            searchQuery = "";
-            if (navSearchInput) navSearchInput.value = "";
-            if (navSearchClear) navSearchClear.style.display = "none";
-          } else {
-            // Select new query
-            searchQuery = q;
-            if (navSearchInput) navSearchInput.value = q;
-            if (navSearchClear) navSearchClear.style.display = "inline-block";
-          }
-          syncDiscoverChipsState();
-          renderHomePinterestCollage();
-          renderCatalog();
-          renderSearchSuggestionsPreview();
+          executeSearch(q);
         }
       });
     }
@@ -3370,7 +3917,9 @@
         const actionBtn = renderProductActionButton(p.id, false);
         return `
           <div class="product-card" onclick="location.hash='#/product/${p.id}'">
-            <div class="product-img-box">${p.icon}</div>
+            <div class="product-img-box">
+              ${getLucideIconSvg(p.icon || 'box', 56)}
+            </div>
             <div class="t-ystack gap-2" style="padding: var(--space-4); flex: 1;">
               <div class="t-xstack ai-center jc-between">
                 <span class="t-badge">${p.category}</span>
@@ -3411,7 +3960,7 @@
       if (priceEl) priceEl.textContent = `$${prod.price.toFixed(2)}`;
       if (descEl) descEl.textContent = prod.description;
       if (catEl) catEl.textContent = prod.category;
-      if (iconEl) iconEl.textContent = prod.icon;
+      if (iconEl) iconEl.innerHTML = getLucideIconSvg(prod.icon || "box", 96);
       renderProductDetailActionStepper();
       recordRetailMetric("product_view", { productId: prod.id, name: prod.name, price: prod.price, category: prod.category });
     }
@@ -3451,7 +4000,9 @@
           listContainer.innerHTML = cart.map(item => `
             <div class="t-card t-xstack ai-center jc-between flex-wrap gap-3" style="padding: var(--space-3) var(--space-4);">
               <div class="t-xstack ai-center gap-3">
-                <div style="font-size: var(--font-size-8); background-color: var(--bg-element); padding: var(--space-2); border-radius: var(--radius-4);">${item.icon}</div>
+                <div style="background-color: var(--bg-element); padding: var(--space-2); border-radius: var(--radius-4); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                  ${getLucideIconSvg(item.icon || 'box', 32)}
+                </div>
                 <div class="t-ystack gap-1">
                   <a href="#/product/${item.id}" style="text-decoration: none; color: inherit; font-weight: 700;">${item.name}</a>
                   <span style="font-size: var(--font-size-2); color: var(--color-text-muted);">$${item.price.toFixed(2)} each</span>
@@ -3579,6 +4130,27 @@
         if (p) p.classList.add("active");
         renderHomePinterestCollage();
         renderCatalog();
+      } else if (rootRoute === "search") {
+        const p = document.getElementById("view-search");
+        if (p) p.classList.add("active");
+        
+        // Parse search query parameter (?q=... or ?dept=...)
+        const searchParams = new URLSearchParams(window.location.hash.includes("?") ? window.location.hash.split("?")[1] : "");
+        const queryParam = searchParams.get("q");
+        const deptParam = searchParams.get("dept");
+        if (queryParam) {
+          searchPageQuery = decodeURIComponent(queryParam);
+        }
+        if (deptParam) {
+          searchPageActiveFilter = decodeURIComponent(deptParam);
+          const filterWrap = document.getElementById("search-page-dept-filters");
+          if (filterWrap) {
+            filterWrap.querySelectorAll(".collage-filter-btn").forEach(b => {
+              b.classList.toggle("active", b.dataset.searchFilter === searchPageActiveFilter);
+            });
+          }
+        }
+        renderSearchResults();
       } else if (rootRoute === "product") {
         const p = document.getElementById("view-product");
         if (p) p.classList.add("active");
@@ -3921,7 +4493,7 @@
     if (cmsSyncBucketBtn) {
       cmsSyncBucketBtn.addEventListener("click", () => {
         cmsSyncBucketBtn.disabled = true;
-        cmsSyncBucketBtn.innerHTML = `<span>⏳</span> Syncing Storage Bucket...`;
+        cmsSyncBucketBtn.innerHTML = `<span class="icon-svg" style="width: 14px; height: 14px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m4.9 19.1 2.9-2.9"/><path d="M2 12h4"/><path d="m4.9 4.9 2.9 2.9"/></svg></span> Syncing Bucket...`;
         setTimeout(() => {
           saveInventoryLedger();
           recordRetailMetric("cloud_bucket_inventory_synced", {
@@ -3929,9 +4501,9 @@
             bucket: "gs://merchant-of-oz-static-storage/inventory.json"
           });
           cmsSyncBucketBtn.disabled = false;
-          cmsSyncBucketBtn.innerHTML = `<span>✓</span> Bucket Synced!`;
+          cmsSyncBucketBtn.innerHTML = `<span class="icon-svg" style="width: 14px; height: 14px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></span> Bucket Synced!`;
           setTimeout(() => {
-            cmsSyncBucketBtn.innerHTML = `<span>☁️</span> Sync Cloud Bucket`;
+            cmsSyncBucketBtn.innerHTML = `<span class="icon-svg" style="width: 14px; height: 14px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></span> Sync Cloud Bucket`;
           }, 2000);
         }, 800);
       });
