@@ -55,15 +55,40 @@ class TestDeploymentSetup(unittest.TestCase):
             self.assertIn('deal-ribbon', content)
             # Seamless fluid storefront discovery, search, tags & sorting
             self.assertIn('storefront-discovery-bar', content)
-            self.assertIn('store-search-input', content)
-            self.assertIn('store-search-clear', content)
+            self.assertIn('nav-search-input', content)
+            self.assertIn('nav-search-clear', content)
+            self.assertIn('nav-search-dropdown', content)
+            self.assertIn('search-suggestion-pill', content)
             self.assertIn('trending-tags-container', content)
             self.assertIn('trending-tag-pill', content)
             self.assertIn('store-sort-select', content)
             self.assertIn('getFilteredProducts', content)
             self.assertIn('resetStoreFilters', content)
+            self.assertIn('syncDiscoverChipsState', content)
             self.assertIn('feed-filter-indicator', content)
             self.assertIn('feed-empty-message', content)
+            # Dynamic Walmart-style cart quantity stepper buttons
+            self.assertIn('qty-stepper-btn', content)
+            self.assertIn('qty-endcap-btn', content)
+            self.assertIn('renderProductActionButton', content)
+            self.assertIn('product-detail-stepper-container', content)
+            self.assertIn('getCartItemQuantity', content)
+            # Cookie Consent Banner & Privacy Controls
+            self.assertIn('cookie-banner-box', content)
+            self.assertIn('cookie-accept-all-btn', content)
+            self.assertIn('cookie-reject-btn', content)
+            self.assertIn('saveCookiePreferences', content)
+            self.assertIn('settings-subpanel-privacy', content)
+            # Retail Analytics & Telemetry Engine
+            self.assertIn('recordRetailMetric', content)
+            self.assertIn('oz_retail_metrics_stream', content)
+            self.assertIn('cms-metrics-log-container', content)
+            # Storefront CMS & Inventory Management Ledger
+            self.assertIn('settings-subpanel-inventory', content)
+            self.assertIn('cms-inventory-table', content)
+            self.assertIn('cms-sync-bucket-btn', content)
+            self.assertIn('cms-editor-panel', content)
+            self.assertIn('adjustSkuStock', content)
             # Route guard check & auth prompt
             self.assertIn('openAuthModal', content)
             # Global AppAuth bridge

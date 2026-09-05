@@ -16,6 +16,18 @@ Resolution: Established global `window.AppAuth` bridge with promises for `.signI
 Issue: Hard visual breaks and rigid separators disrupted continuous browsing flow on main storefront.
 Resolution: Refactored main scroll into a seamless fluid feed with live keyword search, discovery chips, categories filter, and price/alphabetical sorting.
 
+[2026-09-05T05:20:00Z] Top Navigation Search Expansion, Tag Toggle & Mass Catalog Integration:
+Issue: Search was separate from top navbar, unselecting discovery chips did not toggle/reset filter state, ads were disappearing when filters matched, and item count was limited.
+Resolution: Integrated condensed search bar into header with expandable dropdown overlay packed with trending ideas, department portals, and top matches. Expanded catalog to 26 items with naturally distributed sponsored ad units, and implemented toggleable reset behavior for discovery chips.
+
+[2026-09-05T05:35:00Z] Theme Switcher Reactivity & Walmart Morphing Quantity Steppers:
+Issue: Theme switcher controls in Settings were locked behind auth verification causing non-responsive clicks, and product buttons lacked Walmart-style dynamic quantity adjustments reflecting cart counts.
+Resolution: Enabled theme mode and color subtheme switching directly in Settings with instant DOM variable recomputation, and introduced morphing quantity stepper buttons (`- / qty / +`) across item detail views, catalog shelf cards, and pin overlays that revert to `Add to Cart` when quantity reaches 0.
+
+[2026-09-05T06:00:00Z] Unified Storefront CMS, Inventory Ledger, Retail Metrics & Cookie Consent Engine:
+Issue: Storefront lacked GDPR/CCPA cookie disclaimer and tracking preferences, comprehensive retailer telemetry for metrics/product details, and unified inventory/CMS management with bucket storage sync.
+Resolution: Built slide-up cookie disclaimer with granular privacy settings, full client-side retail metrics event stream capturing telemetry across cart/checkout/views/search, and a unified CMS & Inventory Management ledger with live stock adjustments, SKU creation/editing, and cloud bucket sync simulation.
+
 
 
 

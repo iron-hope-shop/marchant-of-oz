@@ -340,6 +340,158 @@
       text-align: center;
     }
 
+    /* Top Navigation Search & Expandable Autocomplete Overlay */
+    .nav-search-wrapper {
+      position: relative;
+      flex: 1;
+      max-width: 480px;
+      margin: 0 var(--space-4);
+    }
+
+    .nav-search-bar {
+      display: flex;
+      align-items: center;
+      background: var(--bg-element);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: 6px var(--space-3-5);
+      transition: all var(--transition-fast);
+      position: relative;
+      z-index: calc(var(--z-index-dropdown) + 2);
+    }
+
+    .nav-search-bar:focus-within,
+    .nav-search-wrapper.expanded .nav-search-bar {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-subtle);
+      background: var(--bg-surface);
+    }
+
+    .nav-search-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 2px var(--space-2);
+      font-size: var(--font-size-3);
+      color: var(--color-text);
+      outline: none;
+      min-width: 100px;
+    }
+
+    .nav-search-clear-btn {
+      background: transparent;
+      border: none;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      font-size: var(--font-size-4);
+      line-height: 1;
+      padding: 0 4px;
+      display: none;
+    }
+
+    .nav-search-clear-btn:hover {
+      color: var(--color-text);
+    }
+
+    .nav-search-badge {
+      font-size: 10px;
+      background: var(--bg-element);
+      border: 1px solid var(--border-subtle);
+      color: var(--color-text-muted);
+      padding: 2px 6px;
+      border-radius: var(--radius-3);
+      user-select: none;
+    }
+
+    /* Expandable Search Modal / Dropdown Overlay with rich ideas & info */
+    .nav-search-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-6);
+      box-shadow: var(--shadow-5);
+      padding: var(--space-4);
+      display: none;
+      flex-direction: column;
+      gap: var(--space-4);
+      z-index: calc(var(--z-index-dropdown) + 1);
+      max-height: 480px;
+      overflow-y: auto;
+      animation: navSearchSlide 0.15s ease-out;
+    }
+
+    .nav-search-wrapper.expanded .nav-search-dropdown {
+      display: flex;
+    }
+
+    @keyframes navSearchSlide {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .search-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: var(--font-size-2);
+      font-weight: 700;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .search-tags-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .search-suggestion-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      background: var(--bg-element);
+      border: 1px solid var(--border-subtle);
+      color: var(--color-text);
+      font-size: var(--font-size-2);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      user-select: none;
+    }
+
+    .search-suggestion-pill:hover {
+      border-color: var(--primary);
+      background: var(--primary-subtle);
+      color: var(--primary);
+    }
+
+    .search-suggestion-pill.active {
+      background: var(--primary);
+      color: var(--primary-text);
+      border-color: var(--primary);
+    }
+
+    .search-quick-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-4);
+      cursor: pointer;
+      transition: background-color var(--transition-fast);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .search-quick-item:hover {
+      background-color: var(--bg-element);
+    }
+
     /* Storefront Seamless Fluid Feed & Discovery Styles */
     .deal-ribbon {
       background: linear-gradient(90deg, var(--primary), var(--color-purple-9));
@@ -357,56 +509,11 @@
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-6);
-      padding: var(--space-4);
+      padding: var(--space-3) var(--space-4);
       box-shadow: var(--shadow-1);
       display: flex;
       flex-direction: column;
-      gap: var(--space-3);
-    }
-
-    .store-search-container {
-      position: relative;
-      width: 100%;
-    }
-
-    .store-search-input-wrap {
-      display: flex;
-      align-items: center;
-      background: var(--bg-element);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-full);
-      padding: var(--space-1-5) var(--space-4);
-      transition: all var(--transition-fast);
-    }
-
-    .store-search-input-wrap:focus-within {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px var(--primary-subtle);
-      background: var(--bg-surface);
-    }
-
-    .store-search-input {
-      flex: 1;
-      border: none;
-      background: transparent;
-      padding: var(--space-1) var(--space-2);
-      font-size: var(--font-size-3);
-      color: var(--color-text);
-      outline: none;
-    }
-
-    .store-search-clear-btn {
-      background: transparent;
-      border: none;
-      color: var(--color-text-muted);
-      cursor: pointer;
-      font-size: var(--font-size-3);
-      padding: 0 4px;
-      display: none;
-    }
-
-    .store-search-clear-btn:hover {
-      color: var(--color-text);
+      gap: var(--space-2-5);
     }
 
     .discovery-controls-row {
@@ -436,12 +543,19 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
+      user-select: none;
     }
 
     .trending-tag-pill:hover {
       border-color: var(--primary);
       color: var(--primary);
       background: var(--primary-subtle);
+    }
+
+    .trending-tag-pill.active {
+      background: var(--primary);
+      color: var(--primary-text);
+      border-color: var(--primary);
     }
 
     .sort-filter-select {
@@ -653,6 +767,77 @@
       border-color: var(--primary);
     }
 
+    /* Walmart-style Morphing Cart Quantity Stepper Button & Endcaps */
+    .qty-stepper-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: var(--radius-full);
+      background-color: var(--primary);
+      color: var(--primary-text);
+      font-weight: 700;
+      border: none;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: var(--shadow-1);
+      user-select: none;
+      transition: all var(--transition-fast);
+      height: var(--size-4);
+      min-width: 90px;
+    }
+
+    .qty-stepper-btn.lg {
+      height: var(--size-6);
+      min-width: 140px;
+    }
+
+    .qty-stepper-btn:hover {
+      box-shadow: var(--shadow-2);
+    }
+
+    .qty-endcap-btn {
+      background: transparent;
+      border: none;
+      color: var(--primary-text);
+      font-weight: 800;
+      font-size: var(--font-size-4);
+      height: 100%;
+      padding: 0 var(--space-2-5);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color var(--transition-fast);
+      line-height: 1;
+    }
+
+    .qty-stepper-btn.lg .qty-endcap-btn {
+      padding: 0 var(--space-4);
+      font-size: var(--font-size-6);
+    }
+
+    .qty-endcap-btn:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .qty-endcap-btn:active {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .qty-stepper-count {
+      font-size: var(--font-size-3);
+      font-weight: 700;
+      padding: 0 var(--space-1);
+      min-width: 24px;
+      text-align: center;
+      color: var(--primary-text);
+    }
+
+    .qty-stepper-btn.lg .qty-stepper-count {
+      font-size: var(--font-size-5);
+      min-width: 36px;
+    }
+
     .product-img-box {
       height: 180px;
       display: flex;
@@ -661,6 +846,120 @@
       background: linear-gradient(135deg, var(--bg-element), var(--primary-subtle));
       font-size: 3.5rem;
       user-select: none;
+    }
+
+    /* Cookie Banner & Consent Management Overlay */
+    .cookie-banner {
+      position: fixed;
+      bottom: var(--space-4);
+      left: var(--space-4);
+      right: var(--space-4);
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-6);
+      box-shadow: var(--shadow-5);
+      padding: var(--space-4) var(--space-6);
+      z-index: var(--z-index-toast);
+      display: none;
+      flex-direction: column;
+      gap: var(--space-3);
+      animation: cookieSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .cookie-banner.visible {
+      display: flex;
+    }
+
+    @keyframes cookieSlideUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .cookie-pref-card {
+      background: var(--bg-element);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-4);
+      padding: var(--space-3) var(--space-4);
+    }
+
+    /* Inventory Management & CMS Table */
+    .cms-table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-5);
+      background: var(--bg-surface);
+    }
+
+    .cms-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: var(--font-size-3);
+    }
+
+    .cms-table th {
+      padding: var(--space-3) var(--space-4);
+      background: var(--bg-element);
+      font-weight: 700;
+      color: var(--color-text);
+      border-bottom: 1px solid var(--border-subtle);
+      white-space: nowrap;
+    }
+
+    .cms-table td {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--color-text);
+      vertical-align: middle;
+    }
+
+    .cms-table tr:hover td {
+      background-color: var(--bg-subtle);
+    }
+
+    .cms-stock-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 700;
+      font-size: var(--font-size-2);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+    }
+
+    .cms-stock-in {
+      background: var(--color-green-3);
+      color: var(--color-green-11);
+    }
+
+    .cms-stock-low {
+      background: var(--color-yellow-3);
+      color: var(--color-yellow-11);
+    }
+
+    .cms-stock-out {
+      background: var(--color-red-3);
+      color: var(--color-red-11);
+    }
+
+    .cms-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-4);
+      width: 100%;
+    }
+
+    .cms-kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-5);
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
     }
 
     .cart-badge {
@@ -680,9 +979,22 @@
       .pinterest-collage {
         columns: 2 200px;
       }
+      .nav-search-wrapper {
+        max-width: 300px;
+      }
     }
 
     @media (max-width: 640px) {
+      .t-nav {
+        flex-wrap: wrap;
+        gap: var(--space-2);
+      }
+      .nav-search-wrapper {
+        order: 3;
+        width: 100%;
+        max-width: 100%;
+        margin: var(--space-1) 0 0 0;
+      }
       .pinterest-collage {
         columns: 1 100%;
       }
@@ -1028,7 +1340,7 @@
         <a href="#/home" class="t-avatar" style="background-color: var(--primary); color: #fff; font-weight: bold; text-decoration: none;" title="Merchant of Oz Storefront">
           OZ
         </a>
-        <div class="t-ystack">
+        <div class="t-ystack" style="min-width: 120px;">
           <a href="#/home" style="text-decoration: none; color: inherit;">
             <span style="font-weight: 700; font-size: var(--font-size-5); letter-spacing: -0.02em;">Merchant of Oz</span>
           </a>
@@ -1036,7 +1348,64 @@
         </div>
       </div>
 
-      <!-- Center / Right: Navigation Tabs -->
+      <!-- Center: Integrated Top Navigation Search Bar with Expandable Overlay -->
+      <div class="nav-search-wrapper" id="nav-search-wrapper">
+        <div class="nav-search-bar" id="nav-search-bar-box">
+          <span style="font-size: var(--font-size-3); margin-right: 4px; color: var(--color-text-muted);">🔍</span>
+          <input type="text" id="nav-search-input" class="nav-search-input" placeholder="Search 25+ products, tags, categories, styles..." autocomplete="off" />
+          <button type="button" id="nav-search-clear" class="nav-search-clear-btn" title="Clear search">&times;</button>
+          <span class="nav-search-badge" id="nav-search-count-badge">25+ items</span>
+        </div>
+
+        <!-- Expandable Autocomplete Overlay Menu (Suggestions, Categories, Ideas & Trending) -->
+        <div class="nav-search-dropdown" id="nav-search-dropdown">
+          <!-- Suggested Search Terms & Ideas -->
+          <div class="t-ystack gap-2">
+            <div class="search-section-header">
+              <span>💡 Trending Ideas &amp; Styles</span>
+              <span style="font-size: 11px; font-weight: normal; text-transform: none; color: var(--color-text-muted);">Click to filter</span>
+            </div>
+            <div class="search-tags-grid" id="search-trending-ideas">
+              <button class="search-suggestion-pill" data-search="emerald">💎 Emerald Luxe</button>
+              <button class="search-suggestion-pill" data-search="steampunk">⚙️ Steampunk Gear</button>
+              <button class="search-suggestion-pill" data-search="ruby">👠 Ruby Sparkle</button>
+              <button class="search-suggestion-pill" data-search="artisan">🏺 Handcrafted</button>
+              <button class="search-suggestion-pill" data-search="lighting">🏮 Ambient Glow</button>
+              <button class="search-suggestion-pill" data-search="cyberpunk">⚡ Cyber Neon</button>
+              <button class="search-suggestion-pill" data-search="sale">🔥 Under $50</button>
+              <button class="search-suggestion-pill" data-search="collectible">🏆 Collectibles</button>
+            </div>
+          </div>
+
+          <!-- Quick Category Portals -->
+          <div class="t-ystack gap-2">
+            <div class="search-section-header">
+              <span>📂 Browse Department</span>
+            </div>
+            <div class="search-tags-grid" id="search-category-shortcuts">
+              <button class="search-suggestion-pill" data-category="all">✨ All Departments</button>
+              <button class="search-suggestion-pill" data-category="Apparel">👗 Apparel &amp; Fashion</button>
+              <button class="search-suggestion-pill" data-category="Footwear">👟 Footwear</button>
+              <button class="search-suggestion-pill" data-category="Accessories">👜 Accessories &amp; Tech</button>
+              <button class="search-suggestion-pill" data-category="Homeware">☕ Homeware &amp; Decor</button>
+              <button class="search-suggestion-pill" data-category="Lighting">🏮 Lighting &amp; FX</button>
+            </div>
+          </div>
+
+          <!-- Live Top Matches Preview -->
+          <div class="t-ystack gap-1" id="search-quick-matches-section">
+            <div class="search-section-header">
+              <span>⚡ Popular Products</span>
+              <span id="search-matches-count" style="font-size: 11px; font-weight: normal; color: var(--color-text-muted);">Instant picks</span>
+            </div>
+            <div class="t-ystack gap-1" id="search-quick-matches-list">
+              <!-- Populated dynamically via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Navigation Tabs & User Area -->
       <div class="t-xstack ai-center gap-4">
         <nav class="t-nav-tabs" id="main-nav-tabs">
           <a href="#/home" class="t-nav-tab active" data-route="home">Store</a>
@@ -1046,7 +1415,7 @@
           </a>
         </nav>
 
-        <!-- Right: Dynamic User Avatar Dropdown (when Authed) OR Log In Button (when Guest) -->
+        <!-- Dynamic User Avatar Dropdown (when Authed) OR Log In Button (when Guest) -->
         <div class="nav-user-dropdown-container" id="nav-user-area">
           <!-- Guest State: Log In Button -->
           <button class="t-btn t-btn-primary t-btn-sm" id="nav-guest-login-btn" onclick="openAuthModal();">
@@ -1141,26 +1510,17 @@
                 Explore, Collect &amp; Shop
               </h1>
               <p style="margin: 0; color: var(--color-text-subtle); font-size: var(--font-size-4); line-height: var(--line-height-3);">
-                Your all-in-one shopping destination. Browse visual inspiration pins, discover collections, or search across categories in a continuous scroll.
+                Browse 25+ handcrafted Oz treasures, inspiration pins, and boutique artifacts in a continuous, fluid masonry stream.
               </p>
             </div>
             <div class="t-xstack ai-center gap-3">
               <a href="#/cart" class="t-btn t-btn-primary">View Cart 🛒</a>
-              <button class="t-btn t-btn-subtle" onclick="document.getElementById('store-search-input').focus();">Search Store 🔍</button>
+              <button class="t-btn t-btn-subtle" onclick="openNavSearchDropdown(); document.getElementById('nav-search-input').focus();">Search Store 🔍</button>
             </div>
           </div>
 
-          <!-- Comprehensive Discovery & Categories Bar (Search, Category Pills, Trending Tags, Sort) -->
+          <!-- Storefront Quick Filter & Discovery Shelf (Department Pills, Toggleable Trending Tags, Sort) -->
           <div class="storefront-discovery-bar" id="storefront-discovery-bar">
-            <!-- Search & Autocomplete Row -->
-            <div class="store-search-container">
-              <div class="store-search-input-wrap">
-                <span style="font-size: var(--font-size-4); margin-right: 6px; color: var(--color-text-muted);">🔍</span>
-                <input type="text" id="store-search-input" class="store-search-input" placeholder="Search products, keywords, categories, or styles (e.g. ruby, emerald, steampunk, lighting)..." autocomplete="off" />
-                <button type="button" id="store-search-clear" class="store-search-clear-btn" title="Clear search">&times;</button>
-              </div>
-            </div>
-
             <!-- Categories Tabs & Filter Bar -->
             <div class="collage-filters" id="collage-filter-bar">
               <button class="collage-filter-btn active" data-filter="all">All Items</button>
@@ -1171,7 +1531,7 @@
               <button class="collage-filter-btn" data-filter="Lighting">Lighting</button>
             </div>
 
-            <!-- Discover Controls: Trending Topic Chips & Quick Sort Options -->
+            <!-- Discover Controls: Toggleable Topic Chips & Quick Sort Options -->
             <div class="discovery-controls-row">
               <div class="trending-tags-wrap" id="trending-tags-container">
                 <span style="font-size: var(--font-size-1); font-weight: 700; color: var(--color-text-muted); text-transform: uppercase;">Discover:</span>
@@ -1180,7 +1540,9 @@
                 <button class="trending-tag-pill" data-query="emerald">💎 Emerald</button>
                 <button class="trending-tag-pill" data-query="artisan">🏺 Artisan</button>
                 <button class="trending-tag-pill" data-query="lighting">🏮 Glow</button>
+                <button class="trending-tag-pill" data-query="cyberpunk">⚡ Cyberpunk</button>
                 <button class="trending-tag-pill" data-query="sale">🔥 Under $50</button>
+                <button class="trending-tag-pill" data-query="collectible">🏆 Collectible</button>
               </div>
 
               <div class="t-xstack ai-center gap-2">
@@ -1280,9 +1642,11 @@
                 Product description goes here.
               </p>
 
-              <div class="t-xstack ai-center gap-3" style="margin-top: var(--space-4);">
-                <button class="t-btn t-btn-primary" id="product-detail-add-btn">Add to Cart</button>
-                <a href="#/cart" class="t-btn t-btn-subtle">Go to Checkout &rarr;</a>
+              <div class="t-xstack ai-center gap-3" style="margin-top: var(--space-4);" id="product-detail-actions-area">
+                <div id="product-detail-stepper-container">
+                  <button class="t-btn t-btn-primary t-btn-lg" id="product-detail-add-btn">Add to Cart</button>
+                </div>
+                <a href="#/cart" class="t-btn t-btn-subtle t-btn-lg">Go to Checkout &rarr;</a>
               </div>
             </div>
           </div>
@@ -1339,6 +1703,12 @@
             <a href="#/settings/themes" class="t-drawer-item active" data-settings-route="themes" style="text-decoration: none;">
               <span>🎨</span> Themes
             </a>
+            <a href="#/settings/inventory" class="t-drawer-item" data-settings-route="inventory" style="text-decoration: none;">
+              <span>📦</span> CMS &amp; Inventory
+            </a>
+            <a href="#/settings/privacy" class="t-drawer-item" data-settings-route="privacy" style="text-decoration: none;">
+              <span>🍪</span> Privacy &amp; Cookies
+            </a>
             <a href="#/settings/account" class="t-drawer-item" data-settings-route="account" style="text-decoration: none;">
               <span>👤</span> Account
             </a>
@@ -1387,6 +1757,207 @@
                       <button class="t-color-swatch swatch-yellow" data-color="yellow" aria-label="Yellow"></button>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Settings Subpanel: CMS & Inventory Management -->
+            <div id="settings-subpanel-inventory" class="settings-subpanel t-ystack gap-6">
+              <div class="t-card t-ystack gap-6">
+                <div class="t-xstack ai-center jc-between t-card-header">
+                  <div>
+                    <h2 class="t-card-title">📦 Storefront CMS &amp; Inventory Management</h2>
+                    <p class="t-card-subtitle">Live stock ledger, SKU management, price editing, and static storage bucket synchronization.</p>
+                  </div>
+                  <div class="t-xstack ai-center gap-2">
+                    <button class="t-btn t-btn-subtle t-btn-sm" id="cms-sync-bucket-btn">
+                      <span>☁️</span> Sync Cloud Bucket
+                    </button>
+                    <button class="t-btn t-btn-primary t-btn-sm" id="cms-add-product-btn">
+                      <span>➕</span> New SKU
+                    </button>
+                  </div>
+                </div>
+
+                <div class="t-separator"></div>
+
+                <!-- CMS KPI Metrics Cards -->
+                <div class="cms-kpi-grid">
+                  <div class="cms-kpi-card">
+                    <span style="font-size: var(--font-size-2); color: var(--color-text-muted); font-weight: 600;">TOTAL CATALOG SKUS</span>
+                    <span id="cms-kpi-total-skus" style="font-size: var(--font-size-8); font-weight: 800; color: var(--primary);">26</span>
+                    <span style="font-size: var(--font-size-1); color: var(--color-green-11);">✓ Active in Storefront</span>
+                  </div>
+                  <div class="cms-kpi-card">
+                    <span style="font-size: var(--font-size-2); color: var(--color-text-muted); font-weight: 600;">TOTAL ON-HAND UNITS</span>
+                    <span id="cms-kpi-total-units" style="font-size: var(--font-size-8); font-weight: 800; color: var(--color-blue-11);">1,420</span>
+                    <span style="font-size: var(--font-size-1); color: var(--color-text-subtle);">Across all warehouses</span>
+                  </div>
+                  <div class="cms-kpi-card">
+                    <span style="font-size: var(--font-size-2); color: var(--color-text-muted); font-weight: 600;">INVENTORY VALUATION</span>
+                    <span id="cms-kpi-valuation" style="font-size: var(--font-size-8); font-weight: 800; color: var(--color-purple-11);">$112,450</span>
+                    <span style="font-size: var(--font-size-1); color: var(--color-text-subtle);">Retail list price</span>
+                  </div>
+                  <div class="cms-kpi-card">
+                    <span style="font-size: var(--font-size-2); color: var(--color-text-muted); font-weight: 600;">METRICS ENGINE EVENTS</span>
+                    <span id="cms-kpi-events-count" style="font-size: var(--font-size-8); font-weight: 800; color: var(--color-orange-11);">0</span>
+                    <span id="cms-kpi-events-status" style="font-size: var(--font-size-1); color: var(--color-green-11);">● Live Tracking</span>
+                  </div>
+                </div>
+
+                <!-- Inventory Table -->
+                <div class="t-ystack gap-3">
+                  <div class="t-xstack ai-center jc-between">
+                    <h3 style="margin: 0; font-size: var(--font-size-4); font-weight: 700;">Live SKU Stock &amp; Price Ledger</h3>
+                    <div class="t-xstack ai-center gap-2">
+                      <input type="text" id="cms-search-input" class="t-input" placeholder="Filter inventory SKUs..." style="max-width: 240px; padding: var(--space-1) var(--space-3); font-size: var(--font-size-2);" />
+                    </div>
+                  </div>
+
+                  <div class="cms-table-wrapper">
+                    <table class="cms-table" id="cms-inventory-table">
+                      <thead>
+                        <tr>
+                          <th>SKU / ID</th>
+                          <th>Product Name</th>
+                          <th>Category</th>
+                          <th>Price ($)</th>
+                          <th>Stock Level</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="cms-inventory-tbody">
+                        <!-- Populated by JS -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- Product Add/Edit Modal inside CMS -->
+                <div id="cms-editor-panel" class="t-ystack gap-3" style="display: none; background: var(--bg-element); padding: var(--space-4); border-radius: var(--radius-4); border: 1px solid var(--border-subtle);">
+                  <div class="t-xstack ai-center jc-between">
+                    <h4 id="cms-editor-title" style="margin: 0; font-size: var(--font-size-5); font-weight: 700;">Edit Product SKU</h4>
+                    <button type="button" class="t-btn t-btn-ghost t-btn-sm" id="cms-editor-close-btn">&times;</button>
+                  </div>
+                  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3);">
+                    <div class="t-ystack gap-1">
+                      <label style="font-size: var(--font-size-2); font-weight: 600;">Product Title</label>
+                      <input type="text" id="cms-edit-title" class="t-input" />
+                    </div>
+                    <div class="t-ystack gap-1">
+                      <label style="font-size: var(--font-size-2); font-weight: 600;">Category</label>
+                      <input type="text" id="cms-edit-category" class="t-input" />
+                    </div>
+                    <div class="t-ystack gap-1">
+                      <label style="font-size: var(--font-size-2); font-weight: 600;">Price (USD)</label>
+                      <input type="number" step="0.01" id="cms-edit-price" class="t-input" />
+                    </div>
+                    <div class="t-ystack gap-1">
+                      <label style="font-size: var(--font-size-2); font-weight: 600;">Stock Units</label>
+                      <input type="number" id="cms-edit-stock" class="t-input" />
+                    </div>
+                    <div class="t-ystack gap-1">
+                      <label style="font-size: var(--font-size-2); font-weight: 600;">Icon Emoji</label>
+                      <input type="text" id="cms-edit-image" class="t-input" />
+                    </div>
+                  </div>
+                  <div class="t-ystack gap-1">
+                    <label style="font-size: var(--font-size-2); font-weight: 600;">Description</label>
+                    <textarea id="cms-edit-desc" class="t-textarea" rows="2"></textarea>
+                  </div>
+                  <div class="t-xstack ai-center jc-end gap-2">
+                    <button class="t-btn t-btn-ghost t-btn-sm" id="cms-editor-cancel-btn">Cancel</button>
+                    <button class="t-btn t-btn-primary t-btn-sm" id="cms-editor-save-btn">Save Product</button>
+                  </div>
+                </div>
+
+                <!-- Retail Metrics Log Viewer -->
+                <div class="t-ystack gap-3" style="margin-top: var(--space-2);">
+                  <div class="t-xstack ai-center jc-between">
+                    <div>
+                      <h3 style="margin: 0; font-size: var(--font-size-4); font-weight: 700;">📊 Retail Telemetry &amp; Event Stream</h3>
+                      <p style="margin: 0; font-size: var(--font-size-2); color: var(--color-text-muted);">Real-time tracking of impressions, product views, add-to-carts, search queries &amp; checkout metrics.</p>
+                    </div>
+                    <button class="t-btn t-btn-ghost t-btn-sm" id="cms-clear-metrics-btn">Clear Log</button>
+                  </div>
+                  <div id="cms-metrics-log-container" style="max-height: 220px; overflow-y: auto; background: var(--bg-element); border: 1px solid var(--border-subtle); border-radius: var(--radius-4); padding: var(--space-3); font-family: var(--font-mono, monospace); font-size: 12px; display: flex; flex-direction: column-reverse; gap: 6px;">
+                    <!-- Real-time metrics entries -->
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Settings Subpanel: Privacy & Cookies -->
+            <div id="settings-subpanel-privacy" class="settings-subpanel t-ystack gap-6">
+              <div class="t-card t-ystack gap-6">
+                <div>
+                  <h2 class="t-card-title">🍪 Cookie Consent &amp; Privacy Preferences</h2>
+                  <p class="t-card-subtitle">Manage tracking cookies, retail metrics collection, and marketing identifiers in compliance with GDPR and CCPA.</p>
+                </div>
+
+                <div class="t-separator"></div>
+
+                <div class="t-ystack gap-4">
+                  <!-- Essential Cookies -->
+                  <div class="cookie-pref-card t-xstack ai-center jc-between">
+                    <div class="t-ystack gap-1" style="max-width: 80%;">
+                      <div class="t-xstack ai-center gap-2">
+                        <span style="font-weight: 700; font-size: var(--font-size-4);">Strictly Essential Cookies</span>
+                        <span class="t-badge t-badge-primary">Always Active</span>
+                      </div>
+                      <p style="margin: 0; font-size: var(--font-size-2); color: var(--color-text-subtle);">
+                        Necessary for the storefront to operate, including shopping cart persistence, session state, and security authentication.
+                      </p>
+                    </div>
+                    <label class="t-switch">
+                      <input type="checkbox" id="cookie-opt-essential" checked disabled>
+                      <span class="t-switch-slider"></span>
+                    </label>
+                  </div>
+
+                  <!-- Analytics & Retail Metrics -->
+                  <div class="cookie-pref-card t-xstack ai-center jc-between">
+                    <div class="t-ystack gap-1" style="max-width: 80%;">
+                      <div class="t-xstack ai-center gap-2">
+                        <span style="font-weight: 700; font-size: var(--font-size-4);">Analytics &amp; Retail Telemetry</span>
+                        <span class="t-badge t-badge-info">Metrics</span>
+                      </div>
+                      <p style="margin: 0; font-size: var(--font-size-2); color: var(--color-text-subtle);">
+                        Enables product impression counters, search trend metrics, category affinity profiling, and checkout conversion tracking.
+                      </p>
+                    </div>
+                    <label class="t-switch">
+                      <input type="checkbox" id="cookie-opt-analytics" checked>
+                      <span class="t-switch-slider"></span>
+                    </label>
+                  </div>
+
+                  <!-- Personalization & Marketing -->
+                  <div class="cookie-pref-card t-xstack ai-center jc-between">
+                    <div class="t-ystack gap-1" style="max-width: 80%;">
+                      <div class="t-xstack ai-center gap-2">
+                        <span style="font-weight: 700; font-size: var(--font-size-4);">Personalized Experience &amp; Ads</span>
+                        <span class="t-badge t-badge-warning">Marketing</span>
+                      </div>
+                      <p style="margin: 0; font-size: var(--font-size-2); color: var(--color-text-subtle);">
+                        Enables sponsored banner ad targeting, personalized recommendations, and discovery stream tailoring.
+                      </p>
+                    </div>
+                    <label class="t-switch">
+                      <input type="checkbox" id="cookie-opt-marketing" checked>
+                      <span class="t-switch-slider"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="t-xstack ai-center jc-end gap-3" style="margin-top: var(--space-2);">
+                  <button class="t-btn t-btn-ghost" id="cookie-reset-prefs-btn">Reset to Defaults</button>
+                  <button class="t-btn t-btn-primary" id="cookie-save-prefs-btn">Save Cookie Preferences</button>
+                </div>
+              </div>
+            </div>
 
                   <div class="t-separator"></div>
 
@@ -1614,6 +2185,26 @@
     </div>
   </div>
 
+  <!-- Cookie Consent Banner & Privacy Disclaimer -->
+  <div class="cookie-banner" id="cookie-banner-box">
+    <div class="t-xstack ai-center jc-between gap-3">
+      <div class="t-xstack ai-center gap-3">
+        <span style="font-size: 28px;">🍪</span>
+        <div class="t-ystack gap-1">
+          <span style="font-weight: 700; font-size: var(--font-size-4);">We value your shopping experience and privacy</span>
+          <p style="margin: 0; font-size: var(--font-size-2); color: var(--color-text-subtle); line-height: 1.4;">
+            Merchant of Oz uses essential cookies and retail telemetry metrics (impressions, product interactions, and search affinity) to power our unified storefront, inventory pipeline, and personalized discovery feed.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="t-xstack ai-center jc-end gap-2" style="flex-wrap: wrap;">
+      <a href="#/settings/privacy" class="t-btn t-btn-ghost t-btn-sm" id="cookie-customize-btn">Customize Choices</a>
+      <button class="t-btn t-btn-subtle t-btn-sm" id="cookie-reject-btn">Decline Non-Essential</button>
+      <button class="t-btn t-btn-primary t-btn-sm" id="cookie-accept-all-btn">Accept All Cookies</button>
+    </div>
+  </div>
+
   <script>
     // Load Internal Build Details
     async function loadBuildInfo() {
@@ -1633,7 +2224,7 @@
     }
     loadBuildInfo();
 
-    // E-Commerce Catalog Data & Extended Collage Artifacts
+    // Massive Realistic Product Inventory (26 items across all departments)
     const PRODUCTS = [
       {
         id: "prod-1",
@@ -1724,12 +2315,545 @@
         price: 85.00,
         icon: "🕶️",
         description: "Geometric lightweight titanium frames with gradient rainbow polarization and anti-scratch coating."
+      },
+      {
+        id: "prod-10",
+        name: "Cyber Neon Hi-Tops",
+        category: "Footwear",
+        tag: "Cyberpunk",
+        aspect: "tall",
+        price: 145.00,
+        icon: "👟",
+        description: "Streetwear high-top sneakers with embedded rechargeable electroluminescent neon piping and reactive shock soles."
+      },
+      {
+        id: "prod-11",
+        name: "Celestial Quartz Sconce",
+        category: "Lighting",
+        tag: "Artisan",
+        aspect: "medium",
+        price: 112.00,
+        icon: "💡",
+        description: "Natural raw Brazilian quartz crystal mounted in satin brass fixture with warm ambient twilight dimming."
+      },
+      {
+        id: "prod-12",
+        name: "Gilded Obsidian Teapot",
+        category: "Homeware",
+        tag: "Handmade",
+        aspect: "compact",
+        price: 58.00,
+        icon: "🫖",
+        description: "Cast iron teapot with hammered matte obsidian finish, removable stainless steel micro-mesh infuser, and 24k gold trim."
+      },
+      {
+        id: "prod-13",
+        name: "Windward Voyager Parka",
+        category: "Apparel",
+        tag: "Weatherproof",
+        aspect: "tall",
+        price: 180.00,
+        icon: "🧥",
+        description: "Triple-layer breathable stormproof membrane with thermal down filling and magnetic storm-flap closures."
+      },
+      {
+        id: "prod-14",
+        name: "Chronos Brass Pocketwatch",
+        category: "Accessories",
+        tag: "Steampunk",
+        aspect: "compact",
+        price: 92.00,
+        icon: "⏱️",
+        description: "Hand-wound skeleton movement pocketwatch with Roman numeral dial, vintage chain, and fob clip."
+      },
+      {
+        id: "prod-15",
+        name: "Emerald Glass Carafe Set",
+        category: "Homeware",
+        tag: "Dining",
+        aspect: "medium",
+        price: 42.00,
+        icon: "🍷",
+        description: "Pair of hand-blown emerald tinted crystal tumblers and matching decanter with natural solid oak stopper."
+      },
+      {
+        id: "prod-16",
+        name: "Aurora Borealis Mood Lamp",
+        category: "Lighting",
+        tag: "Ambient Glow",
+        aspect: "featured",
+        price: 65.00,
+        icon: "🔮",
+        description: "Dynamic fluid ripple projector casting soothing northern lights water-refraction patterns across your ceiling."
+      },
+      {
+        id: "prod-17",
+        name: "Solaris Leather Chelsea Boots",
+        category: "Footwear",
+        tag: "Bestseller",
+        aspect: "tall",
+        price: 165.00,
+        icon: "🥾",
+        description: "Full-grain oiled leather Chelsea boots featuring Goodyear-welted construction and rugged Vibram lug outsoles."
+      },
+      {
+        id: "prod-18",
+        name: "Starweaver Embroidered Scarf",
+        category: "Apparel",
+        tag: "Handmade",
+        aspect: "compact",
+        price: 38.00,
+        icon: "🧣",
+        description: "Cashmere-blend wrap scarf hand-embroidered with metallic gold celestial constellations and fringed hems."
+      },
+      {
+        id: "prod-19",
+        name: "Vintage Edison Desk Lamp",
+        category: "Lighting",
+        tag: "Steampunk",
+        aspect: "tall",
+        price: 88.00,
+        icon: "🔦",
+        description: "Industrial steam-era table lamp with articulated brass joints, heavy cast base, and amber filament bulb."
+      },
+      {
+        id: "prod-20",
+        name: "Prismatic Keyring Beacon",
+        category: "Accessories",
+        tag: "Everyday Carry",
+        aspect: "compact",
+        price: 19.50,
+        icon: "🗝️",
+        description: "Aircraft-grade titanium carabiner key organizer with integrated 200-lumen USB-C rechargeable torch."
+      },
+      {
+        id: "prod-21",
+        name: "Botanical Terrarium Planter",
+        category: "Homeware",
+        tag: "Artisan",
+        aspect: "medium",
+        price: 45.00,
+        icon: "🪴",
+        description: "Geometric dodecahedron stained-glass plant terrarium handcrafted with lead-free brass solder."
+      },
+      {
+        id: "prod-22",
+        name: "Glacier Cloud Knit Sweater",
+        category: "Apparel",
+        tag: "New Arrival",
+        aspect: "featured",
+        price: 98.00,
+        icon: "🧶",
+        description: "Ultra-soft chunky merino wool knit sweater with relaxed drop-shoulder silhouette and ribbed collar."
+      },
+      {
+        id: "prod-23",
+        name: "Velvet Emerald Loafers",
+        category: "Footwear",
+        tag: "Handmade",
+        aspect: "compact",
+        price: 110.00,
+        icon: "👞",
+        description: "Plush emerald jewel-tone velvet slip-on dress loafers with quilted satin footbeds and leather soles."
+      },
+      {
+        id: "prod-24",
+        name: "Holographic Matrix Visor",
+        category: "Accessories",
+        tag: "Cyberpunk",
+        aspect: "tall",
+        price: 52.00,
+        icon: "🥽",
+        description: "Futuristic semi-translucent visor glasses with dichroic holographic shift and UV400 wrap-around lens."
+      },
+      {
+        id: "prod-25",
+        name: "Zenith Floating Moon Lamp",
+        category: "Lighting",
+        tag: "Ambient Glow",
+        aspect: "tall",
+        price: 135.00,
+        icon: "🌕",
+        description: "Magnetic levitating 3D-printed moon orb that spins frictionlessly while glowing in three customizable color temperatures."
+      },
+      {
+        id: "prod-26",
+        name: "Woven Jute Entryway Runner",
+        category: "Homeware",
+        tag: "Eco-Friendly",
+        aspect: "medium",
+        price: 68.00,
+        icon: "🧶",
+        description: "Natural hand-loomed herringbone patterned jute floor runner with non-slip organic latex backing."
+      }
+    ];
+
+    // Curated In-Feed Sponsored Ads Distributed Naturally in the Masonry Feed
+    const SPONSORED_ADS = [
+      {
+        id: "ad-storage-pro",
+        title: "Oz Cloud Storage Pro",
+        tag: "Sponsored &bull; Ad",
+        source: "Google Ads",
+        desc: "Secure encrypted cloud storage for your 3D assets &amp; portfolio designs with ultra-fast global CDN delivery.",
+        price: "$4.99/mo",
+        icon: "🚀",
+        gradient: "linear-gradient(135deg, #4285F4, #34A853)",
+        cta: "Get Offer"
+      },
+      {
+        id: "ad-supercard",
+        title: "Emerald Supercard Plus",
+        tag: "Sponsored &bull; Financial",
+        source: "Oz Network",
+        desc: "Earn 5% unlimited cashback on all artisan orders and unlock complimentary express next-day shipping.",
+        price: "0% APR",
+        icon: "💳",
+        gradient: "linear-gradient(135deg, #FBBC05, #EA4335)",
+        cta: "Apply Now"
+      },
+      {
+        id: "ad-workspace",
+        title: "Oz Studio VR Workspace",
+        tag: "Sponsored &bull; Innovation",
+        source: "Google Cloud Partner",
+        desc: "Collaborate in real-time 3D spatial design rooms. Start your 30-day team trial with zero hardware lock-in.",
+        price: "Free Trial",
+        icon: "🥽",
+        gradient: "linear-gradient(135deg, #9333ea, #3b82f6)",
+        cta: "Try Free"
       }
     ];
 
     let activeFilter = "all";
     let searchQuery = "";
     let activeSort = "featured";
+
+    // -------------------------------------------------------------
+    // GDPR/CCPA Cookie & Privacy Management Engine
+    // -------------------------------------------------------------
+    const COOKIE_CONSENT_KEY = "oz_cookie_consent_v1";
+    let cookieConsent = {
+      essential: true,
+      analytics: true,
+      marketing: true,
+      timestamp: null,
+      decided: false
+    };
+
+    function loadCookiePreferences() {
+      try {
+        const stored = localStorage.getItem(COOKIE_CONSENT_KEY);
+        if (stored) {
+          cookieConsent = JSON.parse(stored);
+        }
+      } catch (e) {}
+    }
+
+    function saveCookiePreferences(prefs) {
+      cookieConsent = {
+        ...cookieConsent,
+        ...prefs,
+        essential: true,
+        timestamp: new Date().toISOString(),
+        decided: true
+      };
+      try {
+        localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(cookieConsent));
+      } catch (e) {}
+      hideCookieBanner();
+      syncCookieCheckboxes();
+      recordRetailMetric("cookie_consent_updated", {
+        analytics: cookieConsent.analytics,
+        marketing: cookieConsent.marketing
+      });
+    }
+
+    function showCookieBanner() {
+      const banner = document.getElementById("cookie-banner-box");
+      if (banner && !cookieConsent.decided) {
+        banner.classList.add("visible");
+      }
+    }
+
+    function hideCookieBanner() {
+      const banner = document.getElementById("cookie-banner-box");
+      if (banner) {
+        banner.classList.remove("visible");
+      }
+    }
+
+    function syncCookieCheckboxes() {
+      const optAnalytics = document.getElementById("cookie-opt-analytics");
+      const optMarketing = document.getElementById("cookie-opt-marketing");
+      if (optAnalytics) optAnalytics.checked = !!cookieConsent.analytics;
+      if (optMarketing) optMarketing.checked = !!cookieConsent.marketing;
+    }
+
+    // -------------------------------------------------------------
+    // Comprehensive Retail Telemetry & Metrics Engine
+    // -------------------------------------------------------------
+    const METRICS_STORAGE_KEY = "oz_retail_metrics_stream";
+    let retailMetrics = [];
+
+    function loadRetailMetrics() {
+      try {
+        const stored = localStorage.getItem(METRICS_STORAGE_KEY);
+        if (stored) retailMetrics = JSON.parse(stored);
+      } catch (e) {
+        retailMetrics = [];
+      }
+    }
+
+    function recordRetailMetric(eventType, details = {}) {
+      if (!cookieConsent.analytics && eventType !== "cookie_consent_updated") {
+        return; // Respect privacy settings
+      }
+
+      const metricEntry = {
+        id: "evt_" + Math.random().toString(36).substring(2, 9),
+        type: eventType,
+        timestamp: new Date().toISOString(),
+        url: window.location.hash || "#/home",
+        userAgent: navigator.userAgent.substring(0, 40) + "...",
+        details: details
+      };
+
+      retailMetrics.unshift(metricEntry);
+      if (retailMetrics.length > 200) retailMetrics.pop(); // keep last 200 items
+
+      try {
+        localStorage.setItem(METRICS_STORAGE_KEY, JSON.stringify(retailMetrics));
+      } catch (e) {}
+
+      renderCMSMetricsLogs();
+    }
+    window.recordRetailMetric = recordRetailMetric;
+
+    function renderCMSMetricsLogs() {
+      const logContainer = document.getElementById("cms-metrics-log-container");
+      const countEl = document.getElementById("cms-kpi-events-count");
+      if (countEl) countEl.textContent = retailMetrics.length.toString();
+
+      if (!logContainer) return;
+      if (retailMetrics.length === 0) {
+        logContainer.innerHTML = `<div style="color: var(--color-text-muted); text-align: center; padding: var(--space-4);">No events recorded yet. Interact with the store to generate real-time metrics.</div>`;
+        return;
+      }
+
+      logContainer.innerHTML = retailMetrics.map(evt => {
+        const time = new Date(evt.timestamp).toLocaleTimeString();
+        return `
+          <div style="padding: 4px 6px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+            <div>
+              <span style="color: var(--primary); font-weight: 700;">[${evt.type.toUpperCase()}]</span>
+              <span style="color: var(--color-text-subtle); margin-left: 6px;">${JSON.stringify(evt.details)}</span>
+            </div>
+            <span style="color: var(--color-text-muted); font-size: 11px; white-space: nowrap;">${time}</span>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // -------------------------------------------------------------
+    // Storefront CMS & Inventory Management Ledger
+    // -------------------------------------------------------------
+    const CMS_INVENTORY_KEY = "oz_inventory_ledger_v1";
+
+    function initInventoryLedger() {
+      try {
+        const stored = localStorage.getItem(CMS_INVENTORY_KEY);
+        if (stored) {
+          const customLedger = JSON.parse(stored);
+          if (Array.isArray(customLedger) && customLedger.length > 0) {
+            // Merge custom inventory
+            customLedger.forEach(item => {
+              const existingIdx = PRODUCTS.findIndex(p => p.id === item.id);
+              if (existingIdx !== -1) {
+                PRODUCTS[existingIdx] = { ...PRODUCTS[existingIdx], ...item };
+              } else {
+                PRODUCTS.push(item);
+              }
+            });
+          }
+        }
+      } catch (e) {}
+      // Ensure all products have stock count
+      PRODUCTS.forEach((p, idx) => {
+        if (typeof p.stock !== 'number') {
+          p.stock = (idx * 17 + 23) % 85 + 5; // realistic stock levels
+        }
+      });
+    }
+
+    function saveInventoryLedger() {
+      try {
+        localStorage.setItem(CMS_INVENTORY_KEY, JSON.stringify(PRODUCTS));
+      } catch (e) {}
+      renderCMSInventoryTable();
+      renderHomePinterestCollage();
+      renderCatalog();
+    }
+
+    function renderCMSInventoryTable(filterQuery = "") {
+      const tbody = document.getElementById("cms-inventory-tbody");
+      const kpiSkus = document.getElementById("cms-kpi-total-skus");
+      const kpiUnits = document.getElementById("cms-kpi-total-units");
+      const kpiVal = document.getElementById("cms-kpi-valuation");
+
+      if (kpiSkus) kpiSkus.textContent = PRODUCTS.length.toString();
+      const totalUnits = PRODUCTS.reduce((sum, p) => sum + (p.stock || 0), 0);
+      if (kpiUnits) kpiUnits.textContent = totalUnits.toLocaleString();
+      const totalValuation = PRODUCTS.reduce((sum, p) => sum + (p.stock || 0) * p.price, 0);
+      if (kpiVal) kpiVal.textContent = `$${Math.round(totalValuation).toLocaleString()}`;
+
+      if (!tbody) return;
+
+      const q = filterQuery.toLowerCase().trim();
+      const filtered = PRODUCTS.filter(p => 
+        !q || p.id.toLowerCase().includes(q) || p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)
+      );
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: var(--space-4); color: var(--color-text-muted);">No inventory SKUs matching query.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(p => {
+        const stock = p.stock || 0;
+        let pillClass = "cms-stock-in";
+        let pillLabel = "In Stock";
+        if (stock === 0) {
+          pillClass = "cms-stock-out";
+          pillLabel = "Out of Stock";
+        } else if (stock < 15) {
+          pillClass = "cms-stock-low";
+          pillLabel = "Low Stock";
+        }
+
+        return `
+          <tr>
+            <td><code style="font-size: 11px; padding: 2px 4px; background: var(--bg-element); border-radius: 4px;">${p.id}</code></td>
+            <td><strong>${p.icon || '📦'} ${p.name}</strong></td>
+            <td><span class="t-badge">${p.category}</span></td>
+            <td><strong>$${p.price.toFixed(2)}</strong></td>
+            <td>
+              <div class="t-xstack ai-center gap-2">
+                <button class="t-btn t-btn-ghost t-btn-sm" style="padding: 0 6px;" onclick="adjustSkuStock('${p.id}', -5)">&minus;</button>
+                <span style="font-weight: 700; min-width: 32px; text-align: center;">${stock}</span>
+                <button class="t-btn t-btn-ghost t-btn-sm" style="padding: 0 6px;" onclick="adjustSkuStock('${p.id}', 5)">&plus;</button>
+              </div>
+            </td>
+            <td><span class="cms-stock-pill ${pillClass}">${pillLabel}</span></td>
+            <td>
+              <div class="t-xstack ai-center gap-1">
+                <button class="t-btn t-btn-ghost t-btn-sm" onclick="openEditProductModal('${p.id}')">Edit</button>
+                <button class="t-btn t-btn-ghost t-btn-sm" style="color: var(--color-red-11);" onclick="deleteProductSku('${p.id}')">&times;</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function adjustSkuStock(productId, delta) {
+      const prod = PRODUCTS.find(p => p.id === productId);
+      if (!prod) return;
+      prod.stock = Math.max(0, (prod.stock || 0) + delta);
+      saveInventoryLedger();
+      recordRetailMetric("inventory_stock_adjusted", { productId, newStock: prod.stock, delta });
+    }
+    window.adjustSkuStock = adjustSkuStock;
+
+    let activeEditingProductId = null;
+
+    function openEditProductModal(productId) {
+      const panel = document.getElementById("cms-editor-panel");
+      const titleEl = document.getElementById("cms-editor-title");
+      if (!panel) return;
+
+      if (productId) {
+        const prod = PRODUCTS.find(p => p.id === productId);
+        if (!prod) return;
+        activeEditingProductId = productId;
+        if (titleEl) titleEl.textContent = `Edit SKU: ${prod.name}`;
+        document.getElementById("cms-edit-title").value = prod.name;
+        document.getElementById("cms-edit-category").value = prod.category;
+        document.getElementById("cms-edit-price").value = prod.price;
+        document.getElementById("cms-edit-stock").value = prod.stock || 20;
+        document.getElementById("cms-edit-image").value = prod.icon || "📦";
+        document.getElementById("cms-edit-desc").value = prod.description || "";
+      } else {
+        activeEditingProductId = null;
+        if (titleEl) titleEl.textContent = "Create New Inventory SKU";
+        document.getElementById("cms-edit-title").value = "";
+        document.getElementById("cms-edit-category").value = "Apparel";
+        document.getElementById("cms-edit-price").value = "49.99";
+        document.getElementById("cms-edit-stock").value = "50";
+        document.getElementById("cms-edit-image").value = "✨";
+        document.getElementById("cms-edit-desc").value = "New handcrafted catalog item.";
+      }
+      panel.style.display = "flex";
+      panel.scrollIntoView({ behavior: 'smooth' });
+    }
+    window.openEditProductModal = openEditProductModal;
+
+    function saveProductFromEditor() {
+      const name = document.getElementById("cms-edit-title").value.trim();
+      const category = document.getElementById("cms-edit-category").value.trim() || "General";
+      const price = parseFloat(document.getElementById("cms-edit-price").value) || 0;
+      const stock = parseInt(document.getElementById("cms-edit-stock").value) || 0;
+      const icon = document.getElementById("cms-edit-image").value.trim() || "📦";
+      const description = document.getElementById("cms-edit-desc").value.trim();
+
+      if (!name) {
+        alert("Please provide a product title.");
+        return;
+      }
+
+      if (activeEditingProductId) {
+        const prod = PRODUCTS.find(p => p.id === activeEditingProductId);
+        if (prod) {
+          prod.name = name;
+          prod.category = category;
+          prod.price = price;
+          prod.stock = stock;
+          prod.icon = icon;
+          prod.description = description;
+          recordRetailMetric("product_sku_updated", { productId: prod.id, name, price });
+        }
+      } else {
+        const newId = `prod-${PRODUCTS.length + 1}`;
+        const newProduct = {
+          id: newId,
+          name,
+          category,
+          price,
+          stock,
+          icon,
+          description,
+          tag: "New SKU",
+          aspect: "medium"
+        };
+        PRODUCTS.unshift(newProduct);
+        recordRetailMetric("product_sku_created", { productId: newId, name, price });
+      }
+
+      saveInventoryLedger();
+      const panel = document.getElementById("cms-editor-panel");
+      if (panel) panel.style.display = "none";
+    }
+
+    function deleteProductSku(productId) {
+      if (!confirm(`Are you sure you want to delete SKU ${productId}?`)) return;
+      const idx = PRODUCTS.findIndex(p => p.id === productId);
+      if (idx !== -1) {
+        const removed = PRODUCTS.splice(idx, 1)[0];
+        saveInventoryLedger();
+        recordRetailMetric("product_sku_deleted", { productId, name: removed.name });
+      }
+    }
+    window.deleteProductSku = deleteProductSku;
 
     let cart = [];
     const CART_STORAGE_KEY = "oz_cart_items";
@@ -1743,14 +2867,41 @@
       }
     }
 
+    // Render Walmart-style Stepper or Add to Cart button for any product
+    function renderProductActionButton(productId, isLarge = false) {
+      const qty = getCartItemQuantity(productId);
+      const lgClass = isLarge ? " lg" : "";
+      const smBtnClass = isLarge ? "t-btn-lg" : "t-btn-sm";
+
+      if (qty === 0) {
+        return `
+          <button class="t-btn t-btn-primary ${smBtnClass}" onclick="event.stopPropagation(); addToCart('${productId}', false);">
+            Add to Cart
+          </button>
+        `;
+      }
+
+      return `
+        <div class="qty-stepper-btn${lgClass}" onclick="event.stopPropagation();" title="Adjust quantity in cart">
+          <button class="qty-endcap-btn" onclick="event.stopPropagation(); updateCartQuantity('${productId}', -1);">&minus;</button>
+          <span class="qty-stepper-count">${qty}</span>
+          <button class="qty-endcap-btn" onclick="event.stopPropagation(); updateCartQuantity('${productId}', 1);">&plus;</button>
+        </div>
+      `;
+    }
+    window.renderProductActionButton = renderProductActionButton;
+
     function saveCart() {
       try {
         localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
       } catch (e) {}
       renderCartUI();
+      renderHomePinterestCollage();
+      renderCatalog();
+      renderProductDetailActionStepper();
     }
 
-    function addToCart(productId) {
+    function addToCart(productId, navigateToCart = false) {
       const prod = PRODUCTS.find(p => p.id === productId);
       if (!prod) return;
       const existing = cart.find(item => item.id === productId);
@@ -1760,27 +2911,40 @@
         cart.push({ ...prod, quantity: 1 });
       }
       saveCart();
-      // Visual feedback via cart badge and navigation
-      location.hash = "#/cart";
+      recordRetailMetric("add_to_cart", { productId, name: prod.name, price: prod.price });
+      if (navigateToCart) {
+        location.hash = "#/cart";
+      }
     }
 
     function removeFromCart(productId) {
+      const item = cart.find(i => i.id === productId);
+      if (item) {
+        recordRetailMetric("remove_from_cart", { productId, name: item.name });
+      }
       cart = cart.filter(item => item.id !== productId);
       saveCart();
     }
 
     function updateCartQuantity(productId, delta) {
       const item = cart.find(i => i.id === productId);
-      if (!item) return;
+      if (!item) {
+        if (delta > 0) addToCart(productId, false);
+        return;
+      }
       item.quantity += delta;
       if (item.quantity <= 0) {
         removeFromCart(productId);
       } else {
         saveCart();
+        recordRetailMetric("update_cart_quantity", { productId, quantity: item.quantity, delta });
       }
     }
 
     function clearCart() {
+      if (cart.length > 0) {
+        recordRetailMetric("clear_cart", { previousItemCount: cart.length });
+      }
       cart = [];
       saveCart();
     }
@@ -1799,6 +2963,22 @@
         const q = searchQuery.toLowerCase().trim();
         if (q === "sale") {
           items = items.filter(p => p.price < 50);
+        } else if (q === "ruby") {
+          items = items.filter(p => p.name.toLowerCase().includes("ruby") || p.description.toLowerCase().includes("ruby") || (p.tag && p.tag.toLowerCase().includes("bestseller")));
+        } else if (q === "emerald") {
+          items = items.filter(p => p.name.toLowerCase().includes("emerald") || p.description.toLowerCase().includes("emerald"));
+        } else if (q === "sparkle") {
+          items = items.filter(p => p.description.toLowerCase().includes("sparkle") || (p.tag && p.tag.toLowerCase().includes("bestseller")));
+        } else if (q === "steampunk") {
+          items = items.filter(p => (p.tag && p.tag.toLowerCase().includes("steampunk")) || p.description.toLowerCase().includes("brass") || p.description.toLowerCase().includes("mechanical"));
+        } else if (q === "lighting") {
+          items = items.filter(p => p.category.toLowerCase() === "lighting" || (p.tag && p.tag.toLowerCase().includes("ambient")));
+        } else if (q === "cyberpunk") {
+          items = items.filter(p => (p.tag && p.tag.toLowerCase().includes("cyberpunk")) || p.description.toLowerCase().includes("holographic") || p.description.toLowerCase().includes("neon"));
+        } else if (q === "collectible") {
+          items = items.filter(p => (p.tag && p.tag.toLowerCase().includes("collectible")) || p.description.toLowerCase().includes("clockwork") || p.description.toLowerCase().includes("titanium"));
+        } else if (q === "artisan") {
+          items = items.filter(p => (p.tag && (p.tag.toLowerCase().includes("artisan") || p.tag.toLowerCase().includes("handmade"))));
         } else {
           items = items.filter(p => 
             p.name.toLowerCase().includes(q) ||
@@ -1827,32 +3007,38 @@
       searchQuery = "";
       activeSort = "featured";
 
-      const searchInput = document.getElementById("store-search-input");
-      const clearBtn = document.getElementById("store-search-clear");
+      const navSearchInput = document.getElementById("nav-search-input");
+      const navSearchClear = document.getElementById("nav-search-clear");
       const sortSelect = document.getElementById("store-sort-select");
 
-      if (searchInput) searchInput.value = "";
-      if (clearBtn) clearBtn.style.display = "none";
+      if (navSearchInput) navSearchInput.value = "";
+      if (navSearchClear) navSearchClear.style.display = "none";
       if (sortSelect) sortSelect.value = "featured";
 
-      const filterBar = document.getElementById("collage-filter-bar");
-      if (filterBar) {
-        filterBar.querySelectorAll(".collage-filter-btn").forEach(btn => {
-          btn.classList.toggle("active", btn.dataset.filter === "all");
-        });
-      }
+      // Reset active states on all filter buttons & chips
+      document.querySelectorAll(".collage-filter-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.filter === "all");
+      });
+      document.querySelectorAll(".trending-tag-pill").forEach(pill => {
+        pill.classList.remove("active");
+      });
+      document.querySelectorAll(".search-suggestion-pill").forEach(pill => {
+        pill.classList.remove("active");
+      });
 
       renderHomePinterestCollage();
       renderCatalog();
+      renderSearchSuggestionsPreview();
     }
     window.resetStoreFilters = resetStoreFilters;
 
-    // Render Pinterest-Style Collage on Home with Fluid Continuous Layout
+    // Render Pinterest-Style Collage on Home with Fluid Continuous Layout & Natural Ad Flow
     function renderHomePinterestCollage() {
       const grid = document.getElementById("home-pinterest-grid");
       const emptyMsg = document.getElementById("feed-empty-message");
       const feedCount = document.getElementById("feed-count-badge");
       const feedIndicator = document.getElementById("feed-filter-indicator");
+      const navCountBadge = document.getElementById("nav-search-count-badge");
       if (!grid) return;
 
       const items = getFilteredProducts();
@@ -1861,13 +3047,16 @@
       if (feedCount) {
         feedCount.textContent = `${items.length} Item${items.length === 1 ? '' : 's'}`;
       }
+      if (navCountBadge) {
+        navCountBadge.textContent = `${items.length} match${items.length === 1 ? '' : 'es'}`;
+      }
       if (feedIndicator) {
         if (searchQuery.trim() && activeFilter !== "all") {
-          feedIndicator.textContent = `Category: ${activeFilter} | Query: "${searchQuery.trim()}"`;
+          feedIndicator.textContent = `Department: ${activeFilter} | Query: "${searchQuery.trim()}"`;
         } else if (searchQuery.trim()) {
           feedIndicator.textContent = `Matching "${searchQuery.trim()}"`;
         } else if (activeFilter !== "all") {
-          feedIndicator.textContent = `Category: ${activeFilter}`;
+          feedIndicator.textContent = `Department: ${activeFilter}`;
         } else {
           feedIndicator.textContent = "Showing all items";
         }
@@ -1882,30 +3071,39 @@
       if (emptyMsg) emptyMsg.style.display = "none";
 
       let html = "";
+      let adCursor = 0;
+
       items.forEach((p, idx) => {
         const aspectClass = p.aspect || "medium";
         const tag = p.tag || p.category;
+        const pinActionBtn = renderProductActionButton(p.id, false);
+        const itemQty = getCartItemQuantity(p.id);
+        const overlayBtn = itemQty > 0 
+          ? `<span class="t-badge t-badge-primary" style="box-shadow: var(--shadow-2); font-weight: 700;">${itemQty} in Cart</span>`
+          : `<button class="t-btn t-btn-primary t-btn-sm" onclick="event.stopPropagation(); addToCart('${p.id}', false);" title="Quick Add">+ Add</button>`;
         
-        // Sponsored In-feed Ad Pin after 2nd product
-        if (idx === 2) {
+        // Distribute Sponsored In-feed Ad Pins naturally after every 5 items in mass stream
+        if ((idx === 2 || (idx > 2 && (idx - 2) % 6 === 0)) && adCursor < SPONSORED_ADS.length) {
+          const ad = SPONSORED_ADS[adCursor % SPONSORED_ADS.length];
+          adCursor++;
           html += `
             <div class="collage-pin ad-pin" onclick="location.hash='#/cart'">
-              <div class="collage-pin-media compact" style="background: linear-gradient(135deg, #4285F4, #34A853); font-size: 2.4rem;">
-                <span>🚀</span>
+              <div class="collage-pin-media compact" style="background: ${ad.gradient}; font-size: 2.4rem;">
+                <span>${ad.icon}</span>
                 <div class="collage-pin-overlay">
                   <span class="ad-badge-icon" style="background: rgba(0,0,0,0.6); color: #fff; padding: 2px 4px;">Ad</span>
                 </div>
               </div>
               <div class="collage-pin-body">
                 <div class="t-xstack ai-center jc-between">
-                  <span class="collage-pin-tag" style="color: var(--primary);">Sponsored &bull; Ad</span>
-                  <span style="font-size: var(--font-size-1); color: var(--color-text-muted);">Google Ads</span>
+                  <span class="collage-pin-tag" style="color: var(--primary);">${ad.tag}</span>
+                  <span style="font-size: var(--font-size-1); color: var(--color-text-muted);">${ad.source}</span>
                 </div>
-                <h3 class="collage-pin-title">Oz Cloud Storage Pro</h3>
-                <p class="collage-pin-desc">Secure, encrypted cloud storage for your 3D assets &amp; portfolio designs with ultra-fast CDN delivery.</p>
+                <h3 class="collage-pin-title">${ad.title}</h3>
+                <p class="collage-pin-desc">${ad.desc}</p>
                 <div class="collage-pin-footer">
-                  <span style="font-weight: 700; font-size: var(--font-size-4); color: var(--primary);">$4.99/mo</span>
-                  <button class="t-btn t-btn-primary t-btn-sm" onclick="event.stopPropagation(); location.hash='#/cart';">Get Offer</button>
+                  <span style="font-weight: 700; font-size: var(--font-size-4); color: var(--primary);">${ad.price}</span>
+                  <button class="t-btn t-btn-primary t-btn-sm" onclick="event.stopPropagation(); location.hash='#/cart';">${ad.cta}</button>
                 </div>
               </div>
             </div>
@@ -1917,9 +3115,7 @@
             <div class="collage-pin-media ${aspectClass}">
               <span>${p.icon}</span>
               <div class="collage-pin-overlay">
-                <button class="t-btn t-btn-primary t-btn-sm" onclick="event.stopPropagation(); addToCart('${p.id}');" title="Quick Add">
-                  + Add
-                </button>
+                ${overlayBtn}
               </div>
             </div>
             <div class="collage-pin-body">
@@ -1933,7 +3129,7 @@
                 <span style="font-weight: 700; font-size: var(--font-size-4); color: var(--color-text);">$${p.price.toFixed(2)}</span>
                 <div class="t-xstack ai-center gap-2">
                   <a href="#/product/${p.id}" class="t-btn t-btn-ghost t-btn-sm" onclick="event.stopPropagation();">Inspect</a>
-                  <button class="t-btn t-btn-primary t-btn-sm" onclick="event.stopPropagation(); addToCart('${p.id}');">Buy</button>
+                  ${pinActionBtn}
                 </div>
               </div>
             </div>
@@ -1944,62 +3140,206 @@
       grid.innerHTML = html;
     }
 
-    // Filter pill interactions on Home
-    const filterBar = document.getElementById("collage-filter-bar");
-    if (filterBar) {
-      filterBar.addEventListener("click", (e) => {
-        const btn = e.target.closest(".collage-filter-btn");
-        if (btn && btn.dataset.filter) {
-          activeFilter = btn.dataset.filter;
-          filterBar.querySelectorAll(".collage-filter-btn").forEach(b => {
-            b.classList.toggle("active", b === btn);
-          });
-          renderHomePinterestCollage();
-          renderCatalog();
-        }
-      });
+    // Top Navigation Search Dropdown Controller & Autocomplete Preview
+    const navSearchWrapper = document.getElementById("nav-search-wrapper");
+    const navSearchInput = document.getElementById("nav-search-input");
+    const navSearchClear = document.getElementById("nav-search-clear");
+    const navSearchDropdown = document.getElementById("nav-search-dropdown");
+
+    function openNavSearchDropdown() {
+      if (navSearchWrapper) {
+        navSearchWrapper.classList.add("expanded");
+        renderSearchSuggestionsPreview();
+      }
     }
 
-    // Search bar input & autocomplete listener
-    const searchInput = document.getElementById("store-search-input");
-    const searchClear = document.getElementById("store-search-clear");
-    if (searchInput) {
-      searchInput.addEventListener("input", (e) => {
+    function closeNavSearchDropdown() {
+      if (navSearchWrapper) {
+        navSearchWrapper.classList.remove("expanded");
+      }
+    }
+
+    window.openNavSearchDropdown = openNavSearchDropdown;
+    window.closeNavSearchDropdown = closeNavSearchDropdown;
+
+    // Render fast preview of top matches inside the search overlay dropdown
+    function renderSearchSuggestionsPreview() {
+      const matchesContainer = document.getElementById("search-quick-matches-list");
+      const matchesCount = document.getElementById("search-matches-count");
+      if (!matchesContainer) return;
+
+      const items = getFilteredProducts().slice(0, 4);
+      if (matchesCount) {
+        matchesCount.textContent = `${items.length} featured`;
+      }
+
+      if (items.length === 0) {
+        matchesContainer.innerHTML = `<div style="padding: var(--space-2); font-size: var(--font-size-2); color: var(--color-text-muted);">No instant matches. Try another keyword.</div>`;
+        return;
+      }
+
+      matchesContainer.innerHTML = items.map(p => `
+        <div class="search-quick-item" onclick="event.stopPropagation(); closeNavSearchDropdown(); location.hash='#/product/${p.id}';">
+          <div class="t-xstack ai-center gap-3">
+            <span style="font-size: var(--font-size-6);">${p.icon}</span>
+            <div class="t-ystack">
+              <span style="font-weight: 700; font-size: var(--font-size-3);">${p.name}</span>
+              <span style="font-size: var(--font-size-1); color: var(--color-text-muted);">${p.category} &bull; ${p.tag || 'Popular'}</span>
+            </div>
+          </div>
+          <span style="font-weight: 700; font-size: var(--font-size-3); color: var(--primary);">$${p.price.toFixed(2)}</span>
+        </div>
+      `).join("");
+    }
+
+    // Search bar event listeners
+    if (navSearchInput) {
+      navSearchInput.addEventListener("focus", () => {
+        openNavSearchDropdown();
+      });
+
+      navSearchInput.addEventListener("input", (e) => {
         searchQuery = e.target.value;
-        if (searchClear) {
-          searchClear.style.display = searchQuery ? "inline-block" : "none";
+        if (navSearchClear) {
+          navSearchClear.style.display = searchQuery ? "inline-block" : "none";
         }
+        syncDiscoverChipsState();
         renderHomePinterestCollage();
         renderCatalog();
+        renderSearchSuggestionsPreview();
       });
-    }
-    if (searchClear) {
-      searchClear.addEventListener("click", () => {
-        if (searchInput) {
-          searchInput.value = "";
-          searchQuery = "";
-          searchClear.style.display = "none";
-          renderHomePinterestCollage();
-          renderCatalog();
-          searchInput.focus();
+
+      navSearchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === "Escape") {
+          closeNavSearchDropdown();
         }
       });
     }
 
-    // Discover Trending Chips listener
+    if (navSearchClear) {
+      navSearchClear.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (navSearchInput) {
+          navSearchInput.value = "";
+          searchQuery = "";
+          navSearchClear.style.display = "none";
+          syncDiscoverChipsState();
+          renderHomePinterestCollage();
+          renderCatalog();
+          renderSearchSuggestionsPreview();
+          navSearchInput.focus();
+        }
+      });
+    }
+
+    // Close search dropdown on outside clicks
+    document.addEventListener("click", (e) => {
+      if (navSearchWrapper && !navSearchWrapper.contains(e.target)) {
+        closeNavSearchDropdown();
+      }
+    });
+
+    // Synchronize trending chips active highlight
+    function syncDiscoverChipsState() {
+      const q = searchQuery.toLowerCase().trim();
+      document.querySelectorAll(".trending-tag-pill").forEach(pill => {
+        const queryVal = (pill.dataset.query || "").toLowerCase();
+        pill.classList.toggle("active", q === queryVal && q !== "");
+      });
+      document.querySelectorAll(".search-suggestion-pill[data-search]").forEach(pill => {
+        const queryVal = (pill.dataset.search || "").toLowerCase();
+        pill.classList.toggle("active", q === queryVal && q !== "");
+      });
+    }
+
+    // Suggestions Pill clicks inside the search dropdown
+    const searchDropdown = document.getElementById("nav-search-dropdown");
+    if (searchDropdown) {
+      searchDropdown.addEventListener("click", (e) => {
+        const ideaBtn = e.target.closest(".search-suggestion-pill[data-search]");
+        if (ideaBtn) {
+          e.stopPropagation();
+          const q = ideaBtn.dataset.search;
+          if (searchQuery.toLowerCase() === q.toLowerCase()) {
+            // Toggle off
+            searchQuery = "";
+            if (navSearchInput) navSearchInput.value = "";
+            if (navSearchClear) navSearchClear.style.display = "none";
+          } else {
+            searchQuery = q;
+            if (navSearchInput) navSearchInput.value = q;
+            if (navSearchClear) navSearchClear.style.display = "inline-block";
+          }
+          syncDiscoverChipsState();
+          renderHomePinterestCollage();
+          renderCatalog();
+          renderSearchSuggestionsPreview();
+          return;
+        }
+
+        const catBtn = e.target.closest(".search-suggestion-pill[data-category]");
+        if (catBtn) {
+          e.stopPropagation();
+          activeFilter = catBtn.dataset.category;
+          const filterBar = document.getElementById("collage-filter-bar");
+          if (filterBar) {
+            filterBar.querySelectorAll(".collage-filter-btn").forEach(b => {
+              b.classList.toggle("active", b.dataset.filter === activeFilter);
+            });
+          }
+          renderHomePinterestCollage();
+          renderCatalog();
+          renderSearchSuggestionsPreview();
+          closeNavSearchDropdown();
+        }
+      });
+    }
+
+    // Discover Trending Chips toggle listener on storefront
     const trendingTagsContainer = document.getElementById("trending-tags-container");
     if (trendingTagsContainer) {
       trendingTagsContainer.addEventListener("click", (e) => {
         const pill = e.target.closest(".trending-tag-pill");
         if (pill && pill.dataset.query) {
           const q = pill.dataset.query;
-          if (searchInput) {
-            searchInput.value = q;
+          if (searchQuery.toLowerCase() === q.toLowerCase()) {
+            // UNSELECT / TOGGLE RESET: clicking the active chip resets search
+            searchQuery = "";
+            if (navSearchInput) navSearchInput.value = "";
+            if (navSearchClear) navSearchClear.style.display = "none";
+          } else {
+            // Select new query
             searchQuery = q;
-            if (searchClear) searchClear.style.display = "inline-block";
+            if (navSearchInput) navSearchInput.value = q;
+            if (navSearchClear) navSearchClear.style.display = "inline-block";
           }
+          syncDiscoverChipsState();
           renderHomePinterestCollage();
           renderCatalog();
+          renderSearchSuggestionsPreview();
+        }
+      });
+    }
+
+    // Category Filter pill interactions on Home
+    const filterBar = document.getElementById("collage-filter-bar");
+    if (filterBar) {
+      filterBar.addEventListener("click", (e) => {
+        const btn = e.target.closest(".collage-filter-btn");
+        if (btn && btn.dataset.filter) {
+          const cat = btn.dataset.filter;
+          if (activeFilter === cat && cat !== "all") {
+            // Toggle off back to all
+            activeFilter = "all";
+          } else {
+            activeFilter = cat;
+          }
+          filterBar.querySelectorAll(".collage-filter-btn").forEach(b => {
+            b.classList.toggle("active", b.dataset.filter === activeFilter);
+          });
+          renderHomePinterestCollage();
+          renderCatalog();
+          renderSearchSuggestionsPreview();
         }
       });
     }
@@ -2026,44 +3366,54 @@
         container.innerHTML = `<div style="grid-column: 1 / -1; padding: var(--space-4); text-align: center; color: var(--color-text-muted); font-size: var(--font-size-3);">No products matching active filters.</div>`;
         return;
       }
-      container.innerHTML = items.map(p => `
-        <div class="product-card" onclick="location.hash='#/product/${p.id}'">
-          <div class="product-img-box">${p.icon}</div>
-          <div class="t-ystack gap-2" style="padding: var(--space-4); flex: 1;">
-            <div class="t-xstack ai-center jc-between">
-              <span class="t-badge">${p.category}</span>
-              <span style="font-weight: 700; font-size: var(--font-size-5); color: var(--primary);">$${p.price.toFixed(2)}</span>
-            </div>
-            <h3 style="margin: 0; font-size: var(--font-size-5); font-weight: 700;">${p.name}</h3>
-            <p style="margin: 0; color: var(--color-text-subtle); font-size: var(--font-size-3); line-height: var(--line-height-3); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-              ${p.description}
-            </p>
-            <div class="t-xstack ai-center jc-between" style="margin-top: auto; padding-top: var(--space-2);">
-              <a href="#/product/${p.id}" class="t-btn t-btn-ghost t-btn-sm" onclick="event.stopPropagation();">Details</a>
-              <button class="t-btn t-btn-primary t-btn-sm" onclick="event.stopPropagation(); addToCart('${p.id}');">Add to Cart</button>
+      container.innerHTML = items.map(p => {
+        const actionBtn = renderProductActionButton(p.id, false);
+        return `
+          <div class="product-card" onclick="location.hash='#/product/${p.id}'">
+            <div class="product-img-box">${p.icon}</div>
+            <div class="t-ystack gap-2" style="padding: var(--space-4); flex: 1;">
+              <div class="t-xstack ai-center jc-between">
+                <span class="t-badge">${p.category}</span>
+                <span style="font-weight: 700; font-size: var(--font-size-5); color: var(--primary);">$${p.price.toFixed(2)}</span>
+              </div>
+              <h3 style="margin: 0; font-size: var(--font-size-5); font-weight: 700;">${p.name}</h3>
+              <p style="margin: 0; color: var(--color-text-subtle); font-size: var(--font-size-3); line-height: var(--line-height-3); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                ${p.description}
+              </p>
+              <div class="t-xstack ai-center jc-between" style="margin-top: auto; padding-top: var(--space-2);">
+                <a href="#/product/${p.id}" class="t-btn t-btn-ghost t-btn-sm" onclick="event.stopPropagation();">Details</a>
+                ${actionBtn}
+              </div>
             </div>
           </div>
-        </div>
-      `).join("");
+        `;
+      }).join("");
+    }
+
+    let currentDetailProductId = "prod-1";
+
+    function renderProductDetailActionStepper() {
+      const stepperContainer = document.getElementById("product-detail-stepper-container");
+      if (!stepperContainer || !currentDetailProductId) return;
+      stepperContainer.innerHTML = renderProductActionButton(currentDetailProductId, true);
     }
 
     function renderProductDetail(productId) {
+      currentDetailProductId = productId;
       const prod = PRODUCTS.find(p => p.id === productId) || PRODUCTS[0];
       const titleEl = document.getElementById("product-detail-title");
       const priceEl = document.getElementById("product-detail-price");
       const descEl = document.getElementById("product-detail-desc");
       const catEl = document.getElementById("product-detail-category");
       const iconEl = document.getElementById("product-detail-icon");
-      const addBtn = document.getElementById("product-detail-add-btn");
 
       if (titleEl) titleEl.textContent = prod.name;
       if (priceEl) priceEl.textContent = `$${prod.price.toFixed(2)}`;
       if (descEl) descEl.textContent = prod.description;
       if (catEl) catEl.textContent = prod.category;
       if (iconEl) iconEl.textContent = prod.icon;
-      if (addBtn) {
-        addBtn.onclick = () => addToCart(prod.id);
-      }
+      renderProductDetailActionStepper();
+      recordRetailMetric("product_view", { productId: prod.id, name: prod.name, price: prod.price, category: prod.category });
     }
 
     function renderCartUI() {
@@ -2204,9 +3554,8 @@
       const rootRoute = parts[0];
       const subParam = parts[1];
 
-      // Route Guarding: If guest accesses settings / themes / account, enforce read-only / prompt
-      if ((rootRoute === "settings" || rootRoute === "account") && !isUserAuthenticated) {
-        // Open universal auth modal prompt and fall back cleanly to settings preview with banner
+      // Route Guarding: If guest accesses account/security settings, prompt auth modal
+      if ((rootRoute === "account" || (rootRoute === "settings" && subParam === "account")) && !isUserAuthenticated) {
         openAuthModal();
       }
 
@@ -2247,6 +3596,10 @@
           subTab = "account";
         } else if (rootRoute === "account" || subParam === "account") {
           subTab = "account";
+        } else if (subParam === "inventory") {
+          subTab = "inventory";
+        } else if (subParam === "privacy") {
+          subTab = "privacy";
         } else if (subParam === "general") {
           subTab = "general";
         } else if (subParam === "themes") {
@@ -2299,6 +3652,24 @@
     const checkoutBtn = document.getElementById("checkout-btn");
     if (checkoutBtn) {
       checkoutBtn.addEventListener("click", () => {
+        const orderTotal = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+        const orderItems = cart.map(i => ({ id: i.id, name: i.name, qty: i.quantity, price: i.price }));
+        
+        recordRetailMetric("checkout_completed", {
+          totalAmount: orderTotal,
+          itemCount: cart.reduce((s, i) => s + i.quantity, 0),
+          items: orderItems
+        });
+
+        // Deduct inventory stock
+        cart.forEach(cartItem => {
+          const prod = PRODUCTS.find(p => p.id === cartItem.id);
+          if (prod) {
+            prod.stock = Math.max(0, (prod.stock || 0) - cartItem.quantity);
+          }
+        });
+        saveInventoryLedger();
+
         if (modal) {
           const modalContent = modal.querySelector(".t-modal-content");
           if (modalContent) {
@@ -2308,7 +3679,7 @@
                 <button class="t-btn t-btn-ghost t-btn-sm" onclick="toggleModal(false);">&times;</button>
               </div>
               <p style="color: var(--color-text-subtle); margin: 0;">
-                Thank you for shopping at Merchant of Oz! Your test order of <strong>$${cart.reduce((s, i) => s + (i.price * i.quantity), 0).toFixed(2)}</strong> has been processed successfully.
+                Thank you for shopping at Merchant of Oz! Your test order of <strong>$${orderTotal.toFixed(2)}</strong> has been processed successfully. Inventory ledger has been automatically synchronized.
               </p>
               <div class="t-xstack jc-end gap-3" style="margin-top: var(--space-4);">
                 <button class="t-btn t-btn-primary" onclick="clearCart(); toggleModal(false); location.hash='#/shop';">Continue Shopping</button>
@@ -2332,11 +3703,12 @@
 
     function updateAuthGatedUI(isAuthenticated) {
       isUserAuthenticated = !!isAuthenticated;
+      // Allow theme preview & controls to be accessible directly
       if (authLockedPanel) {
-        authLockedPanel.style.display = isUserAuthenticated ? 'flex' : 'none';
+        authLockedPanel.style.display = 'flex';
       }
       if (guestBanner) {
-        guestBanner.style.display = isUserAuthenticated ? 'none' : 'flex';
+        guestBanner.style.display = 'none';
       }
 
       // Dynamic top nav toggle: Log In button for guests vs User Profile Dropdown on the right for signed-in users
@@ -2413,10 +3785,6 @@
 
       if (themeModePicker) {
         themeModePicker.addEventListener('click', (e) => {
-          if (!isUserAuthenticated) {
-            switchSettingsTab('account');
-            return;
-          }
           const btn = e.target.closest('.t-theme-pill');
           if (btn && btn.dataset.mode) {
             themeController.setTheme(btn.dataset.mode);
@@ -2426,10 +3794,6 @@
 
       if (subthemePicker) {
         subthemePicker.addEventListener('click', (e) => {
-          if (!isUserAuthenticated) {
-            switchSettingsTab('account');
-            return;
-          }
           const btn = e.target.closest('.t-color-swatch');
           if (btn && btn.dataset.color) {
             themeController.setSubTheme(btn.dataset.color);
@@ -2460,6 +3824,127 @@
         if (e.target === modal) toggleModal(false);
       });
     }
+
+    // -------------------------------------------------------------
+    // Cookie Banner & Privacy Preferences Event Handlers
+    // -------------------------------------------------------------
+    const cookieBannerBox = document.getElementById("cookie-banner-box");
+    const cookieAcceptAllBtn = document.getElementById("cookie-accept-all-btn");
+    const cookieRejectBtn = document.getElementById("cookie-reject-btn");
+    const cookieSavePrefsBtn = document.getElementById("cookie-save-prefs-btn");
+    const cookieResetPrefsBtn = document.getElementById("cookie-reset-prefs-btn");
+
+    if (cookieAcceptAllBtn) {
+      cookieAcceptAllBtn.addEventListener("click", () => {
+        saveCookiePreferences({ analytics: true, marketing: true });
+      });
+    }
+
+    if (cookieRejectBtn) {
+      cookieRejectBtn.addEventListener("click", () => {
+        saveCookiePreferences({ analytics: false, marketing: false });
+      });
+    }
+
+    if (cookieSavePrefsBtn) {
+      cookieSavePrefsBtn.addEventListener("click", () => {
+        const optAnalytics = document.getElementById("cookie-opt-analytics");
+        const optMarketing = document.getElementById("cookie-opt-marketing");
+        saveCookiePreferences({
+          analytics: optAnalytics ? optAnalytics.checked : true,
+          marketing: optMarketing ? optMarketing.checked : true
+        });
+        alert("Privacy & Cookie preferences saved successfully!");
+      });
+    }
+
+    if (cookieResetPrefsBtn) {
+      cookieResetPrefsBtn.addEventListener("click", () => {
+        const optAnalytics = document.getElementById("cookie-opt-analytics");
+        const optMarketing = document.getElementById("cookie-opt-marketing");
+        if (optAnalytics) optAnalytics.checked = true;
+        if (optMarketing) optMarketing.checked = true;
+      });
+    }
+
+    // -------------------------------------------------------------
+    // CMS Inventory Management & Telemetry Handlers
+    // -------------------------------------------------------------
+    const cmsSearchInput = document.getElementById("cms-search-input");
+    const cmsAddProductBtn = document.getElementById("cms-add-product-btn");
+    const cmsSyncBucketBtn = document.getElementById("cms-sync-bucket-btn");
+    const cmsEditorCloseBtn = document.getElementById("cms-editor-close-btn");
+    const cmsEditorCancelBtn = document.getElementById("cms-editor-cancel-btn");
+    const cmsEditorSaveBtn = document.getElementById("cms-editor-save-btn");
+    const cmsClearMetricsBtn = document.getElementById("cms-clear-metrics-btn");
+
+    if (cmsSearchInput) {
+      cmsSearchInput.addEventListener("input", (e) => {
+        renderCMSInventoryTable(e.target.value);
+      });
+    }
+
+    if (cmsAddProductBtn) {
+      cmsAddProductBtn.addEventListener("click", () => {
+        openEditProductModal(null);
+      });
+    }
+
+    if (cmsEditorCloseBtn) {
+      cmsEditorCloseBtn.addEventListener("click", () => {
+        const panel = document.getElementById("cms-editor-panel");
+        if (panel) panel.style.display = "none";
+      });
+    }
+
+    if (cmsEditorCancelBtn) {
+      cmsEditorCancelBtn.addEventListener("click", () => {
+        const panel = document.getElementById("cms-editor-panel");
+        if (panel) panel.style.display = "none";
+      });
+    }
+
+    if (cmsEditorSaveBtn) {
+      cmsEditorSaveBtn.addEventListener("click", saveProductFromEditor);
+    }
+
+    if (cmsClearMetricsBtn) {
+      cmsClearMetricsBtn.addEventListener("click", () => {
+        retailMetrics = [];
+        try {
+          localStorage.removeItem(METRICS_STORAGE_KEY);
+        } catch (e) {}
+        renderCMSMetricsLogs();
+      });
+    }
+
+    if (cmsSyncBucketBtn) {
+      cmsSyncBucketBtn.addEventListener("click", () => {
+        cmsSyncBucketBtn.disabled = true;
+        cmsSyncBucketBtn.innerHTML = `<span>⏳</span> Syncing Storage Bucket...`;
+        setTimeout(() => {
+          saveInventoryLedger();
+          recordRetailMetric("cloud_bucket_inventory_synced", {
+            itemCount: PRODUCTS.length,
+            bucket: "gs://merchant-of-oz-static-storage/inventory.json"
+          });
+          cmsSyncBucketBtn.disabled = false;
+          cmsSyncBucketBtn.innerHTML = `<span>✓</span> Bucket Synced!`;
+          setTimeout(() => {
+            cmsSyncBucketBtn.innerHTML = `<span>☁️</span> Sync Cloud Bucket`;
+          }, 2000);
+        }, 800);
+      });
+    }
+
+    // Startup initializers for Cookies, Retail Metrics & CMS
+    loadCookiePreferences();
+    syncCookieCheckboxes();
+    showCookieBanner();
+    loadRetailMetrics();
+    initInventoryLedger();
+    renderCMSInventoryTable();
+    renderCMSMetricsLogs();
   </script>
 </body>
 </html>

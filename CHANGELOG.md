@@ -5,6 +5,50 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] - 2026-09-05
 
 ### Added
+- **GDPR & CCPA Compliant Cookie Consent Banner & Privacy Hub**:
+  - Added slide-up cookie disclaimer banner (`#cookie-banner-box`) with quick actions: Accept All, Decline Non-Essential, and Customize Choices.
+  - Added dedicated Privacy & Cookies drawer subpanel in Settings (`#/settings/privacy`) allowing granular toggles for Strictly Essential, Retail Analytics, and Marketing/Ad cookies.
+  - Persistent consent state stored in `localStorage` (`oz_cookie_consent_v1`).
+- **Comprehensive Retail Telemetry & Analytics Engine**:
+  - Real-time client-side event tracking pipeline (`recordRetailMetric`) capturing product views, add-to-carts, quantity adjustments, item removals, search queries, filter resets, and order checkouts.
+  - Telemetry event stream ledger with timestamp, session context, and payload inspector.
+  - Respects user cookie privacy preferences before emitting analytics events.
+- **Unified Storefront CMS & Live Inventory Management Ledger**:
+  - Added full Storefront CMS & Inventory Ledger subpanel in Settings (`#/settings/inventory`).
+  - Real-time KPI summary cards: Total SKUs, On-Hand Units, Inventory Valuation, and Telemetry Events Count.
+  - Live SKU table with stock indicators (`In Stock`, `Low Stock`, `Out of Stock`), inline +/- stock level adjustments, and SKU search filter.
+  - Interactive SKU Editor modal for creating and updating product titles, categories, prices, stock counts, icons, and descriptions.
+  - Automatic inventory deduction on checkout and Cloud Storage static bucket sync simulation (`gs://merchant-of-oz-static-storage/inventory.json`).
+- Incremented build version to `v1.2.0-51` in `public/version.json` and UI watermarks.
+- Updated automated unit test suite in `tests/test_deploy.py` (all 9 tests passing).
+
+- **Theme & Sub-Theme Engine Fix**:
+  - Unlocked theme controls in Settings so users can immediately customize between Light, Dark, Auto modes and color sub-themes (`blue`, `purple`, `green`, `red`, `orange`, `pink`, `yellow`).
+  - Synced active theme mode pills and color swatches with DOM `data-theme`, `data-subtheme`, and `t_*` utility classes.
+- **Walmart-Style Morphing Cart Quantity Steppers**:
+  - Implemented dynamic Walmart-style action buttons (`.qty-stepper-btn`, `.qty-endcap-btn`) on item detail pages, catalog shelf cards, and masonry discovery stream pins.
+  - When quantity is 0: Displays the clean `Add to Cart` button.
+  - When quantity > 0: Transforms seamlessly into an inline pill button displaying `-` endcap button, live quantity badge in the center, and `+` endcap button on the right.
+  - Dropping quantity to 0 removes the item and morphs the button back to `Add to Cart`.
+  - Adding items updates cart counters and badges in real-time without forcing immediate page redirection.
+- Incremented build version to `v1.1.2-50` in `public/version.json` and UI watermarks.
+- Updated automated unit test suite in `tests/test_deploy.py` (all 9 tests passing).
+
+- **Top Navigation Integrated Search & Expandable Autocomplete Overlay**:
+  - Moved search bar into the header navigation bar (`.nav-search-wrapper`, `#nav-search-input`).
+  - Added expandable autocomplete & search ideas overlay (`#nav-search-dropdown`) triggered on focus/click, complete with:
+    - 💡 Trending Ideas & Styles tags (`💎 Emerald Luxe`, `⚙️ Steampunk Gear`, `👠 Ruby Sparkle`, `🏺 Handcrafted`, `🏮 Ambient Glow`, `⚡ Cyber Neon`, `🔥 Under $50`, `🏆 Collectibles`).
+    - 📂 Department shortcuts for instant category filtering.
+    - ⚡ Instant top product matches preview with live price tags and direct item navigation.
+- **Massive Realistic Product Catalog & Natural Ad Flow**:
+  - Expanded product inventory from 9 to 26 diverse items across Apparel, Footwear, Accessories, Homeware, and Lighting.
+  - Distributed multiple sponsored ad pins naturally across the continuous masonry stream (`SPONSORED_ADS`) so ads remain seamlessly integrated without getting filtered out inappropriately.
+- **Toggleable Discovery Chips & Reset Fix**:
+  - Clicking an active discovery topic chip or category pill now toggles it off/resets back to the full catalog.
+  - Active visual highlights synchronize across storefront chips and top nav search suggestions.
+- Incremented build version to `v1.1.1-49` in `public/version.json` and UI watermarks.
+- Updated automated unit test suite in `tests/test_deploy.py` (all 9 tests passing).
+
 - **Seamless Fluid Storefront Feed & Discovery Bar**:
   - Eliminated hard visual separators and jarring section breaks across the main store scroll for a continuous, flowing discovery stream.
   - Added integrated Discovery Bar (`#storefront-discovery-bar`) featuring:
