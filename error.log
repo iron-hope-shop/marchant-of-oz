@@ -3,6 +3,12 @@ Error: name unknown: Repository "merchant-of-oz" not found
 Reason: The Docker push failed because the Artifact Registry repository 'merchant-of-oz' does not exist in project 'iron-hope-shop-ff854' under region 'us-central1'.
 Resolution: Create the Artifact Registry repository 'merchant-of-oz' (or update REPOSITORY in .github/workflows/google-cloudrun-docker.yml to an existing Artifact Registry repository such as 'cat-app-repo' or 'cloud-run-source-deploy').
 
+[2026-09-05T02:37:00Z] Firebase Deploy failed in `./deploy-firebase.sh`:
+Error: Failed to authenticate, have you run firebase login?
+Reason: No FIREBASE_TOKEN or GOOGLE_APPLICATION_CREDENTIALS detected in the environment.
+Resolution: Add FIREBASE_TOKEN or GCP service account credentials to execute direct CLI deployment, or merge to main for CI/CD pipeline execution.
+
+
 
 
 
