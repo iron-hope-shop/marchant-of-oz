@@ -26,5 +26,7 @@ Simple Hello World web application deployed to Google Cloud Run with Nginx rever
 
 - `nginx.conf`: Nginx server on port `8080`, cache-control headers for PWA/SPA assets, `/healthz` endpoint, and reverse-proxy `/ __/auth/` to `https://iron-hope-shop-ff854.firebaseapp.com/__/auth/`.
 - `Dockerfile`: Minimal `nginx:alpine` image.
-- `public/index.html`: Static entry point.
+- `public/index.html`: Static entry point and interactive Tamagui UI showcase.
+- `public/tamagui.css`: Zero-dependency Tamagui design system with 12-step color scales, themes (Light/Dark), sub-themes (blue, purple, green, red, orange, pink, yellow), layout stacks (YStack, XStack, ZStack), and component styles.
+- `public/tamagui-theme.js`: Vanilla theme runtime engine with persistence and responsive color-scheme listener.
 - `.github/workflows/deploy.yml`: Automated CI/CD pipeline.

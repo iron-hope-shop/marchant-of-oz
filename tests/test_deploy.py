@@ -27,6 +27,59 @@ class TestDeploymentSetup(unittest.TestCase):
             self.assertIn('signInWithPopup', content)
             self.assertIn('GoogleAuthProvider', content)
             self.assertIn('iron-hope-shop-ff854', content)
+            self.assertIn('tamagui.css', content)
+            self.assertIn('tamagui-theme.js', content)
+
+    def test_tamagui_css_design_system(self):
+        self.assertTrue(os.path.exists('public/tamagui.css'))
+        with open('public/tamagui.css', 'r') as f:
+            content = f.read()
+            # Verify design tokens
+            self.assertIn('--space-4: 16px;', content)
+            self.assertIn('--radius-4: 9px;', content)
+            self.assertIn('--font-family-body:', content)
+            
+            # Verify themes & color scales
+            self.assertIn('.t_light', content)
+            self.assertIn('.t_dark', content)
+            self.assertIn('[data-theme="dark"]', content)
+            self.assertIn('--color-blue-9:', content)
+            self.assertIn('--color-purple-9:', content)
+            self.assertIn('--color-green-9:', content)
+            self.assertIn('--color-red-9:', content)
+            
+            # Verify sub-themes
+            self.assertIn('.t_blue', content)
+            self.assertIn('.t_purple', content)
+            self.assertIn('.t_green', content)
+            self.assertIn('.t_red', content)
+            self.assertIn('.t_orange', content)
+            self.assertIn('.t_pink', content)
+            self.assertIn('.t_yellow', content)
+
+            # Verify Tamagui primitives
+            self.assertIn('.t-ystack', content)
+            self.assertIn('.t-xstack', content)
+            self.assertIn('.t-zstack', content)
+            self.assertIn('.t-group', content)
+            self.assertIn('.t-card', content)
+            self.assertIn('.t-btn', content)
+            self.assertIn('.t-input', content)
+            self.assertIn('.t-switch', content)
+            self.assertIn('.t-badge', content)
+            self.assertIn('.t-avatar', content)
+
+    def test_tamagui_theme_js_engine(self):
+        self.assertTrue(os.path.exists('public/tamagui-theme.js'))
+        with open('public/tamagui-theme.js', 'r') as f:
+            content = f.read()
+            self.assertIn('ThemeEngine', content)
+            self.assertIn('setTheme', content)
+            self.assertIn('setSubTheme', content)
+            self.assertIn('toggleTheme', content)
+            self.assertIn('subscribe', content)
+            self.assertIn('data-theme', content)
+            self.assertIn('data-subtheme', content)
 
     def test_firebase_config_exists(self):
         self.assertTrue(os.path.exists('firebase.json'))

@@ -1,0 +1,1022 @@
+/**
+ * Tamagui-like Design System & Theme Engine (Zero Dependency)
+ * 
+ * Features:
+ * - Design Tokens: Spacing, Radius, Typography, Shadows, Z-index, Transitions
+ * - 12-step Color Scales (Radix / Tamagui standard) for Gray, Blue, Red, Green, Yellow, Purple, Pink, Orange
+ * - Base Themes: Light & Dark
+ * - Sub-Themes: light_blue, dark_blue, light_purple, dark_purple, light_green, dark_green, light_red, dark_red, light_orange, dark_orange, etc.
+ * - Inversion & Component Themes: Card, Dialog, Sheet, Button, Input, Switch, Select, Tooltip, Badge, Avatar, Separator, etc.
+ * - Tamagui Core Layout Primitives: YStack, XStack, ZStack, Group, Spacer, Container
+ * - Interactive States: hover, active, focus, disabled, pressStyle
+ */
+
+:root {
+  /* ==========================================================================
+     Base Design Tokens (Independent of Theme)
+     ========================================================================== */
+  
+  /* Spacing Scale (Tamagui $size / $space standard) */
+  --space-0: 0px;
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-1-5: 6px;
+  --space-2: 8px;
+  --space-2-5: 10px;
+  --space-3: 12px;
+  --space-3-5: 14px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 44px;
+  --space-11: 52px;
+  --space-12: 64px;
+  --space-14: 80px;
+  --space-16: 96px;
+
+  /* Size Scale */
+  --size-1: 20px;
+  --size-2: 24px;
+  --size-3: 28px;
+  --size-4: 32px;
+  --size-5: 36px;
+  --size-6: 44px;
+  --size-7: 52px;
+  --size-8: 64px;
+  --size-9: 76px;
+  --size-10: 92px;
+
+  /* Border Radius */
+  --radius-0: 0px;
+  --radius-1: 3px;
+  --radius-2: 5px;
+  --radius-3: 7px;
+  --radius-4: 9px;
+  --radius-5: 11px;
+  --radius-6: 13px;
+  --radius-7: 15px;
+  --radius-8: 18px;
+  --radius-9: 22px;
+  --radius-10: 26px;
+  --radius-11: 32px;
+  --radius-12: 40px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-family-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-heading: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --font-size-1: 0.6875rem; /* 11px */
+  --font-size-2: 0.75rem;   /* 12px */
+  --font-size-3: 0.8125rem; /* 13px */
+  --font-size-4: 0.875rem;  /* 14px */
+  --font-size-5: 0.9375rem; /* 15px */
+  --font-size-6: 1rem;      /* 16px */
+  --font-size-7: 1.125rem;  /* 18px */
+  --font-size-8: 1.25rem;   /* 20px */
+  --font-size-9: 1.5rem;    /* 24px */
+  --font-size-10: 1.875rem; /* 30px */
+  --font-size-11: 2.25rem;  /* 36px */
+  --font-size-12: 3rem;     /* 48px */
+
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --line-height-1: 1;
+  --line-height-2: 1.25;
+  --line-height-3: 1.375;
+  --line-height-4: 1.5;
+  --line-height-5: 1.625;
+
+  /* Transitions */
+  --transition-fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* Z-Index */
+  --z-index-0: 0;
+  --z-index-1: 10;
+  --z-index-2: 20;
+  --z-index-3: 30;
+  --z-index-4: 40;
+  --z-index-5: 50;
+  --z-index-modal: 1000;
+  --z-index-popover: 1100;
+  --z-index-tooltip: 1200;
+  --z-index-toast: 1300;
+}
+
+/* ==========================================================================
+   Color Palettes (12-Step Radix / Tamagui Scales)
+   ========================================================================== */
+
+/* Light Base Color Scales */
+:root,
+.t_light,
+[data-theme="light"] {
+  --color-gray-1: #fdfdfd;
+  --color-gray-2: #f9f9f9;
+  --color-gray-3: #f0f0f0;
+  --color-gray-4: #e8e8e8;
+  --color-gray-5: #e0e0e0;
+  --color-gray-6: #d9d9d9;
+  --color-gray-7: #cecece;
+  --color-gray-8: #bbbbbb;
+  --color-gray-9: #8d8d8d;
+  --color-gray-10: #838383;
+  --color-gray-11: #646464;
+  --color-gray-12: #1e1e1e;
+
+  --color-blue-1: #fbfdff;
+  --color-blue-2: #f4faff;
+  --color-blue-3: #e6f4fe;
+  --color-blue-4: #d5edfe;
+  --color-blue-5: #c2e2fd;
+  --color-blue-6: #acd4fc;
+  --color-blue-7: #8ec8f6;
+  --color-blue-8: #5eb1ef;
+  --color-blue-9: #0090ff;
+  --color-blue-10: #0588f0;
+  --color-blue-11: #0d74ce;
+  --color-blue-12: #113264;
+
+  --color-purple-1: #fefcfd;
+  --color-purple-2: #fbf7fe;
+  --color-purple-3: #f5effc;
+  --color-purple-4: #eee3fb;
+  --color-purple-5: #e4d4f8;
+  --color-purple-6: #d7bff2;
+  --color-purple-7: #c5a3ea;
+  --color-purple-8: #ab7ee0;
+  --color-purple-9: #8e4ec6;
+  --color-purple-10: #8345b8;
+  --color-purple-11: #7138a0;
+  --color-purple-12: #34184a;
+
+  --color-green-1: #fbfefc;
+  --color-green-2: #f2fcf5;
+  --color-green-3: #e3f9eb;
+  --color-green-4: #d1f4dc;
+  --color-green-5: #bdedcb;
+  --color-green-6: #a3e3b7;
+  --color-green-7: #81d49e;
+  --color-green-8: #52bf80;
+  --color-green-9: #30a46c;
+  --color-green-10: #299764;
+  --color-green-11: #18794e;
+  --color-green-12: #153226;
+
+  --color-red-1: #fffcfc;
+  --color-red-2: #fff7f7;
+  --color-red-3: #feebec;
+  --color-red-4: #ffdbdc;
+  --color-red-5: #ffcdce;
+  --color-red-6: #fdbdbf;
+  --color-red-7: #f4a9aa;
+  --color-red-8: #eb8e90;
+  --color-red-9: #e5484d;
+  --color-red-10: #dc3e42;
+  --color-red-11: #ce2c31;
+  --color-red-12: #641723;
+
+  --color-orange-1: #fefcfb;
+  --color-orange-2: #fef7f2;
+  --color-orange-3: #ffeede;
+  --color-orange-4: #fee2cb;
+  --color-orange-5: #ffd4b2;
+  --color-orange-6: #ffc291;
+  --color-orange-7: #fca867;
+  --color-orange-8: #f38a35;
+  --color-orange-9: #f76808;
+  --color-orange-10: #ed5f00;
+  --color-orange-11: #bd4b00;
+  --color-orange-12: #4e2009;
+
+  --color-yellow-1: #fdfdf9;
+  --color-yellow-2: #fefce8;
+  --color-yellow-3: #fff9c2;
+  --color-yellow-4: #fff394;
+  --color-yellow-5: #ffe770;
+  --color-yellow-6: #f3d752;
+  --color-yellow-7: #e1c033;
+  --color-yellow-8: #caa51b;
+  --color-yellow-9: #ffe629;
+  --color-yellow-10: #ffff57;
+  --color-yellow-11: #946800;
+  --color-yellow-12: #35290f;
+
+  --color-pink-1: #fefcfd;
+  --color-pink-2: #fef7f9;
+  --color-pink-3: #feeef4;
+  --color-pink-4: #fde2ec;
+  --color-pink-5: #fbd3e2;
+  --color-pink-6: #f6bdd4;
+  --color-pink-7: #efa1c1;
+  --color-pink-8: #e47ea8;
+  --color-pink-9: #d6409f;
+  --color-pink-10: #cd3494;
+  --color-pink-11: #ba1e7e;
+  --color-pink-12: #511438;
+
+  /* Theme Semantic Variables (Light) */
+  --bg-app: var(--color-gray-1);
+  --bg-subtle: var(--color-gray-2);
+  --bg-surface: #ffffff;
+  --bg-surface-hover: var(--color-gray-2);
+  --bg-surface-active: var(--color-gray-3);
+  --bg-surface-press: var(--color-gray-4);
+
+  --bg-element: var(--color-gray-3);
+  --bg-element-hover: var(--color-gray-4);
+  --bg-element-active: var(--color-gray-5);
+
+  --border-subtle: var(--color-gray-4);
+  --border-focus: var(--color-gray-7);
+  --border-strong: var(--color-gray-8);
+
+  --color-text: var(--color-gray-12);
+  --color-text-subtle: var(--color-gray-11);
+  --color-text-muted: var(--color-gray-9);
+  --color-text-inverse: #ffffff;
+
+  --primary: var(--color-blue-9);
+  --primary-hover: var(--color-blue-10);
+  --primary-active: var(--color-blue-11);
+  --primary-subtle: var(--color-blue-3);
+  --primary-text: #ffffff;
+
+  --shadow-color: rgba(0, 0, 0, 0.08);
+  --shadow-1: 0 1px 2px 0 var(--shadow-color);
+  --shadow-2: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -2px var(--shadow-color);
+  --shadow-3: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -4px var(--shadow-color);
+  --shadow-4: 0 20px 25px -5px var(--shadow-color), 0 8px 10px -6px var(--shadow-color);
+  --shadow-5: 0 25px 50px -12px var(--shadow-color);
+}
+
+/* Dark Base Color Scales */
+.t_dark,
+[data-theme="dark"] {
+  --color-gray-1: #111111;
+  --color-gray-2: #191919;
+  --color-gray-3: #222222;
+  --color-gray-4: #2a2a2a;
+  --color-gray-5: #313131;
+  --color-gray-6: #3a3a3a;
+  --color-gray-7: #484848;
+  --color-gray-8: #606060;
+  --color-gray-9: #6e6e6e;
+  --color-gray-10: #7b7b7b;
+  --color-gray-11: #b4b4b4;
+  --color-gray-12: #eeeeee;
+
+  --color-blue-1: #0d1520;
+  --color-blue-2: #111c2d;
+  --color-blue-3: #15253c;
+  --color-blue-4: #192d4b;
+  --color-blue-5: #1d365a;
+  --color-blue-6: #23416d;
+  --color-blue-7: #2c5188;
+  --color-blue-8: #3667ad;
+  --color-blue-9: #0090ff;
+  --color-blue-10: #3b9eff;
+  --color-blue-11: #70b8ff;
+  --color-blue-12: #c2e2fd;
+
+  --color-purple-1: #17111d;
+  --color-purple-2: #1e1528;
+  --color-purple-3: #2a1b39;
+  --color-purple-4: #331e47;
+  --color-purple-5: #3d2256;
+  --color-purple-6: #4a2968;
+  --color-purple-7: #5c3382;
+  --color-purple-8: #753fa6;
+  --color-purple-9: #8e4ec6;
+  --color-purple-10: #9d5bd2;
+  --color-purple-11: #bf7af0;
+  --color-purple-12: #e4d4f8;
+
+  --color-green-1: #0d1912;
+  --color-green-2: #112218;
+  --color-green-3: #152f20;
+  --color-green-4: #193b28;
+  --color-green-5: #1e4730;
+  --color-green-6: #24573b;
+  --color-green-7: #2d6e49;
+  --color-green-8: #398e5e;
+  --color-green-9: #30a46c;
+  --color-green-10: #3cb179;
+  --color-green-11: #4cc38a;
+  --color-green-12: #bdedcb;
+
+  --color-red-1: #191111;
+  --color-red-2: #251214;
+  --color-red-3: #36171a;
+  --color-red-4: #46191f;
+  --color-red-5: #541c23;
+  --color-red-6: #672129;
+  --color-red-7: #832832;
+  --color-red-8: #a8323e;
+  --color-red-9: #e5484d;
+  --color-red-10: #f2555a;
+  --color-red-11: #ff6369;
+  --color-red-12: #ffd5d6;
+
+  --color-orange-1: #17120e;
+  --color-orange-2: #23160e;
+  --color-orange-3: #341c10;
+  --color-orange-4: #432111;
+  --color-orange-5: #522712;
+  --color-orange-6: #663013;
+  --color-orange-7: #813c15;
+  --color-orange-8: #a74c15;
+  --color-orange-9: #f76808;
+  --color-orange-10: #ff781d;
+  --color-orange-11: #ff8b3e;
+  --color-orange-12: #ffe0c2;
+
+  --color-yellow-1: #14120b;
+  --color-yellow-2: #1b180f;
+  --color-yellow-3: #272213;
+  --color-yellow-4: #332c14;
+  --color-yellow-5: #403713;
+  --color-yellow-6: #524614;
+  --color-yellow-7: #695a15;
+  --color-yellow-8: #887413;
+  --color-yellow-9: #ffe629;
+  --color-yellow-10: #ffff57;
+  --color-yellow-11: #f5e147;
+  --color-yellow-12: #fefce8;
+
+  --color-pink-1: #181115;
+  --color-pink-2: #22131b;
+  --color-pink-3: #321626;
+  --color-pink-4: #401830;
+  --color-pink-5: #4e1a3b;
+  --color-pink-6: #621d49;
+  --color-pink-7: #7d225c;
+  --color-pink-8: #a12874;
+  --color-pink-9: #d6409f;
+  --color-pink-10: #e34ba9;
+  --color-pink-11: #f65cb5;
+  --color-pink-12: #fbd3e2;
+
+  /* Theme Semantic Variables (Dark) */
+  --bg-app: var(--color-gray-1);
+  --bg-subtle: var(--color-gray-2);
+  --bg-surface: var(--color-gray-2);
+  --bg-surface-hover: var(--color-gray-3);
+  --bg-surface-active: var(--color-gray-4);
+  --bg-surface-press: var(--color-gray-5);
+
+  --bg-element: var(--color-gray-3);
+  --bg-element-hover: var(--color-gray-4);
+  --bg-element-active: var(--color-gray-5);
+
+  --border-subtle: var(--color-gray-4);
+  --border-focus: var(--color-gray-7);
+  --border-strong: var(--color-gray-8);
+
+  --color-text: var(--color-gray-12);
+  --color-text-subtle: var(--color-gray-11);
+  --color-text-muted: var(--color-gray-9);
+  --color-text-inverse: #111111;
+
+  --primary: var(--color-blue-9);
+  --primary-hover: var(--color-blue-10);
+  --primary-active: var(--color-blue-11);
+  --primary-subtle: var(--color-blue-3);
+  --primary-text: #ffffff;
+
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --shadow-1: 0 1px 2px 0 var(--shadow-color);
+  --shadow-2: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -2px var(--shadow-color);
+  --shadow-3: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -4px var(--shadow-color);
+  --shadow-4: 0 20px 25px -5px var(--shadow-color), 0 8px 10px -6px var(--shadow-color);
+  --shadow-5: 0 25px 50px -12px var(--shadow-color);
+}
+
+/* ==========================================================================
+   Tamagui Sub-Themes (Color Variants)
+   ========================================================================== */
+
+/* Blue Sub-Theme */
+.t_blue, [data-subtheme="blue"] {
+  --primary: var(--color-blue-9);
+  --primary-hover: var(--color-blue-10);
+  --primary-active: var(--color-blue-11);
+  --primary-subtle: var(--color-blue-3);
+  --primary-text: #ffffff;
+}
+
+/* Purple Sub-Theme */
+.t_purple, [data-subtheme="purple"] {
+  --primary: var(--color-purple-9);
+  --primary-hover: var(--color-purple-10);
+  --primary-active: var(--color-purple-11);
+  --primary-subtle: var(--color-purple-3);
+  --primary-text: #ffffff;
+}
+
+/* Green Sub-Theme */
+.t_green, [data-subtheme="green"] {
+  --primary: var(--color-green-9);
+  --primary-hover: var(--color-green-10);
+  --primary-active: var(--color-green-11);
+  --primary-subtle: var(--color-green-3);
+  --primary-text: #ffffff;
+}
+
+/* Red Sub-Theme */
+.t_red, [data-subtheme="red"] {
+  --primary: var(--color-red-9);
+  --primary-hover: var(--color-red-10);
+  --primary-active: var(--color-red-11);
+  --primary-subtle: var(--color-red-3);
+  --primary-text: #ffffff;
+}
+
+/* Orange Sub-Theme */
+.t_orange, [data-subtheme="orange"] {
+  --primary: var(--color-orange-9);
+  --primary-hover: var(--color-orange-10);
+  --primary-active: var(--color-orange-11);
+  --primary-subtle: var(--color-orange-3);
+  --primary-text: #ffffff;
+}
+
+/* Pink Sub-Theme */
+.t_pink, [data-subtheme="pink"] {
+  --primary: var(--color-pink-9);
+  --primary-hover: var(--color-pink-10);
+  --primary-active: var(--color-pink-11);
+  --primary-subtle: var(--color-pink-3);
+  --primary-text: #ffffff;
+}
+
+/* Yellow Sub-Theme */
+.t_yellow, [data-subtheme="yellow"] {
+  --primary: var(--color-yellow-9);
+  --primary-hover: var(--color-yellow-10);
+  --primary-active: var(--color-yellow-11);
+  --primary-subtle: var(--color-yellow-3);
+  --primary-text: #1a1500;
+}
+
+/* ==========================================================================
+   Global Reset & Base
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-6);
+  line-height: var(--line-height-4);
+  background-color: var(--bg-app);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+/* ==========================================================================
+   Tamagui Core Stacks & Layout Primitives
+   ========================================================================== */
+
+/* YStack (Vertical Flex) */
+.t-ystack, .YStack {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* XStack (Horizontal Flex) */
+.t-xstack, .XStack {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+}
+
+/* ZStack (Overlay Layer) */
+.t-zstack, .ZStack {
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.t-zstack > *, .ZStack > * {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+}
+
+/* Group container with border styling */
+.t-group, .Group {
+  display: flex;
+  overflow: hidden;
+  border-radius: var(--radius-4);
+  border: 1px solid var(--border-subtle);
+}
+.t-group.vertical {
+  flex-direction: column;
+}
+.t-group > * {
+  border-radius: 0 !important;
+  border: none !important;
+}
+.t-group:not(.vertical) > *:not(:last-child) {
+  border-right: 1px solid var(--border-subtle) !important;
+}
+.t-group.vertical > *:not(:last-child) {
+  border-bottom: 1px solid var(--border-subtle) !important;
+}
+
+/* Spacer */
+.t-spacer-1 { width: var(--space-1); height: var(--space-1); flex-shrink: 0; }
+.t-spacer-2 { width: var(--space-2); height: var(--space-2); flex-shrink: 0; }
+.t-spacer-3 { width: var(--space-3); height: var(--space-3); flex-shrink: 0; }
+.t-spacer-4 { width: var(--space-4); height: var(--space-4); flex-shrink: 0; }
+.t-spacer-6 { width: var(--space-6); height: var(--space-6); flex-shrink: 0; }
+.t-spacer-8 { width: var(--space-8); height: var(--space-8); flex-shrink: 0; }
+.t-spacer-flex { flex: 1 1 0%; }
+
+/* Gap Utilities */
+.gap-1 { gap: var(--space-1); }
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.gap-5 { gap: var(--space-5); }
+.gap-6 { gap: var(--space-6); }
+.gap-8 { gap: var(--space-8); }
+
+/* Padding & Margin Utilities */
+.p-2 { padding: var(--space-2); }
+.p-3 { padding: var(--space-3); }
+.p-4 { padding: var(--space-4); }
+.p-5 { padding: var(--space-5); }
+.p-6 { padding: var(--space-6); }
+.p-8 { padding: var(--space-8); }
+
+.px-3 { padding-left: var(--space-3); padding-right: var(--space-3); }
+.px-4 { padding-left: var(--space-4); padding-right: var(--space-4); }
+.px-6 { padding-left: var(--space-6); padding-right: var(--space-6); }
+.py-2 { padding-top: var(--space-2); padding-bottom: var(--space-2); }
+.py-3 { padding-top: var(--space-3); padding-bottom: var(--space-3); }
+.py-4 { padding-top: var(--space-4); padding-bottom: var(--space-4); }
+
+.ai-center { align-items: center; }
+.ai-start { align-items: flex-start; }
+.ai-end { align-items: flex-end; }
+.ai-stretch { align-items: stretch; }
+
+.jc-center { justify-content: center; }
+.jc-between { justify-content: space-between; }
+.jc-start { justify-content: flex-start; }
+.jc-end { justify-content: flex-end; }
+.jc-around { justify-content: space-around; }
+
+.flex-wrap { flex-wrap: wrap; }
+.w-full { width: 100%; }
+
+/* ==========================================================================
+   Tamagui Components
+   ========================================================================== */
+
+/* 1. Card / Panel */
+.t-card, .Card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-6);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-2);
+  transition: all var(--transition-normal);
+  position: relative;
+}
+
+.t-card-hover:hover {
+  border-color: var(--border-focus);
+  box-shadow: var(--shadow-3);
+  transform: translateY(-2px);
+}
+
+.t-card-header {
+  margin-bottom: var(--space-4);
+}
+
+.t-card-title {
+  margin: 0;
+  font-size: var(--font-size-8);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+
+.t-card-subtitle {
+  margin: var(--space-1) 0 0 0;
+  font-size: var(--font-size-4);
+  color: var(--color-text-subtle);
+}
+
+.t-card-footer {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+/* 2. Button */
+.t-btn, .Button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: inherit;
+  font-size: var(--font-size-4);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  padding: 0 var(--space-4);
+  height: var(--size-5);
+  border-radius: var(--radius-4);
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  user-select: none;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.t-btn:hover {
+  background-color: var(--bg-surface-hover);
+  border-color: var(--border-focus);
+}
+
+.t-btn:active {
+  background-color: var(--bg-surface-press);
+  transform: scale(0.98);
+}
+
+.t-btn:focus-visible {
+  box-shadow: 0 0 0 2px var(--bg-app), 0 0 0 4px var(--primary);
+}
+
+.t-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Button Variants */
+.t-btn-primary {
+  background-color: var(--primary);
+  color: var(--primary-text);
+  border-color: transparent;
+}
+.t-btn-primary:hover {
+  background-color: var(--primary-hover);
+  border-color: transparent;
+}
+.t-btn-primary:active {
+  background-color: var(--primary-active);
+}
+
+.t-btn-subtle {
+  background-color: var(--primary-subtle);
+  color: var(--primary);
+  border-color: transparent;
+}
+.t-btn-subtle:hover {
+  filter: brightness(0.95);
+}
+
+.t-btn-destructive {
+  background-color: var(--color-red-9);
+  color: #ffffff;
+  border-color: transparent;
+}
+.t-btn-destructive:hover {
+  background-color: var(--color-red-10);
+}
+.t-btn-destructive:active {
+  background-color: var(--color-red-11);
+}
+
+.t-btn-ghost {
+  background-color: transparent;
+  border-color: transparent;
+}
+.t-btn-ghost:hover {
+  background-color: var(--bg-element);
+}
+
+.t-btn-sm {
+  height: var(--size-3);
+  padding: 0 var(--space-2-5);
+  font-size: var(--font-size-3);
+  border-radius: var(--radius-3);
+}
+
+.t-btn-lg {
+  height: var(--size-7);
+  padding: 0 var(--space-6);
+  font-size: var(--font-size-6);
+  border-radius: var(--radius-5);
+}
+
+.t-btn-icon {
+  width: var(--size-5);
+  padding: 0;
+}
+
+/* 3. Input & Textarea */
+.t-input, .Input {
+  display: block;
+  width: 100%;
+  height: var(--size-5);
+  padding: 0 var(--space-3-5);
+  font-family: inherit;
+  font-size: var(--font-size-4);
+  color: var(--color-text);
+  background-color: var(--bg-element);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-4);
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.t-input:hover {
+  border-color: var(--border-focus);
+}
+
+.t-input:focus {
+  border-color: var(--primary);
+  background-color: var(--bg-surface);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+.t-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.t-textarea {
+  min-height: 80px;
+  padding: var(--space-2-5) var(--space-3-5);
+  line-height: var(--line-height-4);
+  resize: vertical;
+}
+
+/* 4. Badge / Tag */
+.t-badge, .Badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-0-5) var(--space-2);
+  font-size: var(--font-size-2);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-full);
+  line-height: 1.2;
+  background-color: var(--bg-element);
+  color: var(--color-text-subtle);
+  border: 1px solid var(--border-subtle);
+}
+
+.t-badge-primary {
+  background-color: var(--primary-subtle);
+  color: var(--primary);
+  border-color: transparent;
+}
+
+.t-badge-success {
+  background-color: var(--color-green-3);
+  color: var(--color-green-11);
+  border-color: transparent;
+}
+
+.t-badge-warning {
+  background-color: var(--color-yellow-3);
+  color: var(--color-yellow-11);
+  border-color: transparent;
+}
+
+.t-badge-danger {
+  background-color: var(--color-red-3);
+  color: var(--color-red-11);
+  border-color: transparent;
+}
+
+/* 5. Switch Component */
+.t-switch {
+  position: relative;
+  display: inline-flex;
+  width: 44px;
+  height: 24px;
+  background-color: var(--bg-element-active);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  border: 1px solid var(--border-subtle);
+  padding: 2px;
+  align-items: center;
+}
+
+.t-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.t-switch-thumb {
+  display: block;
+  width: 18px;
+  height: 18px;
+  background-color: #ffffff;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-1);
+  transition: transform var(--transition-spring);
+}
+
+.t-switch input:checked + .t-switch-thumb {
+  transform: translateX(20px);
+}
+
+.t-switch:has(input:checked) {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+/* 6. Avatar */
+.t-avatar, .Avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-6);
+  height: var(--size-6);
+  border-radius: var(--radius-full);
+  background-color: var(--bg-element);
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-4);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+
+.t-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.t-avatar-lg {
+  width: var(--size-8);
+  height: var(--size-8);
+  font-size: var(--font-size-7);
+}
+
+.t-avatar-xl {
+  width: var(--size-10);
+  height: var(--size-10);
+  font-size: var(--font-size-9);
+}
+
+/* 7. Separator */
+.t-separator, .Separator {
+  background-color: var(--border-subtle);
+  height: 1px;
+  width: 100%;
+  border: none;
+  margin: var(--space-4) 0;
+}
+.t-separator.vertical {
+  width: 1px;
+  height: 100%;
+  margin: 0 var(--space-4);
+}
+
+/* 8. Modal / Dialog & Sheet */
+.t-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: var(--z-index-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+.t-modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.t-modal-content {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-8);
+  padding: var(--space-6);
+  max-width: 480px;
+  width: 90%;
+  box-shadow: var(--shadow-5);
+  transform: scale(0.95);
+  transition: transform var(--transition-spring);
+}
+
+.t-modal-overlay.active .t-modal-content {
+  transform: scale(1);
+}
+
+/* 9. Tooltip */
+.t-tooltip-trigger {
+  position: relative;
+  display: inline-block;
+}
+
+.t-tooltip {
+  position: absolute;
+  bottom: calc(100% + var(--space-2));
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background-color: var(--color-gray-12);
+  color: var(--color-gray-1);
+  padding: var(--space-1) var(--space-2-5);
+  border-radius: var(--radius-3);
+  font-size: var(--font-size-2);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: all var(--transition-fast);
+  z-index: var(--z-index-tooltip);
+  box-shadow: var(--shadow-2);
+}
+
+.t-tooltip-trigger:hover .t-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* 10. Theme Pill Switcher */
+.t-theme-switcher {
+  display: inline-flex;
+  background-color: var(--bg-element);
+  border-radius: var(--radius-full);
+  padding: 3px;
+  border: 1px solid var(--border-subtle);
+  gap: 2px;
+}
+
+.t-theme-pill {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-3);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-full);
+  background: transparent;
+  border: none;
+  color: var(--color-text-subtle);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.t-theme-pill.active {
+  background-color: var(--bg-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-1);
+}
+
+.t-color-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.t-color-swatch:hover {
+  transform: scale(1.2);
+}
+
+.t-color-swatch.active {
+  border-color: var(--color-text);
+}

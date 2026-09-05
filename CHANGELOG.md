@@ -2,7 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] - 2026-09-03
+## [Unreleased] - 2026-09-05
+
+### Added
+- Zero-dependency Tamagui-inspired UI design system (`public/tamagui.css`) with:
+  - Design tokens for sizing, spacing ($size/$space), radius, typography, shadows, transitions, and z-indices.
+  - 12-step Radix/Tamagui color scales for Gray, Blue, Purple, Green, Red, Orange, Pink, and Yellow.
+  - Light and Dark base themes with system auto-detection and sub-theme color palettes (`blue`, `purple`, `green`, `red`, `orange`, `pink`, `yellow`).
+  - Tamagui layout primitives: `YStack`, `XStack`, `ZStack`, `Group`, and `Spacer`.
+  - Component library: `Card`, `Button` (primary, subtle, ghost, destructive, sizes), `Input`/`Textarea`, `Switch`, `Badge`, `Avatar`, `Separator`, `Tooltip`, and `Modal Dialog`.
+- Lightweight theme management runtime (`public/tamagui-theme.js`) providing theme switching, sub-theme selection, local persistence, media query listening, and state event subscriptions.
+- Updated `public/index.html` UI showcase demonstrating the design system, theme switching, interactive modal and controls while preserving Firebase Google Auth SSO.
+- Added comprehensive unit tests in `tests/test_deploy.py` for design system tokens, themes, sub-themes, and theme engine functionality.
+
+## [1.0.0] - 2026-09-03
 
 ### Added
 - Integrated Firebase Web SDK (v11) with Google Sign-In popup flow, user profile view, and sign-out handler in `public/index.html`.

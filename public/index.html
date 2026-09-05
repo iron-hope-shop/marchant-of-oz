@@ -1,83 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light" data-subtheme="blue" class="t_light t_blue">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Merchant of Oz</title>
+  <title>Merchant of Oz - Tamagui Design System</title>
+  
+  <!-- Tamagui Design System CSS -->
+  <link rel="stylesheet" href="tamagui.css">
+  <script src="tamagui-theme.js"></script>
+
   <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    /* Application Layout Styles leveraging Tamagui Tokens */
+    .app-viewport {
       min-height: 100vh;
-      background-color: #f8fafc;
-      color: #0f172a;
-    }
-    .container {
-      text-align: center;
-      padding: 2.5rem;
-      background: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-      max-width: 420px;
-      width: 90%;
-    }
-    h1 {
-      margin: 0 0 0.5rem 0;
-      font-size: 2rem;
-    }
-    p {
-      margin: 0 0 1.5rem 0;
-      color: #64748b;
-    }
-    .btn {
-      display: inline-flex;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      background-color: #ffffff;
-      color: #374151;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      padding: 0.75rem 1.25rem;
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background-color 0.15s ease;
+      padding: var(--space-8) var(--space-4);
+      background-color: var(--bg-app);
+      color: var(--color-text);
+    }
+    
+    .app-shell {
       width: 100%;
-      box-sizing: border-box;
+      max-width: 900px;
     }
-    .btn:hover {
-      background-color: #f3f4f6;
+
+    .theme-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+      padding: var(--space-3) var(--space-5);
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-1);
     }
-    .btn-signout {
-      background-color: #ef4444;
-      color: #ffffff;
-      border: none;
-      margin-top: 1rem;
+
+    .color-swatches {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
     }
-    .btn-signout:hover {
-      background-color: #dc2626;
+
+    .swatch-blue { background-color: #0090ff; }
+    .swatch-purple { background-color: #8e4ec6; }
+    .swatch-green { background-color: #30a46c; }
+    .swatch-red { background-color: #e5484d; }
+    .swatch-orange { background-color: #f76808; }
+    .swatch-pink { background-color: #d6409f; }
+    .swatch-yellow { background-color: #ffe629; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--space-6);
     }
-    .user-profile {
-      display: none;
-      margin-top: 1.5rem;
-      text-align: center;
-    }
-    .user-avatar {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      margin-bottom: 0.5rem;
-    }
-    .status-msg {
-      margin-top: 1rem;
-      font-size: 0.875rem;
-      color: #dc2626;
+
+    .code-preview {
+      font-family: var(--font-family-mono);
+      font-size: var(--font-size-2);
+      background-color: var(--bg-element);
+      padding: var(--space-3);
+      border-radius: var(--radius-3);
+      color: var(--color-text-subtle);
+      overflow-x: auto;
     }
   </style>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
     import { 
@@ -98,9 +91,15 @@
       appId: "1:148109111215:web:208f61c9b7d974e064095a"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
+    let auth;
+    let provider;
+    try {
+      const app = initializeApp(firebaseConfig);
+      auth = getAuth(app);
+      provider = new GoogleAuthProvider();
+    } catch (e) {
+      console.warn("Firebase initialization skipped or simulated:", e);
+    }
 
     const loginSection = document.getElementById("login-section");
     const userProfile = document.getElementById("user-profile");
@@ -111,64 +110,300 @@
     const signInBtn = document.getElementById("signin-btn");
     const signOutBtn = document.getElementById("signout-btn");
 
-    signInBtn.addEventListener("click", async () => {
-      statusMsg.textContent = "";
-      try {
-        await signInWithPopup(auth, provider);
-      } catch (err) {
-        console.error(err);
-        statusMsg.textContent = err.message;
-      }
-    });
+    if (signInBtn && auth) {
+      signInBtn.addEventListener("click", async () => {
+        statusMsg.textContent = "";
+        try {
+          await signInWithPopup(auth, provider);
+        } catch (err) {
+          console.error(err);
+          statusMsg.textContent = err.message;
+        }
+      });
+    }
 
-    signOutBtn.addEventListener("click", async () => {
-      try {
-        await signOut(auth);
-      } catch (err) {
-        console.error(err);
-        statusMsg.textContent = err.message;
-      }
-    });
+    if (signOutBtn && auth) {
+      signOutBtn.addEventListener("click", async () => {
+        try {
+          await signOut(auth);
+        } catch (err) {
+          console.error(err);
+          statusMsg.textContent = err.message;
+        }
+      });
+    }
 
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        loginSection.style.display = "none";
-        userProfile.style.display = "block";
-        userName.textContent = user.displayName || "User";
-        userEmail.textContent = user.email || "";
-        userAvatar.src = user.photoURL || "";
-      } else {
-        loginSection.style.display = "block";
-        userProfile.style.display = "none";
-      }
-    });
+    if (auth) {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          if (loginSection) loginSection.style.display = "none";
+          if (userProfile) userProfile.style.display = "flex";
+          if (userName) userName.textContent = user.displayName || "User";
+          if (userEmail) userEmail.textContent = user.email || "";
+          if (userAvatar) userAvatar.src = user.photoURL || "";
+        } else {
+          if (loginSection) loginSection.style.display = "block";
+          if (userProfile) userProfile.style.display = "none";
+        }
+      });
+    }
   </script>
 </head>
 <body>
-  <div class="container">
-    <h1>Merchant of Oz</h1>
-    <p>Google Cloud Run (iron-hope-shop-ff854)</p>
+  <div class="app-viewport">
+    <div class="app-shell t-ystack gap-6">
 
-    <div id="login-section">
-      <button id="signin-btn" class="btn">
-        <svg width="18" height="18" viewBox="0 0 18 18">
-          <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.616z"/>
-          <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
-          <path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.173 0 7.547 0 9s.347 2.827.957 4.039l3.007-2.332z"/>
-          <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/>
-        </svg>
-        Sign in with Google
-      </button>
+      <!-- Navigation & Tamagui Theme Controls -->
+      <header class="theme-bar">
+        <div class="t-xstack ai-center gap-3">
+          <div class="t-avatar" style="background-color: var(--primary); color: #fff; font-weight: bold;">
+            TO
+          </div>
+          <div class="t-ystack">
+            <span style="font-weight: 700; font-size: var(--font-size-5); letter-spacing: -0.02em;">Tamagui UI</span>
+            <span style="font-size: var(--font-size-2); color: var(--color-text-muted);">Zero-Dependency Design System</span>
+          </div>
+        </div>
+
+        <div class="t-xstack ai-center gap-4 flex-wrap">
+          <!-- Color Sub-themes -->
+          <div class="color-swatches" id="subtheme-picker" title="Select Sub-theme Color">
+            <button class="t-color-swatch swatch-blue active" data-color="blue" aria-label="Blue"></button>
+            <button class="t-color-swatch swatch-purple" data-color="purple" aria-label="Purple"></button>
+            <button class="t-color-swatch swatch-green" data-color="green" aria-label="Green"></button>
+            <button class="t-color-swatch swatch-red" data-color="red" aria-label="Red"></button>
+            <button class="t-color-swatch swatch-orange" data-color="orange" aria-label="Orange"></button>
+            <button class="t-color-swatch swatch-pink" data-color="pink" aria-label="Pink"></button>
+            <button class="t-color-swatch swatch-yellow" data-color="yellow" aria-label="Yellow"></button>
+          </div>
+
+          <!-- Base Theme Switcher (Light / Dark / System) -->
+          <div class="t-theme-switcher" id="theme-mode-picker">
+            <button class="t-theme-pill active" data-mode="light">Light</button>
+            <button class="t-theme-pill" data-mode="dark">Dark</button>
+            <button class="t-theme-pill" data-mode="system">Auto</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Showcase Grid -->
+      <div class="grid-2">
+        <!-- Card 1: Auth & Application Portal (Merchant of Oz) -->
+        <section class="t-card t-card-hover t-ystack jc-between">
+          <div>
+            <div class="t-xstack ai-center jc-between t-card-header">
+              <div>
+                <h1 class="t-card-title">Merchant of Oz</h1>
+                <p class="t-card-subtitle">Google Cloud Run (iron-hope-shop-ff854)</p>
+              </div>
+              <span class="t-badge t-badge-primary">v11 Auth</span>
+            </div>
+
+            <p style="color: var(--color-text-subtle); font-size: var(--font-size-4);">
+              Production SSO reverse-proxy application styled with a pure CSS Tamagui design system and customizable runtime themes.
+            </p>
+
+            <div class="t-separator"></div>
+
+            <div id="login-section" class="t-ystack gap-3">
+              <button id="signin-btn" class="t-btn w-full t-btn-primary">
+                <svg width="18" height="18" viewBox="0 0 18 18">
+                  <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.616z"/>
+                  <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
+                  <path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.173 0 7.547 0 9s.347 2.827.957 4.039l3.007-2.332z"/>
+                  <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/>
+                </svg>
+                Sign in with Google
+              </button>
+            </div>
+
+            <div id="user-profile" class="t-ystack ai-center gap-3" style="display: none; padding: var(--space-4) 0;">
+              <div class="t-avatar t-avatar-xl">
+                <img id="user-avatar" src="" alt="Avatar">
+              </div>
+              <div class="t-ystack ai-center">
+                <h3 id="user-name" style="margin: 0; font-size: var(--font-size-7);"></h3>
+                <p id="user-email" style="margin: var(--space-1) 0 0 0; color: var(--color-text-muted); font-size: var(--font-size-3);"></p>
+              </div>
+              <button id="signout-btn" class="t-btn t-btn-destructive w-full">Sign Out</button>
+            </div>
+
+            <div id="status-msg" style="color: var(--color-red-11); font-size: var(--font-size-3); margin-top: var(--space-2);"></div>
+          </div>
+
+          <div class="t-card-footer">
+            <span style="font-size: var(--font-size-2); color: var(--color-text-muted);">Cloud Run &middot; Nginx Proxy</span>
+          </div>
+        </section>
+
+        <!-- Card 2: Tamagui UI Primitives Showcase -->
+        <section class="t-card t-card-hover t-ystack gap-5">
+          <div>
+            <div class="t-xstack ai-center jc-between t-card-header">
+              <h2 class="t-card-title">Tamagui Primitives</h2>
+              <span class="t-badge t-badge-success">Tokens &amp; Stacks</span>
+            </div>
+            <p class="t-card-subtitle">Layout stacks, buttons, switches, and interactive state styles.</p>
+          </div>
+
+          <!-- Interactive Inputs & Groups -->
+          <div class="t-ystack gap-3">
+            <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Input &amp; Group Primitive</label>
+            <div class="t-group">
+              <input type="text" class="t-input" placeholder="Enter query..." value="tamagui-zero-dep">
+              <button class="t-btn t-btn-primary">Search</button>
+            </div>
+          </div>
+
+          <!-- Buttons & Switch -->
+          <div class="t-ystack gap-3">
+            <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Variants &amp; Switches</label>
+            <div class="t-xstack ai-center gap-3 flex-wrap">
+              <button class="t-btn t-btn-primary">Primary</button>
+              <button class="t-btn t-btn-subtle">Subtle</button>
+              <button class="t-btn t-btn-ghost">Ghost</button>
+              
+              <div class="t-spacer-flex"></div>
+
+              <label class="t-switch" title="Toggle Demo State">
+                <input type="checkbox" checked id="demo-toggle">
+                <span class="t-switch-thumb"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Badges & Tooltips -->
+          <div class="t-ystack gap-3">
+            <label style="font-size: var(--font-size-3); font-weight: 600; color: var(--color-text-subtle);">Badges &amp; Tooltip</label>
+            <div class="t-xstack ai-center gap-2 flex-wrap">
+              <span class="t-badge t-badge-primary">Blue Token</span>
+              <span class="t-badge t-badge-success">Success</span>
+              <span class="t-badge t-badge-warning">Warning</span>
+              <span class="t-badge t-badge-danger">Error</span>
+              
+              <div class="t-tooltip-trigger">
+                <button class="t-btn t-btn-sm">Hover me</button>
+                <div class="t-tooltip">Tamagui Tooltip!</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal Trigger Demo -->
+          <div class="t-card-footer">
+            <button class="t-btn t-btn-sm" id="open-modal-btn">Preview Modal Dialog</button>
+          </div>
+        </section>
+      </div>
+
+      <!-- Live Theme Token Inspector -->
+      <section class="t-card">
+        <h3 style="margin-top: 0; font-size: var(--font-size-6);">Tamagui Active Theme State</h3>
+        <pre class="code-preview" id="theme-state-output">{
+  "theme": "light",
+  "resolvedTheme": "light",
+  "subTheme": "blue"
+}</pre>
+      </section>
+
     </div>
-
-    <div id="user-profile" class="user-profile">
-      <img id="user-avatar" class="user-avatar" alt="Avatar">
-      <h3 id="user-name" style="margin: 0.25rem 0;"></h3>
-      <p id="user-email" style="margin: 0 0 1rem 0; font-size: 0.875rem;"></p>
-      <button id="signout-btn" class="btn btn-signout">Sign Out</button>
-    </div>
-
-    <div id="status-msg" class="status-msg"></div>
   </div>
+
+  <!-- Modal Dialog Primitive -->
+  <div class="t-modal-overlay" id="demo-modal">
+    <div class="t-modal-content t-ystack gap-4">
+      <div class="t-xstack ai-center jc-between">
+        <h3 style="margin: 0; font-size: var(--font-size-7);">Tamagui Modal Dialog</h3>
+        <button class="t-btn t-btn-ghost t-btn-sm" id="close-modal-btn">&times;</button>
+      </div>
+      <p style="color: var(--color-text-subtle); margin: 0;">
+        This dialog renders with Tamagui-grade blur overlays, spring transitions, and adaptive theme elevation.
+      </p>
+      <div class="t-xstack jc-end gap-3" style="margin-top: var(--space-4);">
+        <button class="t-btn t-btn-ghost" id="cancel-modal-btn">Cancel</button>
+        <button class="t-btn t-btn-primary" id="confirm-modal-btn">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme Switcher Controller
+    const themeModePicker = document.getElementById('theme-mode-picker');
+    const subthemePicker = document.getElementById('subtheme-picker');
+    const themeStateOutput = document.getElementById('theme-state-output');
+
+    function updateActiveThemeUI(state) {
+      if (themeStateOutput) {
+        themeStateOutput.textContent = JSON.stringify(state, null, 2);
+      }
+
+      // Update mode pill active state
+      if (themeModePicker) {
+        themeModePicker.querySelectorAll('.t-theme-pill').forEach(btn => {
+          if (btn.dataset.mode === state.theme) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+      }
+
+      // Update color swatch active state
+      if (subthemePicker) {
+        subthemePicker.querySelectorAll('.t-color-swatch').forEach(btn => {
+          if (btn.dataset.color === state.subTheme) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+      }
+    }
+
+    if (window.TamaguiTheme) {
+      TamaguiTheme.subscribe(updateActiveThemeUI);
+      updateActiveThemeUI(TamaguiTheme.getState());
+
+      if (themeModePicker) {
+        themeModePicker.addEventListener('click', (e) => {
+          const btn = e.target.closest('.t-theme-pill');
+          if (btn && btn.dataset.mode) {
+            TamaguiTheme.setTheme(btn.dataset.mode);
+          }
+        });
+      }
+
+      if (subthemePicker) {
+        subthemePicker.addEventListener('click', (e) => {
+          const btn = e.target.closest('.t-color-swatch');
+          if (btn && btn.dataset.color) {
+            TamaguiTheme.setSubTheme(btn.dataset.color);
+          }
+        });
+      }
+    }
+
+    // Modal Dialog Interactive Demo
+    const modal = document.getElementById('demo-modal');
+    const openModalBtn = document.getElementById('open-modal-btn');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const cancelModalBtn = document.getElementById('cancel-modal-btn');
+    const confirmModalBtn = document.getElementById('confirm-modal-btn');
+
+    const toggleModal = (open) => {
+      if (modal) {
+        modal.classList.toggle('active', open);
+      }
+    };
+
+    if (openModalBtn) openModalBtn.addEventListener('click', () => toggleModal(true));
+    if (closeModalBtn) closeModalBtn.addEventListener('click', () => toggleModal(false));
+    if (cancelModalBtn) cancelModalBtn.addEventListener('click', () => toggleModal(false));
+    if (confirmModalBtn) confirmModalBtn.addEventListener('click', () => toggleModal(false));
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) toggleModal(false);
+      });
+    }
+  </script>
 </body>
 </html>
