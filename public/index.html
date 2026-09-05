@@ -15,6 +15,7 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      position: relative;
       background-color: var(--bg-app);
       color: var(--color-text);
     }
@@ -22,16 +23,9 @@
     .app-main {
       flex: 1;
       width: 100%;
-      max-width: 1000px;
+      max-width: 960px;
       margin: 0 auto;
-      padding: var(--space-6) var(--space-4);
-    }
-
-    .app-footer {
-      border-top: 1px solid var(--border-subtle);
-      background-color: var(--bg-surface);
-      padding: var(--space-4) var(--space-6);
-      margin-top: auto;
+      padding: var(--space-6) var(--space-4) var(--space-10) var(--space-4);
     }
 
     .color-swatches {
@@ -80,6 +74,27 @@
       border: 2px dashed var(--border-subtle);
       border-radius: var(--radius-8);
       background-color: var(--bg-surface);
+    }
+
+    .build-watermark {
+      position: fixed;
+      bottom: var(--space-2);
+      right: var(--space-4);
+      font-family: var(--font-family-mono);
+      font-size: var(--font-size-1);
+      color: var(--color-text-muted);
+      opacity: 0.6;
+      user-select: none;
+      pointer-events: none;
+      z-index: var(--z-index-1);
+    }
+
+    .user-avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: var(--radius-full);
+      display: block;
     }
 
     @media (max-width: 640px) {
@@ -137,6 +152,17 @@
     const signInBtn = document.getElementById("signin-btn");
     const signOutBtn = document.getElementById("signout-btn");
     const navUserAvatar = document.getElementById("nav-user-avatar");
+    const homeUserWelcome = document.getElementById("home-user-welcome");
+
+    function renderUserAvatar(photoUrl, name, targetElement) {
+      if (!targetElement) return;
+      if (photoUrl) {
+        targetElement.innerHTML = `<img src="${photoUrl}" alt="Avatar" class="user-avatar-img" referrerpolicy="no-referrer">`;
+      } else {
+        const initials = name ? name.split(" ").map(p => p[0]).join("").toUpperCase().slice(0, 2) : "MO";
+        targetElement.textContent = initials;
+      }
+    }
 
     if (signInBtn && auth) {
       signInBtn.addEventListener("click", async () => {
@@ -164,19 +190,32 @@
     if (auth) {
       onAuthStateChanged(auth, (user) => {
         if (user) {
+          const photo = user.photoURL || "";
+          const name = user.displayName || "User";
+          const email = user.email || "";
+
           if (loginSection) loginSection.style.display = "none";
           if (userProfile) userProfile.style.display = "flex";
-          if (userName) userName.textContent = user.displayName || "User";
-          if (userEmail) userEmail.textContent = user.email || "";
-          if (userAvatar) userAvatar.src = user.photoURL || "";
+          if (userName) userName.textContent = name;
+          if (userEmail) userEmail.textContent = email;
+          
+          if (userAvatar) {
+            renderUserAvatar(photo, name, userAvatar);
+          }
           if (navUserAvatar) {
-            navUserAvatar.innerHTML = `<img src="${user.photoURL || ''}" alt="Avatar">`;
+            renderUserAvatar(photo, name, navUserAvatar);
+          }
+          if (homeUserWelcome) {
+            homeUserWelcome.textContent = `Welcome back, ${name}`;
           }
         } else {
           if (loginSection) loginSection.style.display = "block";
           if (userProfile) userProfile.style.display = "none";
           if (navUserAvatar) {
             navUserAvatar.textContent = "MO";
+          }
+          if (homeUserWelcome) {
+            homeUserWelcome.textContent = "Welcome Home";
           }
         }
       });
@@ -189,7 +228,7 @@
     <!-- Top Navigation Bar -->
     <header class="t-nav">
       <div class="t-xstack ai-center gap-3">
-        <div class="t-avatar" id="nav-user-avatar" style="background-color: var(--primary); color: #fff; font-weight: bold;">
+        <div class="t-avatar" id="nav-user-avatar" style="background-color: var(--primary); color: #fff; font-weight: bold; cursor: pointer;" onclick="switchNavTab('settings'); switchSettingsTab('account');">
           MO
         </div>
         <div class="t-ystack">
@@ -201,7 +240,6 @@
       <!-- Main Navigation Tabs -->
       <nav class="t-nav-tabs" id="main-nav-tabs">
         <button class="t-nav-tab active" data-tab="home">Home</button>
-        <button class="t-nav-tab" data-tab="app">Portal</button>
         <button class="t-nav-tab" data-tab="settings">Settings</button>
       </nav>
     </header>
@@ -216,72 +254,19 @@
             🏠
           </div>
           <div class="t-ystack ai-center gap-1">
-            <h2 style="margin: 0; font-size: var(--font-size-8); font-weight: 700;">Welcome Home</h2>
+            <h2 id="home-user-welcome" style="margin: 0; font-size: var(--font-size-8); font-weight: 700;">Welcome Home</h2>
             <p style="margin: 0; color: var(--color-text-subtle); max-width: 420px;">
-              Your application workspace is clean and ready. Navigate to the Portal to sign in, or visit Settings to customize themes and preferences.
+              Your application workspace is clean and ready. Open Settings to customize themes or manage your account.
             </p>
           </div>
           <div class="t-xstack ai-center gap-3" style="margin-top: var(--space-2);">
-            <button class="t-btn t-btn-primary" onclick="switchNavTab('app')">Open Portal</button>
-            <button class="t-btn t-btn-ghost" onclick="switchNavTab('settings')">Settings</button>
+            <button class="t-btn t-btn-primary" onclick="switchNavTab('settings'); switchSettingsTab('account');">Account</button>
+            <button class="t-btn t-btn-ghost" onclick="switchNavTab('settings'); switchSettingsTab('themes');">Themes</button>
           </div>
         </div>
       </section>
 
-      <!-- View 2: Application / Auth Portal -->
-      <section id="view-app" class="view-panel">
-        <div class="t-ystack ai-center">
-          <!-- Auth & Profile Card -->
-          <div class="t-card t-card-hover t-ystack jc-between" style="max-width: 460px; width: 100%;">
-            <div>
-              <div class="t-xstack ai-center jc-between t-card-header">
-                <div>
-                  <h1 class="t-card-title">Merchant of Oz</h1>
-                  <p class="t-card-subtitle">Authentication Portal</p>
-                </div>
-                <span class="t-badge t-badge-primary">v11 Auth</span>
-              </div>
-
-              <p style="color: var(--color-text-subtle); font-size: var(--font-size-4);">
-                Secure single sign-on access with themed UI components and session management.
-              </p>
-
-              <div class="t-separator"></div>
-
-              <div id="login-section" class="t-ystack gap-3">
-                <button id="signin-btn" class="t-btn w-full t-btn-primary">
-                  <svg width="18" height="18" viewBox="0 0 18 18">
-                    <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.616z"/>
-                    <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
-                    <path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.173 0 7.547 0 9s.347 2.827.957 4.039l3.007-2.332z"/>
-                    <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/>
-                  </svg>
-                  Sign in with Google
-                </button>
-              </div>
-
-              <div id="user-profile" class="t-ystack ai-center gap-3" style="display: none; padding: var(--space-4) 0;">
-                <div class="t-avatar t-avatar-xl">
-                  <img id="user-avatar" src="" alt="Avatar">
-                </div>
-                <div class="t-ystack ai-center">
-                  <h3 id="user-name" style="margin: 0; font-size: var(--font-size-7);"></h3>
-                  <p id="user-email" style="margin: var(--space-1) 0 0 0; color: var(--color-text-muted); font-size: var(--font-size-3);"></p>
-                </div>
-                <button id="signout-btn" class="t-btn t-btn-primary w-full">Sign Out</button>
-              </div>
-
-              <div id="status-msg" style="color: var(--color-red-11); font-size: var(--font-size-3); margin-top: var(--space-2);"></div>
-            </div>
-
-            <div class="t-card-footer">
-              <span style="font-size: var(--font-size-2); color: var(--color-text-muted);">Session Portal</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- View 3: Settings with Left Drawer Nav -->
+      <!-- View 2: Settings with Left Drawer Nav (Themes, Account, General) -->
       <section id="view-settings" class="view-panel">
         <div class="t-drawer-layout">
           
@@ -291,11 +276,11 @@
             <button class="t-drawer-item active" data-settings-tab="themes">
               <span>🎨</span> Themes
             </button>
-            <button class="t-drawer-item" data-settings-tab="general">
-              <span>⚙️</span> General
-            </button>
             <button class="t-drawer-item" data-settings-tab="account">
               <span>👤</span> Account
+            </button>
+            <button class="t-drawer-item" data-settings-tab="general">
+              <span>⚙️</span> General
             </button>
           </aside>
 
@@ -409,28 +394,66 @@
 
             </div>
 
-            <!-- Settings Subpanel: General -->
-            <div id="settings-subpanel-general" class="settings-subpanel">
-              <div class="t-card t-ystack gap-4">
-                <h2 class="t-card-title">General Settings</h2>
-                <p class="t-card-subtitle">Manage environment endpoints and application preferences.</p>
-                <div class="t-separator"></div>
-                <div class="t-ystack gap-3">
-                  <label style="font-size: var(--font-size-3); font-weight: 600;">Application Name</label>
-                  <input type="text" class="t-input" value="Merchant of Oz" readonly>
+            <!-- Settings Subpanel: Account (Consolidated Authentication & Profile) -->
+            <div id="settings-subpanel-account" class="settings-subpanel">
+              <div class="t-card t-card-hover t-ystack jc-between">
+                <div>
+                  <div class="t-xstack ai-center jc-between t-card-header">
+                    <div>
+                      <h2 class="t-card-title">Account &amp; Session</h2>
+                      <p class="t-card-subtitle">Google Single Sign-On and profile management</p>
+                    </div>
+                    <span class="t-badge t-badge-primary">SSO</span>
+                  </div>
+
+                  <div class="t-separator"></div>
+
+                  <!-- Sign In Flow -->
+                  <div id="login-section" class="t-ystack gap-3">
+                    <p style="color: var(--color-text-subtle); font-size: var(--font-size-4); margin: 0 0 var(--space-2) 0;">
+                      Sign in with your Google Account to access authorized services and personal workspace state.
+                    </p>
+                    <button id="signin-btn" class="t-btn w-full t-btn-primary">
+                      <svg width="18" height="18" viewBox="0 0 18 18">
+                        <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.616z"/>
+                        <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
+                        <path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.173 0 7.547 0 9s.347 2.827.957 4.039l3.007-2.332z"/>
+                        <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/>
+                      </svg>
+                      Sign in with Google
+                    </button>
+                  </div>
+
+                  <!-- Authenticated Profile View -->
+                  <div id="user-profile" class="t-ystack ai-center gap-3" style="display: none; padding: var(--space-4) 0;">
+                    <div class="t-avatar t-avatar-xl" id="user-avatar" style="background-color: var(--primary-subtle); color: var(--primary);">
+                    </div>
+                    <div class="t-ystack ai-center">
+                      <h3 id="user-name" style="margin: 0; font-size: var(--font-size-7);"></h3>
+                      <p id="user-email" style="margin: var(--space-1) 0 0 0; color: var(--color-text-muted); font-size: var(--font-size-3);"></p>
+                    </div>
+                    <button id="signout-btn" class="t-btn t-btn-primary w-full">Sign Out</button>
+                  </div>
+
+                  <div id="status-msg" style="color: var(--color-red-11); font-size: var(--font-size-3); margin-top: var(--space-2);"></div>
                 </div>
               </div>
             </div>
 
-            <!-- Settings Subpanel: Account -->
-            <div id="settings-subpanel-account" class="settings-subpanel">
+            <!-- Settings Subpanel: General -->
+            <div id="settings-subpanel-general" class="settings-subpanel">
               <div class="t-card t-ystack gap-4">
-                <h2 class="t-card-title">Account Settings</h2>
-                <p class="t-card-subtitle">Authentication profile and permissions.</p>
+                <h2 class="t-card-title">General Settings</h2>
+                <p class="t-card-subtitle">Application preferences and build information.</p>
                 <div class="t-separator"></div>
-                <p style="font-size: var(--font-size-4); color: var(--color-text-subtle);">
-                  Sign in through the Portal tab to view and manage your authenticated session details.
-                </p>
+                <div class="t-ystack gap-3">
+                  <label style="font-size: var(--font-size-3); font-weight: 600;">Application</label>
+                  <input type="text" class="t-input" value="Merchant of Oz" readonly>
+                </div>
+                <div class="t-ystack gap-3">
+                  <label style="font-size: var(--font-size-3); font-weight: 600;">Build Version</label>
+                  <input type="text" class="t-input" id="settings-build-tag" value="v1.0.4-42" readonly>
+                </div>
               </div>
             </div>
 
@@ -440,22 +463,8 @@
 
     </main>
 
-    <!-- Build Details Footer at Bottom of the App -->
-    <footer class="app-footer">
-      <div class="t-xstack ai-center jc-between flex-wrap gap-4" style="max-width: 1000px; margin: 0 auto; font-size: var(--font-size-3); color: var(--color-text-muted);">
-        <div class="t-xstack ai-center gap-3">
-          <span style="font-weight: 600; color: var(--color-text);">Merchant of Oz</span>
-          <span>&middot;</span>
-          <span>Version: <code id="build-version">v1.0.4</code></span>
-          <span>&middot;</span>
-          <span>Build: <code id="build-number">#42</code></span>
-        </div>
-        <div class="t-xstack ai-center gap-3">
-          <span class="t-badge t-badge-primary" id="build-env">Production</span>
-          <span class="t-badge" id="build-date">2026-09-05</span>
-        </div>
-      </div>
-    </footer>
+    <!-- Subtle Bottom Build Stamp -->
+    <div class="build-watermark" id="build-tag">v1.0.4-42</div>
 
   </div>
 
@@ -483,17 +492,14 @@
         const res = await fetch('version.json');
         if (res.ok) {
           const data = await res.json();
-          const vEl = document.getElementById('build-version');
-          const bEl = document.getElementById('build-number');
-          const envEl = document.getElementById('build-env');
-          const dateEl = document.getElementById('build-date');
-          if (vEl && data.version) vEl.textContent = `v${data.version}`;
-          if (bEl && data.buildNumber) bEl.textContent = `#${data.buildNumber}`;
-          if (envEl && data.environment) envEl.textContent = data.environment;
-          if (dateEl && data.buildDate) dateEl.textContent = data.buildDate.split('T')[0];
+          const tag = `v${data.version || '1.0.4'}-${data.buildNumber || 42}`;
+          const tagEl = document.getElementById('build-tag');
+          const sTagEl = document.getElementById('settings-build-tag');
+          if (tagEl) tagEl.textContent = tag;
+          if (sTagEl) sTagEl.value = tag;
         }
       } catch (err) {
-        // Fallback to default rendered values
+        // Fallback to default tag
       }
     }
     loadBuildInfo();
@@ -507,6 +513,21 @@
         panel.classList.toggle('active', panel.id === `view-${tabName}`);
       });
     }
+
+    function switchSettingsTab(subTabKey) {
+      const settingsDrawerNav = document.getElementById('settings-drawer-nav');
+      if (settingsDrawerNav) {
+        settingsDrawerNav.querySelectorAll('.t-drawer-item').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.settingsTab === subTabKey);
+        });
+      }
+      document.querySelectorAll('.settings-subpanel').forEach(panel => {
+        panel.classList.toggle('active', panel.id === `settings-subpanel-${subTabKey}`);
+      });
+    }
+
+    window.switchNavTab = switchNavTab;
+    window.switchSettingsTab = switchSettingsTab;
 
     const mainNavTabs = document.getElementById('main-nav-tabs');
     if (mainNavTabs) {
@@ -524,13 +545,7 @@
       settingsDrawerNav.addEventListener('click', (e) => {
         const itemBtn = e.target.closest('.t-drawer-item');
         if (itemBtn && itemBtn.dataset.settingsTab) {
-          const tabKey = itemBtn.dataset.settingsTab;
-          settingsDrawerNav.querySelectorAll('.t-drawer-item').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.settingsTab === tabKey);
-          });
-          document.querySelectorAll('.settings-subpanel').forEach(panel => {
-            panel.classList.toggle('active', panel.id === `settings-subpanel-${tabKey}`);
-          });
+          switchSettingsTab(itemBtn.dataset.settingsTab);
         }
       });
     }

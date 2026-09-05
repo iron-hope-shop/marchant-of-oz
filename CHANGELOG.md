@@ -14,15 +14,17 @@ All notable changes to this project will be documented in this file.
   - Distinct badge variants separating semantic statuses (`.t-badge-warning`, `.t-badge-danger`, `.t-badge-success`, `.t-badge-info`) from raw palette colors (`.t-badge-yellow`, `.t-badge-red`, `.t-badge-blue`, `.t-badge-purple`, `.t-badge-green`, `.t-badge-orange`, `.t-badge-pink`, `.t-badge-gray`).
   - Top navigation bar component (`.t-nav`, `.t-nav-tabs`, `.t-nav-tab`).
   - Left drawer navigation layout (`.t-drawer-layout`, `.t-drawer-nav`, `.t-drawer-item`, `.t-drawer-content`).
-  - Persistent bottom footer displaying internal application build metadata.
-- Internal version and build tracker (`public/version.json`) with version number, build number, and build date.
+- Internal version and build tracker (`public/version.json`) with version number and build number.
 - Lightweight theme management runtime (`public/tamagui-theme.js`) providing theme switching, sub-theme selection, local persistence, media query listening, and state event subscriptions.
 - Redesigned `public/index.html` application shell with:
-  - Sticky top navigation across views (`Home`, `Portal`, `Settings`).
-  - Clean, dedicated blank Home screen.
-  - Settings screen with a left drawer navigation containing `Themes` (color mode switcher, sub-theme picker, live engine output, and interactive component primitives preview), `General`, and `Account`.
-  - Dedicated bottom footer displaying internal application build numbers and versioning.
-  - Preserved Firebase Google Auth SSO workflow.
+  - Top navigation simplified to `Home` and `Settings`.
+  - Profile avatar rendering Google user photo with `referrerpolicy="no-referrer"` in both the top header and account settings.
+  - Consolidated authentication/portal view into `Settings -> Account`.
+  - Streamlined `Settings -> Themes` drawer view containing theme pickers and live component controls.
+  - Minimized footer into a discreet bottom-right build watermark (`v1.0.4-42`) with full details available under `Settings -> General`.
+- Added comprehensive unit tests in `tests/test_deploy.py` for design system tokens, themes, sub-themes, and theme engine functionality.
+- Updated GitHub Actions workflow triggers in `.github/workflows/google-cloudrun-docker.yml` to include `cursor/**` branches and `pull_request` events.
+- Logged Firebase deployment CLI authentication requirement in `error.log`.
 - Added comprehensive unit tests in `tests/test_deploy.py` for design system tokens, themes, sub-themes, and theme engine functionality.
 - Updated GitHub Actions workflow triggers in `.github/workflows/google-cloudrun-docker.yml` to include `cursor/**` branches and `pull_request` events.
 - Logged Firebase deployment CLI authentication requirement in `error.log`.

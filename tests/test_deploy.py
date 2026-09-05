@@ -34,8 +34,8 @@ class TestDeploymentSetup(unittest.TestCase):
             self.assertIn('view-home', content)
             self.assertIn('view-settings', content)
             self.assertIn('settings-subpanel-themes', content)
-            self.assertIn('app-footer', content)
-            self.assertIn('build-number', content)
+            self.assertIn('settings-subpanel-account', content)
+            self.assertIn('build-watermark', content)
 
     def test_version_json_exists(self):
         self.assertTrue(os.path.exists('public/version.json'))
